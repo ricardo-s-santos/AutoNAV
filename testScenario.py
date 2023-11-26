@@ -18,15 +18,7 @@ S = np.eye(6)  # State transition matrix
 S[0, 3] = Ts
 S[1, 4] = Ts
 S[2, 5] = Ts
-sigma_w = 0.05  # State process noise intensity
-Q = dot(sigma_w ** 2, ([] +
-                       [Ts ** 3 / 3, 0, 0, Ts ** 2 / 2, 0, 0],
-                       [0, Ts ** 3 / 3, 0, 0, Ts ** 2 / 2, 0],
-                       [0, 0, Ts ** 3 / 3, 0, 0, Ts ** 2 / 2],
-                       [Ts ** 2 / 2, 0, 0, Ts, 0, 0],
-                       [0, Ts ** 2 / 2, 0, 0, Ts, 0],
-                       [0, 0, Ts ** 2 / 2, 0, 0, Ts])
-        )  # State process noise covariance
+sigma_w = 0.05  # State process noise intensity  # State process noise covariance
 
 a_i = np.array(
     [
