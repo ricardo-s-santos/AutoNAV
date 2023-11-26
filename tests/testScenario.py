@@ -1,10 +1,10 @@
-from numpy import dot
-
-from WLS import wls
-from readPathFile import readpathfile
+from autonav.WLS import wls
+from autonav.readPathFile import readpathfile
 import numpy as np
+import os
 
-filename = "Path.txt"
+ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
+filename = ROOT_DIR + "/Path.txt"
 destinations = readpathfile(filename)
 N = 8  # Number of anchors
 M = 1  # Number of target

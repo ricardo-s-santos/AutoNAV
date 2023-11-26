@@ -3,7 +3,7 @@ import math
 import cmath
 import itertools
 from numpy import dot
-from velocity import velocity
+from autonav.velocity import velocity
 
 
 def wls(a_i, N, K, sigma, destinations, initial_uav_position):
