@@ -1,4 +1,5 @@
 from autonav.WLS import wls
+from autonav.GTRS import gtrs
 from autonav.readPathFile import readpathfile
 import numpy as np
 import os
@@ -10,16 +11,8 @@ N = 8  # Number of anchors
 M = 1  # Number of target
 K = 10  # Number of measurement samples
 Mc = 1  # Number of Monte Carlo runs
-sigma = 3  # Noise STD in meters
+sigma = 0  # Noise STD in meters
 B = 200  # Area border in meters
-Ts = 1  # Time sample in seconds
-T = 10000
-S = np.eye(6)  # State transition matrix
-S[0, 3] = Ts
-S[1, 4] = Ts
-S[2, 5] = Ts
-sigma_w = 0.05  # State process noise intensity  # State process noise covariance
-
 a_i = np.array(
     [
         [0, 0, 0],
@@ -32,4 +25,6 @@ a_i = np.array(
         [B / 2, B, B / 8],
     ]).T
 
-wls(a_i, N, K, sigma, destinations, [10, 10, 5])
+#wls(a_i, N, K, sigma, destinations, [10, 10, 5])
+
+gtrs(a_i, N, K, sigma, destinations, [10, 10, 5])
