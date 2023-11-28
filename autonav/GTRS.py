@@ -7,7 +7,7 @@ from autonav.velocity import velocity
 
 def bisection_fun(min_lim, max_lim, tol, N_iter, A, D, b, f):
     """
-    This function executes the bisection procedure to solve the GTRS problem
+    This function executes the bisection procedure to solve the GTRS problem.
     """
     lambda_ = (min_lim + max_lim) / 2
     fun_val = 10 ** 9
@@ -25,7 +25,7 @@ def bisection_fun(min_lim, max_lim, tol, N_iter, A, D, b, f):
 
 def fi_fun(lambda_1, A, D, b, f):
     """
-    This function computes the fi value
+    This function computes the fi value.
     """
     g_ = np.dot(A.T, A)
     gg_ = np.dot(lambda_1, D)
@@ -40,7 +40,7 @@ def fi_fun(lambda_1, A, D, b, f):
 
 def calc_eigen(A, D):
     """
-    This function computes the Eigen values of the matrices
+    This function computes the Eigen values of the matrices.
     """
     try:
         left = (np.dot(A.conj().transpose(), A))

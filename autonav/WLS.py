@@ -8,7 +8,7 @@ from autonav.velocity import velocity
 
 def wls(a_i, N, K, sigma, destinations, initial_uav_position):
     """
-    This function executes the WLS algorithm
+    This function executes the WLS algorithm.
     """
     x_true = initial_uav_position
     ww = 0

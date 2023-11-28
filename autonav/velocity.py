@@ -5,7 +5,7 @@ from numpy import dot
 
 def velocity(current_position, destination_position):
     """
-    This function computes the max speed allowed to the UAV according to the distance to the destination
+    This function computes the max speed allowed to the UAV according to the distance to the destination.
 
     """
     param_max_velocity = 2
