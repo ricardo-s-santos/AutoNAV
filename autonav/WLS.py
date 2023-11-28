@@ -25,7 +25,7 @@ def wls(a_i, N, K, sigma, destinations, initial_uav_position):
             # ---------------------------------------------------------------------
             di_k = np.sqrt(((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2))
             di_k = np.array([di_k]).T
-            di_k = di_k + ((sigma + 1) * np.random.randn(N, K))
+            di_k = di_k + (sigma * np.random.randn(N, K))
             d_i = np.median(di_k, axis=1)
             d_i = np.array([d_i]).T
             # ---------------------------------------------------------------------
