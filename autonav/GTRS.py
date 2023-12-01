@@ -1,4 +1,3 @@
-import scipy.linalg as sp
 import math
 from numpy.typing import NDArray
 from numpy import (append, arange, array, concatenate, diag, dot, eye, insert, matmul, median, real, ones, zeros, size,
@@ -6,6 +5,7 @@ from numpy import (append, arange, array, concatenate, diag, dot, eye, insert, m
                    subtract)
 from numpy.random import randn
 from numpy.linalg import (norm, eigvals, inv, pinv, solve)
+from scipy.linalg import (fractional_matrix_power, sqrtm)
 
 from autonav.velocity import _velocity
 
@@ -83,14 +83,14 @@ def gtrs(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, init
                     b1_track.append(norm(a_i[0:3, tt]) ** 2 - abs(d_i[tt] ** 2))
                 A1_track = array(A1_track)
                 b1_track = array(b1_track)
-                left_matrix = sp.sqrtm(inv(P_pred))
+                left_matrix = sqrtm(inv(P_pred))
                 right_matrix = zeros((size(x_state, 0), 1))
                 A1_track = concatenate(
                     (A1_track, concatenate((left_matrix, right_matrix), axis=1))
                     , axis=0
                 )
                 A1_track[A1_track == math.inf] = 0
-                INF_P_pred = array(sp.sqrtm(inv(P_pred)))
+                INF_P_pred = array(sqrtm(inv(P_pred)))
                 INF_P_pred[INF_P_pred == math.inf] = 0
                 b1_track = concatenate((b1_track, dot(INF_P_pred, x_pred)), axis=0)
                 a = dot(math.sqrt(1. / 2.), w_i_loc.T)
@@ -197,9 +197,9 @@ def _calc_eigen(A, D):
     """
     try:
         left = (dot(A.conj().transpose(), A))
-        left = sp.fractional_matrix_power(left, 0.5)
+        left = fractional_matrix_power(left, 0.5)
         right = (dot(A.conj().transpose(), A))
-        right = sp.fractional_matrix_power(right, 0.5)
+        right = fractional_matrix_power(right, 0.5)
         aux = solve(left, D)
         result = dot(aux, pinv(right))
         return eigvals(result)
