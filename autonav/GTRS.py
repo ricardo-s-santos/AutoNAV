@@ -3,6 +3,7 @@ import scipy.linalg as sp
 import math
 
 from autonav.velocity import velocity
+from autonav.readPathFile import readpathfile
 
 
 def bisection_fun(min_lim, max_lim, tol, N_iter, A, D, b, f):
@@ -66,7 +67,7 @@ def calc_eigen(A, D):
         return 0
 
 
-def gtrs(a_i, N, K, sigma, destinations, initial_uav_position):
+def gtrs(a_i, N: int, K: int, sigma: float, waypoints_filename: str, initial_uav_position):
     """
     This function executes the GTRS algorithm
     """
@@ -88,10 +89,10 @@ def gtrs(a_i, N, K, sigma, destinations, initial_uav_position):
     x_state = np.zeros((6, 1))
     x_loc = np.zeros((3, 1))
     P = None
-    K = 10
     qq = 0
     x_true = initial_uav_position
     ww = 0
+    destinations = readpathfile(waypoints_filename)
     N_dest = len(destinations) - 1
     while ww <= N_dest:
         RMSE_Goal = []
