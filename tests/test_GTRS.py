@@ -1,5 +1,4 @@
 from autonav.GTRS import gtrs
-from autonav.readPathFile import readpathfile
 import numpy as np
 import os
 
@@ -7,7 +6,6 @@ ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
 filename = ROOT_DIR + "/Path.txt"
 N = 8  # Number of anchors
 K = 10  # Number of measurement samples
-Mc = 1  # Number of Monte Carlo runs
 sigma = 0  # Noise STD in meters
 B = 200  # Area border in meters
 a_i = np.array(

@@ -12,3 +12,6 @@ keywords = ["UAV", "Navigation", "Indoor"]
 license = { text = "MIT" }
 authors = [{ name = "Ricardo S. Santos", email = "f6221@ulusofona.pt" }]
 dependencies = []
+
+[project.scripts]
+autonav = "autonav.cli:_main"

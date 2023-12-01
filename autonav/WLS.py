@@ -7,13 +7,12 @@ from autonav.velocity import _velocity
 from autonav.readPathFile import _readpathfile
 
 
-def wls(a_i, N, K, sigma, waypoints_filename, initial_uav_position):
+def wls(a_i, N: int, K: int, sigma: float, destinations, initial_uav_position):
     """
     This function executes the WLS algorithm.
     """
     x_true = initial_uav_position
     ww = 0
-    destinations = _readpathfile(waypoints_filename)
     N_dest = len(destinations) - 1
     while ww <= N_dest:
         RMSE_Goal = []

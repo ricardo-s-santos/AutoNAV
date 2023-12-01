@@ -3,10 +3,9 @@ import scipy.linalg as sp
 import math
 
 from autonav.velocity import _velocity
-from autonav.readPathFile import _readpathfile
 
 
-def gtrs(a_i, N: int, K: int, sigma: float, waypoints_filename: str, initial_uav_position):
+def gtrs(a_i, N: int, K: int, sigma: float, destinations: str, initial_uav_position):
     """
     This function executes the GTRS algorithm
     """
@@ -31,7 +30,6 @@ def gtrs(a_i, N: int, K: int, sigma: float, waypoints_filename: str, initial_uav
     qq = 0
     x_true = initial_uav_position
     ww = 0
-    destinations = _readpathfile(waypoints_filename)
     N_dest = len(destinations) - 1
     while ww <= N_dest:
         RMSE_Goal = []
