@@ -1,9 +1,11 @@
 from autonav.GTRS import gtrs
+from autonav.readPathFile import _readpathfile
 import numpy as np
 import os
 
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
 filename = ROOT_DIR + "/Path.txt"
+destinations = _readpathfile(filename)
 N = 8  # Number of anchors
 K = 10  # Number of measurement samples
 sigma = 0  # Noise STD in meters
@@ -20,4 +22,4 @@ a_i = np.array(
         [B / 2, B, B / 8],
     ]).T
 
-gtrs(a_i, N, K, sigma, filename, [10, 10, 5])
+gtrs(a_i, N, K, sigma, destinations, [10, 10, 5])

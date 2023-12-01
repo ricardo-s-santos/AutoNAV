@@ -4,10 +4,10 @@ import cmath
 import itertools
 from numpy import dot
 from autonav.velocity import _velocity
-from autonav.readPathFile import _readpathfile
+from numpy.typing import NDArray
 
 
-def wls(a_i, N: int, K: int, sigma: float, destinations, initial_uav_position):
+def wls(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, initial_uav_position: list):
     """
     This function executes the WLS algorithm.
     """

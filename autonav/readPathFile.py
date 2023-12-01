@@ -2,7 +2,7 @@ import csv
 import numpy as np
 
 
-def _readpathfile(filename):
+def _readpathfile(filename: str):
     positions = []
     try:
         with open(filename, 'r') as file:

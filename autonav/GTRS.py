@@ -1,11 +1,12 @@
 import numpy as np
 import scipy.linalg as sp
 import math
+from numpy.typing import NDArray
 
 from autonav.velocity import _velocity
 
 
-def gtrs(a_i, N: int, K: int, sigma: float, destinations: str, initial_uav_position):
+def gtrs(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, initial_uav_position: list):
     """
     This function executes the GTRS algorithm
     """
