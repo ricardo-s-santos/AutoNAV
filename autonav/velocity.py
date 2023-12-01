@@ -3,7 +3,7 @@ from math import sqrt
 from numpy import dot
 
 
-def velocity(current_position, destination_position):
+def _velocity(current_position, destination_position):
     """
     This function computes the max speed allowed to the UAV according to the distance to the destination.
 

@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def readpathfile(filename):
+def _readpathfile(filename):
     try:
         positions = np.genfromtxt(filename, delimiter=',')
     except:

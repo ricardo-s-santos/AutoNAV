@@ -3,8 +3,8 @@ import math
 import cmath
 import itertools
 from numpy import dot
-from autonav.velocity import velocity
-from autonav.readPathFile import readpathfile
+from autonav.velocity import _velocity
+from autonav.readPathFile import _readpathfile
 
 
 def wls(a_i, N, K, sigma, waypoints_filename, initial_uav_position):
@@ -13,7 +13,7 @@ def wls(a_i, N, K, sigma, waypoints_filename, initial_uav_position):
     """
     x_true = initial_uav_position
     ww = 0
-    destinations = readpathfile(waypoints_filename)
+    destinations = _readpathfile(waypoints_filename)
     N_dest = len(destinations) - 1
     while ww <= N_dest:
         RMSE_Goal = []
@@ -79,7 +79,7 @@ def wls(a_i, N, K, sigma, waypoints_filename, initial_uav_position):
             x_est = np.asarray(
                 np.linalg.solve(np.dot(np.dot(A.T, W.T), np.dot(W, A)), np.dot(np.dot(A.T, W.T), np.dot(W, b))).real)
             x_est = x_est[:, 0]
-            uav_velocity = velocity(x_est, destinations[ww, :])
+            uav_velocity = _velocity(x_est, destinations[ww, :])
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
             x_true[2] = x_true[2] + uav_velocity[2]

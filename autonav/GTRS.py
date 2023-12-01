@@ -2,69 +2,8 @@ import numpy as np
 import scipy.linalg as sp
 import math
 
-from autonav.velocity import velocity
-from autonav.readPathFile import readpathfile
-
-
-def bisection_fun(min_lim, max_lim, tol, N_iter, A, D, b, f):
-    """
-    This function executes the bisection procedure to solve the GTRS problem.
-
-    Args:
-        min_lim:
-        max_lim:
-        tol:
-        N_iter:
-        A:
-        D:
-        b:
-        f:
-    Returns:
-
-    """
-    lambda_ = (min_lim + max_lim) / 2
-    fun_val = 10 ** 9
-    num_iter = 1
-    while num_iter <= N_iter and abs(fun_val) > tol and abs(min_lim - max_lim) > 0.0001:
-        lambda_ = (min_lim + max_lim) / 2
-        fun_val = fi_fun(lambda_, A, D, b, f)
-        if fun_val > 0:
-            min_lim = lambda_.copy()
-        else:
-            max_lim = lambda_.copy()
-        num_iter = num_iter + 1
-    return lambda_
-
-
-def fi_fun(lambda_1, A, D, b, f):
-    """
-    This function computes the fi value.
-    """
-    g_ = np.dot(A.T, A)
-    gg_ = np.dot(lambda_1, D)
-    ggg_ = np.dot(1e-06, np.eye(np.size(D, 1)))
-    t_ = np.dot(A.T, b)
-    ttt_ = np.dot(lambda_1, f)
-    y = np.linalg.solve((g_ + gg_ + ggg_), (t_ - ttt_))
-    fi = np.dot(np.dot(y.T, D), y) + np.dot(np.dot(2, f.T), y)
-    return fi
-
-
-def calc_eigen(A, D):
-    """
-    This function computes the Eigen values of the matrices.
-    """
-    try:
-        left = (np.dot(A.conj().transpose(), A))
-        left = sp.fractional_matrix_power(left, 0.5)
-        right = (np.dot(A.conj().transpose(), A))
-        right = sp.fractional_matrix_power(right, 0.5)
-        aux = np.linalg.solve(left, D)
-        result = np.dot(aux, np.linalg.pinv(right))
-        return np.linalg.eigvals(result)
-    except:
-        print("An exception occurred")
-        return 0
+from autonav.velocity import _velocity
+from autonav.readPathFile import _readpathfile
 
 
 def gtrs(a_i, N: int, K: int, sigma: float, waypoints_filename: str, initial_uav_position):
@@ -92,7 +31,7 @@ def gtrs(a_i, N: int, K: int, sigma: float, waypoints_filename: str, initial_uav
     qq = 0
     x_true = initial_uav_position
     ww = 0
-    destinations = readpathfile(waypoints_filename)
+    destinations = _readpathfile(waypoints_filename)
     N_dest = len(destinations) - 1
     while ww <= N_dest:
         RMSE_Goal = []
@@ -162,13 +101,13 @@ def gtrs(a_i, N: int, K: int, sigma: float, waypoints_filename: str, initial_uav
                 f_track = np.array([0, 0, 0, 0, 0, 0, - 1. / 2.]).reshape(7, 1)
                 A_track = np.dot(W_track, A1_track)
                 b_track = np.dot(W_track, b1_track)
-            eigen_values = calc_eigen(A_loc, D_loc)
+            eigen_values = _calc_eigen(A_loc, D_loc)
             eig_1 = max(eigen_values)
             min_lim = - 1.0 / eig_1
             max_lim = 1000000.0
             tol = 0.001
             N_iter = 30
-            lambda_loc = bisection_fun(min_lim, max_lim, tol, N_iter, A_loc, D_loc, b_loc, f_loc)
+            lambda_loc = _bisection_fun(min_lim, max_lim, tol, N_iter, A_loc, D_loc, b_loc, f_loc)
             y_hat_loc = np.linalg.solve(
                 (np.dot(A_loc.T, A_loc) + np.dot(lambda_loc, D_loc) + np.dot(1e-06, np.eye(np.size(A_loc, 1)))),
                 (np.dot(A_loc.T, b_loc) - np.dot(lambda_loc, f_loc)))
@@ -178,13 +117,13 @@ def gtrs(a_i, N: int, K: int, sigma: float, waypoints_filename: str, initial_uav
                 P = np.eye(6)
             else:
                 x_loc = np.insert(x_loc, qq, np.real(y_hat_loc[0:3, 0]), axis=1)
-                eigen_values = calc_eigen(A_track, D_track)
+                eigen_values = _calc_eigen(A_track, D_track)
                 eig_1 = max(eigen_values)
                 min_lim = - 1.0 / eig_1
                 max_lim = 1000000.0
                 tol = 0.001
                 N_iter = 30
-                lambda_track = bisection_fun(min_lim, max_lim, tol, N_iter, A_track, D_track, b_track, f_track)
+                lambda_track = _bisection_fun(min_lim, max_lim, tol, N_iter, A_track, D_track, b_track, f_track)
                 y_hat_track = np.linalg.solve(
                     (np.dot(A_track.T, A_track) + np.dot(lambda_track, D_track) + np.dot(1e-06,
                                                                                          np.eye(np.size(A_track, 1)))),
@@ -194,7 +133,7 @@ def gtrs(a_i, N: int, K: int, sigma: float, waypoints_filename: str, initial_uav
                 lk1 = np.subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1))
                 lk2 = np.subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1)).T
                 P = np.matmul(lk1, lk2)
-            uav_velocity = velocity(x_loc[0:3, qq], destinations[ww, :])
+            uav_velocity = _velocity(x_loc[0:3, qq], destinations[ww, :])
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
             x_true[2] = x_true[2] + uav_velocity[2]
@@ -203,3 +142,64 @@ def gtrs(a_i, N: int, K: int, sigma: float, waypoints_filename: str, initial_uav
                                  (x_true[2] - destinations[ww][2]) ** 2)
             qq += 1
         ww += 1
+
+
+def _bisection_fun(min_lim, max_lim, tol, N_iter, A, D, b, f):
+    """
+    This function executes the bisection procedure to solve the GTRS problem.
+
+    Args:
+        min_lim:
+        max_lim:
+        tol:
+        N_iter:
+        A:
+        D:
+        b:
+        f:
+    Returns:
+
+    """
+    lambda_ = (min_lim + max_lim) / 2
+    fun_val = 10 ** 9
+    num_iter = 1
+    while num_iter <= N_iter and abs(fun_val) > tol and abs(min_lim - max_lim) > 0.0001:
+        lambda_ = (min_lim + max_lim) / 2
+        fun_val = _fi_fun(lambda_, A, D, b, f)
+        if fun_val > 0:
+            min_lim = lambda_.copy()
+        else:
+            max_lim = lambda_.copy()
+        num_iter = num_iter + 1
+    return lambda_
+
+
+def _fi_fun(lambda_1, A, D, b, f):
+    """
+    This function computes the fi value.
+    """
+    g_ = np.dot(A.T, A)
+    gg_ = np.dot(lambda_1, D)
+    ggg_ = np.dot(1e-06, np.eye(np.size(D, 1)))
+    t_ = np.dot(A.T, b)
+    ttt_ = np.dot(lambda_1, f)
+    y = np.linalg.solve((g_ + gg_ + ggg_), (t_ - ttt_))
+    fi = np.dot(np.dot(y.T, D), y) + np.dot(np.dot(2, f.T), y)
+    return fi
+
+
+def _calc_eigen(A, D):
+    """
+    This function computes the Eigen values of the matrices.
+    """
+    try:
+        left = (np.dot(A.conj().transpose(), A))
+        left = sp.fractional_matrix_power(left, 0.5)
+        right = (np.dot(A.conj().transpose(), A))
+        right = sp.fractional_matrix_power(right, 0.5)
+        aux = np.linalg.solve(left, D)
+        result = np.dot(aux, np.linalg.pinv(right))
+        return np.linalg.eigvals(result)
+    except:
+        print("An exception occurred")
+        return 0
