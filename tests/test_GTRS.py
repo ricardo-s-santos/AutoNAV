@@ -6,7 +6,6 @@ import os
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
 filename = ROOT_DIR + "/Path.txt"
 N = 8  # Number of anchors
-M = 1  # Number of target
 K = 10  # Number of measurement samples
 Mc = 1  # Number of Monte Carlo runs
 sigma = 0  # Noise STD in meters
@@ -23,4 +22,4 @@ a_i = np.array(
         [B / 2, B, B / 8],
     ]).T
 
-gtrs(a_i, N, K, sigma, "abc.txt", [10, 10, 5])
+gtrs(a_i, N, K, sigma, filename, [10, 10, 5])
