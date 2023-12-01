@@ -1,8 +1,9 @@
 import csv
 from numpy import array
+from numpy.typing import NDArray
 
 
-def _readpathfile(filename: str):
+def _readpathfile(filename: str) -> NDArray:
     positions = []
     try:
         with open(filename, 'r') as file:

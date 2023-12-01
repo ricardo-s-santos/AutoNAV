@@ -1,10 +1,13 @@
-import numpy as np
 import math
 import cmath
 import itertools
-from numpy import dot
-from autonav.velocity import _velocity
+from numpy import (array, asarray, cos, dot, eye, float32, median, sin, sqrt)
+from numpy.random import randn
+from numpy.linalg import (norm, solve)
+from numpy.lib import scimath
 from numpy.typing import NDArray
+
+from autonav.velocity import _velocity
 
 
 def wls(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, initial_uav_position: list):
@@ -24,11 +27,11 @@ def wls(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, initi
             # ---------------------------------------------------------------------
             # Simulation part
             # ---------------------------------------------------------------------
-            di_k = np.sqrt(((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2))
-            di_k = np.array([di_k]).T
-            di_k = di_k + (sigma * np.random.randn(N, K))
-            d_i = np.median(di_k, axis=1)
-            d_i = np.array([d_i]).T
+            di_k = sqrt(((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2))
+            di_k = array([di_k]).T
+            di_k = di_k + (sigma * randn(N, K))
+            d_i = median(di_k, axis=1)
+            d_i = array([d_i]).T
             # ---------------------------------------------------------------------
             # Estimation part
             # ---------------------------------------------------------------------
@@ -47,36 +50,36 @@ def wls(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, initi
                         total += 1
                     if ii != jj and total > 0:
                         kk.append(jj + 1)
-                for uu in range(0, len(np.array(list(itertools.combinations(kk, 2))))):
-                    combinations = np.array(list(itertools.combinations(kk, 2)))
+                for uu in range(0, len(array(list(itertools.combinations(kk, 2))))):
+                    combinations = array(list(itertools.combinations(kk, 2)))
                     gg = combinations[uu, 0]
                     hh = combinations[uu, 1]
                     A2.append(2 * (a_i[0:3, gg - 1] - a_i[0:3, hh - 1]).T)
                     b2.append(
-                        d_i[hh - 1] ** 2 - d_i[gg - 1] ** 2 - np.linalg.norm(a_i[0:3, hh - 1]) ** 2 + np.linalg.norm(
+                        d_i[hh - 1] ** 2 - d_i[gg - 1] ** 2 - norm(a_i[0:3, hh - 1]) ** 2 + norm(
                             a_i[0:3, gg - 1]) ** 2)
-                A2 = np.asarray(A2, dtype=np.float32)
-                b2 = np.asarray(b2, dtype=np.float32)
-                xi_est.append(np.linalg.solve(dot(A2.T, A2) + (1 * 10 ** (-6)) * np.eye(3), dot(A2.T, b2)))
-                di_xy = np.linalg.norm(xi_est[0][0:2])
+                A2 = asarray(A2, dtype=float32)
+                b2 = asarray(b2, dtype=float32)
+                xi_est.append(solve(dot(A2.T, A2) + (1 * 10 ** (-6)) * eye(3), dot(A2.T, b2)))
+                di_xy = norm(xi_est[0][0:2])
                 xi_est[ii][2] = cmath.sqrt((d_i[0] ** 2) - (di_xy ** 2)).real + cmath.sqrt(
                     (d_i[0] ** 2) - (di_xy ** 2)).imag
                 phi_i.append(math.atan2(xi_est[ii][1] - a_i[1, ii], xi_est[ii][0] - a_i[0, ii]) * 180 / math.pi)
                 alpha_i.append(math.acos((xi_est[ii][2] - a_i[2, ii]) / (
-                    np.linalg.norm(xi_est[:][ii] - a_i[:, ii].reshape(len(a_i), 1)))) * 180 / math.pi)
-            phi_i = np.asarray(phi_i, dtype=np.float32)
-            alpha_i = np.asarray(alpha_i, dtype=np.float32)
-            u_i_1 = np.cos(phi_i * math.pi / 180).T
-            u_i_2 = np.sin(alpha_i * math.pi / 180).T
-            u_i_3 = np.sin(phi_i * math.pi / 180).T
-            u_i_4 = np.cos(alpha_i * math.pi / 180).T
-            u_i = np.array([[u_i_1 * u_i_2], [u_i_3 * u_i_2], [u_i_4]], dtype=np.float32).reshape(3, N)
-            A = np.asarray(u_i.T, dtype=np.float32)
+                    norm(xi_est[:][ii] - a_i[:, ii].reshape(len(a_i), 1)))) * 180 / math.pi)
+            phi_i = asarray(phi_i, dtype=float32)
+            alpha_i = asarray(alpha_i, dtype=float32)
+            u_i_1 = cos(phi_i * math.pi / 180).T
+            u_i_2 = sin(alpha_i * math.pi / 180).T
+            u_i_3 = sin(phi_i * math.pi / 180).T
+            u_i_4 = cos(alpha_i * math.pi / 180).T
+            u_i = array([[u_i_1 * u_i_2], [u_i_3 * u_i_2], [u_i_4]], dtype=float32).reshape(3, N)
+            A = asarray(u_i.T, dtype=float32)
             b = d_i + sum(u_i * a_i).T.reshape(N, 1)
-            w_i = np.asarray((1 / d_i) / (sum(1 / d_i)))
-            W = np.asarray(np.eye(N) * np.lib.scimath.sqrt(w_i))
-            x_est = np.asarray(
-                np.linalg.solve(np.dot(np.dot(A.T, W.T), np.dot(W, A)), np.dot(np.dot(A.T, W.T), np.dot(W, b))).real)
+            w_i = asarray((1 / d_i) / (sum(1 / d_i)))
+            W = asarray(eye(N) * scimath.sqrt(w_i))
+            x_est = asarray(
+                solve(dot(dot(A.T, W.T), dot(W, A)), dot(dot(A.T, W.T), dot(W, b))).real)
             x_est = x_est[:, 0]
             uav_velocity = _velocity(x_est, destinations[ww, :])
             x_true[0] = x_true[0] + uav_velocity[0]
