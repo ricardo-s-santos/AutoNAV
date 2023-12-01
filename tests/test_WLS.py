@@ -26,5 +26,3 @@ a_i = np.array(
     ]).T
 
 wls(a_i, N, K, sigma, destinations, [10, 10, 5])
-
-gtrs(a_i, N, K, sigma, destinations, [10, 10, 5])

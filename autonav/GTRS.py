@@ -8,6 +8,18 @@ from autonav.velocity import velocity
 def bisection_fun(min_lim, max_lim, tol, N_iter, A, D, b, f):
     """
     This function executes the bisection procedure to solve the GTRS problem.
+
+    Args:
+        min_lim:
+        max_lim:
+        tol:
+        N_iter:
+        A:
+        D:
+        b:
+        f:
+    Returns:
+
     """
     lambda_ = (min_lim + max_lim) / 2
     fun_val = 10 ** 9
@@ -33,7 +45,6 @@ def fi_fun(lambda_1, A, D, b, f):
     t_ = np.dot(A.T, b)
     ttt_ = np.dot(lambda_1, f)
     y = np.linalg.solve((g_ + gg_ + ggg_), (t_ - ttt_))
-    # fi = np.dot(np.dot(y.T, D), y) + np.dot(np.dot(2, f.T), y)
     fi = np.dot(np.dot(y.T, D), y) + np.dot(np.dot(2, f.T), y)
     return fi
 
