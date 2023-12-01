@@ -1,6 +1,6 @@
 from autonav.GTRS import gtrs
 from autonav.readPathFile import _readpathfile
-import numpy as np
+from numpy import array
 import os
 
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -10,7 +10,7 @@ N = 8  # Number of anchors
 K = 10  # Number of measurement samples
 sigma = 0  # Noise STD in meters
 B = 200  # Area border in meters
-a_i = np.array(
+a_i = array(
     [
         [0, 0, 0],
         [0, B, 0],

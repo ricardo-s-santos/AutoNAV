@@ -1,5 +1,5 @@
 import csv
-import numpy as np
+from numpy import array
 
 
 def _readpathfile(filename: str):
@@ -12,4 +12,4 @@ def _readpathfile(filename: str):
     except:
         print("File not found, please check path.")
         exit()
-    return np.array(positions)
+    return array(positions)

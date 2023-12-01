@@ -1,7 +1,11 @@
-import numpy as np
 import scipy.linalg as sp
 import math
 from numpy.typing import NDArray
+from numpy import (append, arange, array, concatenate, diag, dot, eye, insert, matmul, median, real, ones, zeros, size,
+                   sqrt,
+                   subtract)
+from numpy.random import randn
+from numpy.linalg import (norm, eigvals, inv, pinv, solve)
 
 from autonav.velocity import _velocity
 
@@ -11,22 +15,22 @@ def gtrs(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, init
     This function executes the GTRS algorithm
     """
     Ts = 1  # Time sample in seconds
-    S = np.eye(6)  # State transition matrix
+    S = eye(6)  # State transition matrix
     S[0, 3] = Ts
     S[1, 4] = Ts
     S[2, 5] = Ts
     sigma_w = 0.05  # State process noise intensity  # State process noise covariance
-    Q = np.dot(sigma_w ** 2,
-               ([
-                   [Ts ** 3 / 3, 0, 0, Ts ** 2 / 2, 0, 0],
-                   [0, Ts ** 3 / 3, 0, 0, Ts ** 2 / 2, 0],
-                   [0, 0, Ts ** 3 / 3, 0, 0, Ts ** 2 / 2],
-                   [Ts ** 2 / 2, 0, 0, Ts, 0, 0],
-                   [0, Ts ** 2 / 2, 0, 0, Ts, 0],
-                   [0, 0, Ts ** 2 / 2, 0, 0, Ts]
-               ]))
-    x_state = np.zeros((6, 1))
-    x_loc = np.zeros((3, 1))
+    Q = dot(sigma_w ** 2,
+            ([
+                [Ts ** 3 / 3, 0, 0, Ts ** 2 / 2, 0, 0],
+                [0, Ts ** 3 / 3, 0, 0, Ts ** 2 / 2, 0],
+                [0, 0, Ts ** 3 / 3, 0, 0, Ts ** 2 / 2],
+                [Ts ** 2 / 2, 0, 0, Ts, 0, 0],
+                [0, Ts ** 2 / 2, 0, 0, Ts, 0],
+                [0, 0, Ts ** 2 / 2, 0, 0, Ts]
+            ]))
+    x_state = zeros((6, 1))
+    x_loc = zeros((3, 1))
     P = None
     qq = 0
     x_true = initial_uav_position
@@ -42,11 +46,11 @@ def gtrs(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, init
             # ---------------------------------------------------------------------
             # Simulation part
             # ---------------------------------------------------------------------
-            di_k = np.sqrt(((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2))
-            di_k = np.array([di_k]).T
-            di_k = di_k + (sigma * np.random.randn(N, K))
-            d_i = np.median(di_k, axis=1)
-            d_i = np.array([d_i]).T
+            di_k = sqrt(((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2))
+            di_k = array([di_k]).T
+            di_k = di_k + (sigma * randn(N, K))
+            d_i = median(di_k, axis=1)
+            d_i = array([d_i]).T
             # ---------------------------------------------------------------------
             # Estimation part
             # ---------------------------------------------------------------------
@@ -56,50 +60,50 @@ def gtrs(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, init
             D_track = []
             f_track = []
             b_track = []
-            w_i_loc = np.array(np.sqrt(d_i ** (- 1.0) / (sum(d_i ** (- 1.0)))))
-            for tt in np.arange(0, N, 1).reshape(-1):
-                A1_loc.append(np.append(np.dot(2, a_i[0:3, tt].T), -1))
-                b1_loc.append(np.linalg.norm(a_i[0:3, tt]) ** 2 - d_i[tt] ** 2)
-            A1_loc = np.array(A1_loc)
-            b1_loc = np.array(b1_loc)
-            W_loc = np.diag(w_i_loc.T[0])
-            D_loc = np.eye(4)
+            w_i_loc = array(sqrt(d_i ** (- 1.0) / (sum(d_i ** (- 1.0)))))
+            for tt in arange(0, N, 1).reshape(-1):
+                A1_loc.append(append(dot(2, a_i[0:3, tt].T), -1))
+                b1_loc.append(norm(a_i[0:3, tt]) ** 2 - d_i[tt] ** 2)
+            A1_loc = array(A1_loc)
+            b1_loc = array(b1_loc)
+            W_loc = diag(w_i_loc.T[0])
+            D_loc = eye(4)
             D_loc[3, 3] = 0
-            f_loc = np.array([0, 0, 0, - 1. / 2.]).reshape(4, 1)
-            A_loc = np.dot(W_loc, A1_loc)
-            b_loc = np.dot(W_loc, b1_loc)
+            f_loc = array([0, 0, 0, - 1. / 2.]).reshape(4, 1)
+            A_loc = dot(W_loc, A1_loc)
+            b_loc = dot(W_loc, b1_loc)
             if qq != 0:
-                P_pred = np.dot(np.dot(S, P), S.T) + Q
-                x_pred = np.dot(S, x_state[0:6, qq - 1])
+                P_pred = dot(dot(S, P), S.T) + Q
+                x_pred = dot(S, x_state[0:6, qq - 1])
                 x_pred = x_pred.reshape(len(x_pred), 1)
                 A1_track = []
                 b1_track = []
-                for tt in np.arange(0, N, 1).reshape(-1):
-                    A1_track.append(np.concatenate((np.dot(2, a_i[0:3, tt].T), np.zeros(np.size(x, 0)), [-1]), axis=0))
-                    b1_track.append(np.linalg.norm(a_i[0:3, tt]) ** 2 - abs(d_i[tt] ** 2))
-                A1_track = np.array(A1_track)
-                b1_track = np.array(b1_track)
-                left_matrix = sp.sqrtm(np.linalg.inv(P_pred))
-                right_matrix = np.zeros((np.size(x_state, 0), 1))
-                A1_track = np.concatenate(
-                    (A1_track, np.concatenate((left_matrix, right_matrix), axis=1))
+                for tt in arange(0, N, 1).reshape(-1):
+                    A1_track.append(concatenate((dot(2, a_i[0:3, tt].T), zeros(size(x, 0)), [-1]), axis=0))
+                    b1_track.append(norm(a_i[0:3, tt]) ** 2 - abs(d_i[tt] ** 2))
+                A1_track = array(A1_track)
+                b1_track = array(b1_track)
+                left_matrix = sp.sqrtm(inv(P_pred))
+                right_matrix = zeros((size(x_state, 0), 1))
+                A1_track = concatenate(
+                    (A1_track, concatenate((left_matrix, right_matrix), axis=1))
                     , axis=0
                 )
                 A1_track[A1_track == math.inf] = 0
-                INF_P_pred = np.array(sp.sqrtm(np.linalg.inv(P_pred)))
+                INF_P_pred = array(sp.sqrtm(inv(P_pred)))
                 INF_P_pred[INF_P_pred == math.inf] = 0
-                b1_track = np.concatenate((b1_track, np.dot(INF_P_pred, x_pred)), axis=0)
-                a = np.dot(math.sqrt(1. / 2.), w_i_loc.T)
-                b = np.dot(math.sqrt(1. / 8.), np.ones((1, np.size(x_state, 0))))
-                W_track = np.concatenate((a, b), axis=1)
-                W_track = np.eye(np.size(W_track, 1)) * W_track
-                D_track = np.zeros((7, 7))
+                b1_track = concatenate((b1_track, dot(INF_P_pred, x_pred)), axis=0)
+                a = dot(math.sqrt(1. / 2.), w_i_loc.T)
+                b = dot(math.sqrt(1. / 8.), ones((1, size(x_state, 0))))
+                W_track = concatenate((a, b), axis=1)
+                W_track = eye(size(W_track, 1)) * W_track
+                D_track = zeros((7, 7))
                 D_track[0, 0] = 1
                 D_track[1, 1] = 1
                 D_track[2, 2] = 1
-                f_track = np.array([0, 0, 0, 0, 0, 0, - 1. / 2.]).reshape(7, 1)
-                A_track = np.dot(W_track, A1_track)
-                b_track = np.dot(W_track, b1_track)
+                f_track = array([0, 0, 0, 0, 0, 0, - 1. / 2.]).reshape(7, 1)
+                A_track = dot(W_track, A1_track)
+                b_track = dot(W_track, b1_track)
             eigen_values = _calc_eigen(A_loc, D_loc)
             eig_1 = max(eigen_values)
             min_lim = - 1.0 / eig_1
@@ -107,15 +111,15 @@ def gtrs(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, init
             tol = 0.001
             N_iter = 30
             lambda_loc = _bisection_fun(min_lim, max_lim, tol, N_iter, A_loc, D_loc, b_loc, f_loc)
-            y_hat_loc = np.linalg.solve(
-                (np.dot(A_loc.T, A_loc) + np.dot(lambda_loc, D_loc) + np.dot(1e-06, np.eye(np.size(A_loc, 1)))),
-                (np.dot(A_loc.T, b_loc) - np.dot(lambda_loc, f_loc)))
+            y_hat_loc = solve(
+                (dot(A_loc.T, A_loc) + dot(lambda_loc, D_loc) + dot(1e-06, eye(size(A_loc, 1)))),
+                (dot(A_loc.T, b_loc) - dot(lambda_loc, f_loc)))
             if qq == 0:
-                x_loc[0:3, qq] = np.real(y_hat_loc[0:3, 0])
-                x_state[0:6, qq] = np.concatenate((x_loc[0:3, qq], [0], [0], [0]), axis=0)
-                P = np.eye(6)
+                x_loc[0:3, qq] = real(y_hat_loc[0:3, 0])
+                x_state[0:6, qq] = concatenate((x_loc[0:3, qq], [0], [0], [0]), axis=0)
+                P = eye(6)
             else:
-                x_loc = np.insert(x_loc, qq, np.real(y_hat_loc[0:3, 0]), axis=1)
+                x_loc = insert(x_loc, qq, real(y_hat_loc[0:3, 0]), axis=1)
                 eigen_values = _calc_eigen(A_track, D_track)
                 eig_1 = max(eigen_values)
                 min_lim = - 1.0 / eig_1
@@ -123,15 +127,15 @@ def gtrs(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, init
                 tol = 0.001
                 N_iter = 30
                 lambda_track = _bisection_fun(min_lim, max_lim, tol, N_iter, A_track, D_track, b_track, f_track)
-                y_hat_track = np.linalg.solve(
-                    (np.dot(A_track.T, A_track) + np.dot(lambda_track, D_track) + np.dot(1e-06,
-                                                                                         np.eye(np.size(A_track, 1)))),
-                    (np.dot(A_track.T, b_track) - np.dot(lambda_track, f_track)))
-                x_state = np.concatenate((x_state, np.zeros((np.size(x_state, 0), 1))), axis=1)
-                x_state[0:6, qq] = np.concatenate((np.real(y_hat_track[np.arange(0, np.size(x_state, 0))])), axis=0)
-                lk1 = np.subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1))
-                lk2 = np.subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1)).T
-                P = np.matmul(lk1, lk2)
+                y_hat_track = solve(
+                    (dot(A_track.T, A_track) + dot(lambda_track, D_track) + dot(1e-06,
+                                                                                eye(size(A_track, 1)))),
+                    (dot(A_track.T, b_track) - dot(lambda_track, f_track)))
+                x_state = concatenate((x_state, zeros((size(x_state, 0), 1))), axis=1)
+                x_state[0:6, qq] = concatenate((real(y_hat_track[arange(0, size(x_state, 0))])), axis=0)
+                lk1 = subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1))
+                lk2 = subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1)).T
+                P = matmul(lk1, lk2)
             uav_velocity = _velocity(x_loc[0:3, qq], destinations[ww, :])
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
@@ -177,13 +181,13 @@ def _fi_fun(lambda_1, A, D, b, f):
     """
     This function computes the fi value.
     """
-    g_ = np.dot(A.T, A)
-    gg_ = np.dot(lambda_1, D)
-    ggg_ = np.dot(1e-06, np.eye(np.size(D, 1)))
-    t_ = np.dot(A.T, b)
-    ttt_ = np.dot(lambda_1, f)
-    y = np.linalg.solve((g_ + gg_ + ggg_), (t_ - ttt_))
-    fi = np.dot(np.dot(y.T, D), y) + np.dot(np.dot(2, f.T), y)
+    g_ = dot(A.T, A)
+    gg_ = dot(lambda_1, D)
+    ggg_ = dot(1e-06, eye(size(D, 1)))
+    t_ = dot(A.T, b)
+    ttt_ = dot(lambda_1, f)
+    y = solve((g_ + gg_ + ggg_), (t_ - ttt_))
+    fi = dot(dot(y.T, D), y) + dot(dot(2, f.T), y)
     return fi
 
 
@@ -192,13 +196,13 @@ def _calc_eigen(A, D):
     This function computes the Eigen values of the matrices.
     """
     try:
-        left = (np.dot(A.conj().transpose(), A))
+        left = (dot(A.conj().transpose(), A))
         left = sp.fractional_matrix_power(left, 0.5)
-        right = (np.dot(A.conj().transpose(), A))
+        right = (dot(A.conj().transpose(), A))
         right = sp.fractional_matrix_power(right, 0.5)
-        aux = np.linalg.solve(left, D)
-        result = np.dot(aux, np.linalg.pinv(right))
-        return np.linalg.eigvals(result)
+        aux = solve(left, D)
+        result = dot(aux, pinv(right))
+        return eigvals(result)
     except:
         print("An exception occurred")
         return 0

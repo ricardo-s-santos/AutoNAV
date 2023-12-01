@@ -1,5 +1,5 @@
 import time
-import numpy as np
+from numpy import array
 
 from .WLS import wls
 from .GTRS import gtrs
@@ -19,7 +19,7 @@ def _main():
         if default == 'y' or 'Y':
             B = 200
             N = 8
-            a_i = np.array(
+            a_i = array(
                 [
                     [0, 0, 0],
                     [0, B, 0],
