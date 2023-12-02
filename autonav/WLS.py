@@ -10,13 +10,14 @@ from numpy.typing import NDArray
 from autonav.velocity import _velocity
 
 
-def wls(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, initial_uav_position: list):
+def wls(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, initial_uav_position: list) -> NDArray:
     """
     This function executes the WLS algorithm.
     """
     x_true = initial_uav_position
     ww = 0
     N_dest = len(destinations) - 1
+    estimated_trajectory = []
     while ww <= N_dest:
         RMSE_Goal = []
         distance = math.sqrt((x_true[0] - destinations[ww][0]) ** 2 +
@@ -80,8 +81,8 @@ def wls(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, initi
             W = asarray(eye(N) * scimath.sqrt(w_i))
             x_est = asarray(
                 solve(dot(dot(A.T, W.T), dot(W, A)), dot(dot(A.T, W.T), dot(W, b))).real)
-            x_est = x_est[:, 0]
-            uav_velocity = _velocity(x_est, destinations[ww, :])
+            estimated_trajectory.append(x_est[:, 0])
+            uav_velocity = _velocity(x_est[:, 0], destinations[ww, :])
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
             x_true[2] = x_true[2] + uav_velocity[2]
@@ -89,3 +90,4 @@ def wls(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, initi
                                  (x_true[1] - destinations[ww][1]) ** 2 +
                                  (x_true[2] - destinations[ww][2]) ** 2)
         ww += 1
+    return array(estimated_trajectory)

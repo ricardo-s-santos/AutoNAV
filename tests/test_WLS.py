@@ -1,5 +1,6 @@
 from autonav.WLS import wls
 from autonav.fileHandlers import _readpathfile
+from autonav.plots import plot_trajectories
 from numpy import array
 import os
 
@@ -24,4 +25,5 @@ a_i = array(
         [B / 2, B, B / 8],
     ]).T
 
-wls(a_i, N, K, sigma, destinations, [10, 10, 5])
+estimated_trajectory = wls(a_i, N, K, sigma, destinations, [10, 10, 5])
+plot_trajectories(destinations, estimated_trajectory)
