@@ -10,7 +10,7 @@ from scipy.linalg import (fractional_matrix_power, sqrtm)
 from autonav.velocity import _velocity
 
 
-def gtrs(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, initial_uav_position: list):
+def gtrs(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, initial_uav_position: list) -> NDArray:
     """
     This function executes the GTRS algorithm
     """
@@ -34,6 +34,7 @@ def gtrs(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, init
     P = None
     qq = 0
     x_true = initial_uav_position
+    estimated_trajectory = []
     ww = 0
     N_dest = len(destinations) - 1
     while ww <= N_dest:
@@ -118,6 +119,7 @@ def gtrs(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, init
                 x_loc[0:3, qq] = real(y_hat_loc[0:3, 0])
                 x_state[0:6, qq] = concatenate((x_loc[0:3, qq], [0], [0], [0]), axis=0)
                 P = eye(6)
+                estimated_trajectory.append(x_loc[0:3, qq])
             else:
                 x_loc = insert(x_loc, qq, real(y_hat_loc[0:3, 0]), axis=1)
                 eigen_values = _calc_eigen(A_track, D_track)
@@ -136,6 +138,7 @@ def gtrs(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, init
                 lk1 = subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1))
                 lk2 = subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1)).T
                 P = matmul(lk1, lk2)
+                estimated_trajectory.append(x_loc[0:3, qq])
             uav_velocity = _velocity(x_loc[0:3, qq], destinations[ww, :])
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
@@ -145,6 +148,7 @@ def gtrs(a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, init
                                  (x_true[2] - destinations[ww][2]) ** 2)
             qq += 1
         ww += 1
+    return array(estimated_trajectory)
 
 
 def _bisection_fun(min_lim, max_lim, tol, N_iter, A, D, b, f):
