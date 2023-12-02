@@ -3,7 +3,7 @@ from numpy import array
 
 from .WLS import wls
 from .GTRS import gtrs
-from .readPathFile import _readpathfile
+from .fileHandlers import _readpathfile
 
 
 def _main():
@@ -31,7 +31,7 @@ def _main():
                     [B / 2, B, B / 8],
                 ]).T
             K = int(input("Please insert the number of Measurement Samples (K)\n"))
-            sigma = float(input("Please insert the noise level (sigma)\n"))
+            sigma = float(input("Please insert the noise level in meters (sigma)\n"))
             filename = input("Please input the path to the Waypoints file\n")
             destinations = _readpathfile(filename)
             if algorithm == '1':

@@ -1,5 +1,5 @@
 from autonav.GTRS import gtrs
-from autonav.readPathFile import _readpathfile
+from autonav.fileHandlers import _readpathfile
 from numpy import array
 import os
 
