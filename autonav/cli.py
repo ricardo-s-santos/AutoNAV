@@ -4,6 +4,7 @@ from numpy import array
 from .WLS import wls
 from .GTRS import gtrs
 from .fileHandlers import _readpathfile
+from .plots import plot_trajectories
 
 
 def _main():
@@ -37,15 +38,17 @@ def _main():
             if algorithm == '1':
                 print("Running GTRS...")
                 start_time = time.time()
-                gtrs(a_i, N, K, sigma, destinations, [10, 10, 5])
+                estimated_trajectory = gtrs(a_i, N, K, sigma, destinations, [10, 10, 5])
                 exec_time = (time.time() - start_time)
                 print(f"GTRS finished in {exec_time:0,.2f} seconds.")
+                plot_trajectories(destinations, estimated_trajectory)
             elif algorithm == '2':
                 print("Running WLS...")
                 start_time = time.time()
-                wls(a_i, N, K, sigma, destinations, [10, 10, 5])
+                estimated_trajectory = wls(a_i, N, K, sigma, destinations, [10, 10, 5])
                 exec_time = (time.time() - start_time)
                 print(f"WLS finished in {exec_time:0,.2f} seconds.")
+                plot_trajectories(destinations, estimated_trajectory)
         elif default == 'n' or 'N':
             aux = input(
                 "Please insert the positions of the anchors in the following format: [x1, y1, z1]; [x2, y2; z2];....")
