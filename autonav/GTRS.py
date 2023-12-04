@@ -59,7 +59,6 @@ def gtrs(
     ww = 0
     N_dest = len(destinations) - 1
     while ww <= N_dest:
-        RMSE_Goal = []
         distance = math.sqrt(
             (x_true[0] - destinations[ww][0]) ** 2
             + (x_true[1] - destinations[ww][1]) ** 2
@@ -188,7 +187,16 @@ def gtrs(
     return array(estimated_trajectory)
 
 
-def _bisection_fun(min_lim, max_lim, tol, N_iter, A, D, b, f):
+def _bisection_fun(
+    min_lim: float,
+    max_lim: float,
+    tol: float,
+    N_iter: int,
+    A: NDArray,
+    D: NDArray,
+    b: NDArray,
+    f: NDArray,
+) -> float:
     """
     This function executes the bisection procedure to solve the GTRS problem.
 
@@ -218,7 +226,7 @@ def _bisection_fun(min_lim, max_lim, tol, N_iter, A, D, b, f):
     return lambda_
 
 
-def _fi_fun(lambda_1, A, D, b, f):
+def _fi_fun(lambda_1: float, A: NDArray, D: NDArray, b: NDArray, f: NDArray) -> NDArray:
     """
     This function computes the fi value.
     """
@@ -232,10 +240,8 @@ def _fi_fun(lambda_1, A, D, b, f):
     return fi
 
 
-def _calc_eigen(A, D):
-    """
-    This function computes the Eigen values of the matrices.
-    """
+def _calc_eigen(A: NDArray, D: NDArray) -> NDArray:
+    """This function computes the Eigen values of the matrices."""
     try:
         left = dot(A.conj().transpose(), A)
         left = fractional_matrix_power(left, 0.5)
@@ -244,6 +250,6 @@ def _calc_eigen(A, D):
         aux = solve(left, D)
         result = dot(aux, pinv(right))
         return eigvals(result)
-    except:
+    except Exception:
         print("An exception occurred")
-        return 0
+        return array([0])

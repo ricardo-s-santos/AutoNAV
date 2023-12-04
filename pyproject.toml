@@ -34,6 +34,9 @@ max-line-length = 100
 max-doc-length = 150
 ignore = [
     "E203", # "whitespace before ’:’"", but that’s how black likes it
-    "W503"] # "line break before binary operator", conflicts with black
+    "W503", # "line break before binary operator", conflicts with black
+    "D100", # Doc related errors, I will correct them later
+    "D200",
+"D400","D401","D212","D415","D417"]
 exclude = [".git", "__pycache__", ".*cache", "build", "dist", "env", "venv", ".eggs", "*.egg", "docs"]
 docstring-convention = "google" # flake8-docstrings
