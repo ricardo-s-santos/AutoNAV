@@ -1,8 +1,9 @@
-from autonav.GTRS import gtrs
+import os
+
 from autonav.fileHandlers import _readpathfile
+from autonav.GTRS import gtrs
 from autonav.plots import plot_trajectories
 from numpy import array
-import os
 
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
 filename = ROOT_DIR + "/Path.txt"
@@ -21,7 +22,8 @@ a_i = array(
         [0, B, B / 8],
         [B / 2, 0, B / 8],
         [B / 2, B, B / 8],
-    ]).T
+    ]
+).T
 
 estimated_trajectory = gtrs(a_i, N, K, sigma, destinations, [10, 10, 5])
 plot_trajectories(destinations, estimated_trajectory)

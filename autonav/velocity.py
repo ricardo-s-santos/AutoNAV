@@ -1,5 +1,6 @@
-import numpy
 from math import sqrt
+
+import numpy
 from numpy import dot
 from numpy.typing import NDArray
 
@@ -19,5 +20,7 @@ def _velocity(current_position: NDArray, destination_position: NDArray) -> NDArr
         scale = param_max_velocity / error_norm
         velocity_allowed = dot(error_position, scale)
         if error_norm < param_reach_distance:  # Lower Distance = Less Speed
-            velocity_allowed = velocity_allowed * ((error_norm / param_reach_distance) ** param_smooth_factor)
+            velocity_allowed = velocity_allowed * (
+                (error_norm / param_reach_distance) ** param_smooth_factor
+            )
     return velocity_allowed
