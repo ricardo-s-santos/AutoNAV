@@ -11,7 +11,7 @@ requires-python = ">=3.8"
 keywords = ["UAV", "Navigation", "Indoor"]
 license = { text = "MIT" }
 authors = [{ name = "Ricardo S. Santos", email = "f6221@ulusofona.pt" }]
-dependencies = []
+dependencies = ["numpy >= 1.26.2", "matplotlib >= 3.8.2", "scipy >= 1.11.3"]
 
 [project.scripts]
 autonav = "autonav.cli:_main"
