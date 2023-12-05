@@ -1,3 +1,4 @@
+"""This module contains the GTRS algorithm functions."""
 import math
 
 from autonav.velocity import _velocity
@@ -28,8 +29,18 @@ from scipy.linalg import fractional_matrix_power, sqrtm
 def gtrs(
     a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, initial_uav_position: list
 ) -> NDArray:
-    """
-    This function executes the GTRS algorithm
+    """This function executes the GTRS algorithm.
+
+    Args:
+        a_i (NDArray): The true position of the anchors in 3D.
+        N (int): The number of anchors.
+        K (int): The number of measurements.
+        sigma (float): The noise level in meters.
+        destinations (NDArray): The intermediate points need for navigation in 3D.
+        initial_uav_position (list): The initial UAV position in 3D.
+
+    Returns:
+        The estimated trajectory computed using the GTRS algorithm for the given input scenario.
     """
     Ts = 1  # Time sample in seconds
     S = eye(6)  # State transition matrix
@@ -69,9 +80,7 @@ def gtrs(
             # ---------------------------------------------------------------------
             # Simulation part
             # ---------------------------------------------------------------------
-            di_k = sqrt(
-                ((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2)
-            )
+            di_k = sqrt(((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2))
             di_k = array([di_k]).T
             di_k = di_k + (sigma * randn(N, K))
             d_i = median(di_k, axis=1)
@@ -104,17 +113,13 @@ def gtrs(
                 A1_track = []
                 b1_track = []
                 for tt in arange(0, N, 1).reshape(-1):
-                    A1_track.append(
-                        concatenate((dot(2, a_i[0:3, tt].T), zeros(size(x, 0)), [-1]), axis=0)
-                    )
+                    A1_track.append(concatenate((dot(2, a_i[0:3, tt].T), zeros(size(x, 0)), [-1]), axis=0))
                     b1_track.append(norm(a_i[0:3, tt]) ** 2 - abs(d_i[tt] ** 2))
                 A1_track = array(A1_track)
                 b1_track = array(b1_track)
                 left_matrix = sqrtm(inv(P_pred))
                 right_matrix = zeros((size(x_state, 0), 1))
-                A1_track = concatenate(
-                    (A1_track, concatenate((left_matrix, right_matrix), axis=1)), axis=0
-                )
+                A1_track = concatenate((A1_track, concatenate((left_matrix, right_matrix), axis=1)), axis=0)
                 A1_track[A1_track == math.inf] = 0
                 INF_P_pred = array(sqrtm(inv(P_pred)))
                 INF_P_pred[INF_P_pred == math.inf] = 0
@@ -166,9 +171,7 @@ def gtrs(
                     (dot(A_track.T, b_track) - dot(lambda_track, f_track)),
                 )
                 x_state = concatenate((x_state, zeros((size(x_state, 0), 1))), axis=1)
-                x_state[0:6, qq] = concatenate(
-                    (real(y_hat_track[arange(0, size(x_state, 0))])), axis=0
-                )
+                x_state[0:6, qq] = concatenate((real(y_hat_track[arange(0, size(x_state, 0))])), axis=0)
                 lk1 = subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1))
                 lk2 = subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1)).T
                 P = matmul(lk1, lk2)
@@ -197,20 +200,21 @@ def _bisection_fun(
     b: NDArray,
     f: NDArray,
 ) -> float:
-    """
-    This function executes the bisection procedure to solve the GTRS problem.
+    """This function executes the bisection procedure to solve the GTRS problem.
 
     Args:
-        min_lim:
-        max_lim:
-        tol:
-        N_iter:
-        A:
-        D:
-        b:
-        f:
-    Returns:
+        min_lim (float): Minimum interval value.
+        max_lim (float): Maximum interval value.
+        tol (float): Tolerance value
+        N_iter (int): The max number of interactions for the bisection procedure.
+        A (NDArray): Matrix A.
+        D (NDArray): Matrix D.
+        b (NDArray): Matrix b.
+        f (NDArray): Matrix f.
+        Note: The definitions of the matrices can be seen in the paper.
 
+    Returns:
+        The solution to the GTRS problem.
     """
     lambda_ = (min_lim + max_lim) / 2
     fun_val = 10**9
@@ -227,8 +231,18 @@ def _bisection_fun(
 
 
 def _fi_fun(lambda_1: float, A: NDArray, D: NDArray, b: NDArray, f: NDArray) -> NDArray:
-    """
-    This function computes the fi value.
+    """This function computes the fi value for a given lambda.
+
+    Args:
+        lambda_1 (float): Minimum interval value.
+        A (NDArray): Matrix A.
+        D (NDArray): Matrix D.
+        b (NDArray): Matrix b.
+        f (NDArray): Matrix f.
+        Note: The definitions of the matrices can be seen in the paper.
+
+    Returns:
+        An NDArray with the fi value for the given input.
     """
     g_ = dot(A.T, A)
     gg_ = dot(lambda_1, D)
@@ -241,7 +255,19 @@ def _fi_fun(lambda_1: float, A: NDArray, D: NDArray, b: NDArray, f: NDArray) -> 
 
 
 def _calc_eigen(A: NDArray, D: NDArray) -> NDArray:
-    """This function computes the Eigen values of the matrices."""
+    """This function computes the Eigen values of the matrices.
+
+    Args:
+        A (NDArray): Matrix A.
+        D (NDArray): Matrix D.
+        Note: The definitions of the matrices can be seen in the paper.
+
+    Returns:
+        The Eigen values for the given matrices.
+
+    Raises:
+        Exception if the Eigen Values cannot be computed.
+    """
     try:
         left = dot(A.conj().transpose(), A)
         left = fractional_matrix_power(left, 0.5)

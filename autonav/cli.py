@@ -1,3 +1,4 @@
+"""This module contains the command line application."""
 import time
 
 from numpy import array, fromstring
@@ -13,6 +14,14 @@ from .WLS import wls
 
 
 def _main():
+    """This is the CLI application function of the AutoNAV package.
+
+    Args:
+        None.
+
+    Returns:
+        Nothing.
+    """
     print("##################")
     print("Welcome to Autonav")
     print("##################")

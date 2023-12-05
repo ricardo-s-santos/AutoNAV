@@ -1,3 +1,4 @@
+"""This module contains the WLS algorithm."""
 import cmath
 import itertools
 import math
@@ -13,15 +14,25 @@ from numpy.typing import NDArray
 def wls(
     a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, initial_uav_position: list
 ) -> NDArray:
-    """
-    This function executes the WLS algorithm.
+    """This function executes the WLS algorithm.
+
+    Args:
+        a_i (NDArray): The true position of the anchors in 3D.
+        N (int): The number of anchors.
+        K (int): The number of measurements.
+        sigma (float): The noise level in meters.
+        destinations (NDArray): The intermediate points need for navigation in 3D.
+        initial_uav_position (list): The initial UAV position in 3D.
+
+    Returns:
+        The estimated trajectory computed using the WLS algorithm for the given input scenario.
     """
     x_true = initial_uav_position
     ww = 0
     N_dest = len(destinations) - 1
     estimated_trajectory = []
     while ww <= N_dest:
-        RMSE_Goal = []
+        # RMSE_Goal = []
         distance = math.sqrt(
             (x_true[0] - destinations[ww][0]) ** 2
             + (x_true[1] - destinations[ww][1]) ** 2
@@ -32,9 +43,7 @@ def wls(
             # ---------------------------------------------------------------------
             # Simulation part
             # ---------------------------------------------------------------------
-            di_k = sqrt(
-                ((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2)
-            )
+            di_k = sqrt(((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2))
             di_k = array([di_k]).T
             di_k = di_k + (sigma * randn(N, K))
             d_i = median(di_k, axis=1)
@@ -77,14 +86,11 @@ def wls(
                     + cmath.sqrt((d_i[0] ** 2) - (di_xy**2)).imag
                 )
                 phi_i.append(
-                    math.atan2(xi_est[ii][1] - a_i[1, ii], xi_est[ii][0] - a_i[0, ii])
-                    * 180
-                    / math.pi
+                    math.atan2(xi_est[ii][1] - a_i[1, ii], xi_est[ii][0] - a_i[0, ii]) * 180 / math.pi
                 )
                 alpha_i.append(
                     math.acos(
-                        (xi_est[ii][2] - a_i[2, ii])
-                        / (norm(xi_est[:][ii] - a_i[:, ii].reshape(len(a_i), 1)))
+                        (xi_est[ii][2] - a_i[2, ii]) / (norm(xi_est[:][ii] - a_i[:, ii].reshape(len(a_i), 1)))
                     )
                     * 180
                     / math.pi
@@ -100,9 +106,7 @@ def wls(
             b = d_i + sum(u_i * a_i).T.reshape(N, 1)
             w_i = asarray((1 / d_i) / (sum(1 / d_i)))
             W = asarray(eye(N) * scimath.sqrt(w_i))
-            x_est = asarray(
-                solve(dot(dot(A.T, W.T), dot(W, A)), dot(dot(A.T, W.T), dot(W, b))).real
-            )
+            x_est = asarray(solve(dot(dot(A.T, W.T), dot(W, A)), dot(dot(A.T, W.T), dot(W, b))).real)
             estimated_trajectory.append(x_est[:, 0])
             uav_velocity = _velocity(x_est[:, 0], destinations[ww, :])
             x_true[0] = x_true[0] + uav_velocity[0]

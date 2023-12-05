@@ -17,26 +17,23 @@ dependencies = ["numpy >= 1.26.2", "matplotlib >= 3.8.2", "scipy >= 1.11.3"]
 autonav = "autonav.cli:_main"
 
 [project.optional-dependencies]
-dev = [ "isort", "black", "flake8", "flake8-isort", "flake8-black", "flake8-bugbear", "pre-commit" ]
+dev = ["isort", "black", "flake8", "flake8-isort", "flake8-black", "flake8-bugbear", "pre-commit"]
 
 [tool.black]
-line-length = 100
+line-length = 110
 target-version = ['py38']
 
 [tool.isort]
 profile = "black"
 src_paths = ["txtstats", "tests"]
-line_length = 100
+line_length = 110
 skip_gitignore = "True"
 
 [tool.flake8]
-max-line-length = 100
+max-line-length = 110
 max-doc-length = 150
 ignore = [
     "E203", # "whitespace before ’:’"", but that’s how black likes it
-    "W503", # "line break before binary operator", conflicts with black
-    "D100", # Doc related errors, I will correct them later
-    "D200",
-"D400","D401","D212","D415","D417"]
+    "W503"] # "line break before binary operator", conflicts with black]
 exclude = [".git", "__pycache__", ".*cache", "build", "dist", "env", "venv", ".eggs", "*.egg", "docs"]
 docstring-convention = "google" # flake8-docstrings
