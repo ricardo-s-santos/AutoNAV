@@ -1,6 +1,7 @@
+"""This file contains the WLS tests."""
 import os
 
-from autonav.fileHandlers import _readpathfile
+from autonav.file_handlers import _readpathfile
 from autonav.plots import plot_trajectories
 from autonav.WLS import wls
 from numpy import array

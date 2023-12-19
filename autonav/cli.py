@@ -3,13 +3,22 @@ import time
 
 from numpy import array, fromstring
 
-from .fileHandlers import _readpathfile
+from .file_handlers import _readpathfile
 from .GTRS import gtrs
 from .plots import plot_trajectories
 from .WLS import wls
 
 """
     Todo: Verify user input
+    Ver text line
+    alterar nomes para ficheiros
+    ver loops
+    Atenção hardcoded
+
+    Por tol min lim maxlim como parametros opcionais
+https://typer.tiangolo.com/tutorial/first-steps/
+https://github.com/Textualize/rich
+https://rich.readthedocs.io/en/latest/introduction.html#quick-start
 """
 
 

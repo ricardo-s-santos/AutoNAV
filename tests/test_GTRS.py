@@ -1,6 +1,7 @@
+"""This file contains the GTRS tests."""
 import os
 
-from autonav.fileHandlers import _readpathfile
+from autonav.file_handlers import _readpathfile
 from autonav.GTRS import gtrs
 from autonav.plots import plot_trajectories
 from numpy import array

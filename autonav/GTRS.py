@@ -27,49 +27,60 @@ from scipy.linalg import fractional_matrix_power, sqrtm
 
 
 def gtrs(
-    a_i: NDArray, N: int, K: int, sigma: float, destinations: NDArray, initial_uav_position: list
+    a_i: NDArray,
+    n: int,
+    k: int,
+    sigma: float,
+    destinations: NDArray,
+    initial_uav_position: list,
+    tol: float = 0.001,
+    n_iter: int = 30,
+    max_lim: float = 1000000.0,
 ) -> NDArray:
     """This function executes the GTRS algorithm.
 
     Args:
         a_i (NDArray): The true position of the anchors in 3D.
-        N (int): The number of anchors.
-        K (int): The number of measurements.
+        n (int): The number of anchors.
+        k (int): The number of measurements.
         sigma (float): The noise level in meters.
         destinations (NDArray): The intermediate points need for navigation in 3D.
         initial_uav_position (list): The initial UAV position in 3D.
+        tol (float): The tolerance for the bisection function.
+        n_iter (int): The max number of iterations for the bisection function.
+        max_lim (float): The maximum value for the interval in the bisection function.
 
     Returns:
         The estimated trajectory computed using the GTRS algorithm for the given input scenario.
     """
-    Ts = 1  # Time sample in seconds
-    S = eye(6)  # State transition matrix
-    S[0, 3] = Ts
-    S[1, 4] = Ts
-    S[2, 5] = Ts
+    ts = 1  # Time sample in seconds
+    s = eye(6)  # State transition matrix
+    s[0, 3] = ts
+    s[1, 4] = ts
+    s[2, 5] = ts
     sigma_w = 0.05  # State process noise intensity  # State process noise covariance
-    Q = dot(
+    q = dot(
         sigma_w**2,
         (
             [
-                [Ts**3 / 3, 0, 0, Ts**2 / 2, 0, 0],
-                [0, Ts**3 / 3, 0, 0, Ts**2 / 2, 0],
-                [0, 0, Ts**3 / 3, 0, 0, Ts**2 / 2],
-                [Ts**2 / 2, 0, 0, Ts, 0, 0],
-                [0, Ts**2 / 2, 0, 0, Ts, 0],
-                [0, 0, Ts**2 / 2, 0, 0, Ts],
+                [ts**3 / 3, 0, 0, ts**2 / 2, 0, 0],
+                [0, ts**3 / 3, 0, 0, ts**2 / 2, 0],
+                [0, 0, ts**3 / 3, 0, 0, ts**2 / 2],
+                [ts**2 / 2, 0, 0, ts, 0, 0],
+                [0, ts**2 / 2, 0, 0, ts, 0],
+                [0, 0, ts**2 / 2, 0, 0, ts],
             ]
         ),
     )
     x_state = zeros((6, 1))
     x_loc = zeros((3, 1))
-    P = None
+    p = None
     qq = 0
     x_true = initial_uav_position
     estimated_trajectory = []
     ww = 0
-    N_dest = len(destinations) - 1
-    while ww <= N_dest:
+    n_dest = len(destinations) - 1
+    while ww <= n_dest:
         distance = math.sqrt(
             (x_true[0] - destinations[ww][0]) ** 2
             + (x_true[1] - destinations[ww][1]) ** 2
@@ -82,7 +93,7 @@ def gtrs(
             # ---------------------------------------------------------------------
             di_k = sqrt(((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2))
             di_k = array([di_k]).T
-            di_k = di_k + (sigma * randn(N, K))
+            di_k = di_k + (sigma * randn(n, k))
             d_i = median(di_k, axis=1)
             d_i = array([d_i]).T
             # ---------------------------------------------------------------------
@@ -95,7 +106,7 @@ def gtrs(
             f_track = []
             b_track = []
             w_i_loc = array(sqrt(d_i ** (-1.0) / (sum(d_i ** (-1.0)))))
-            for tt in arange(0, N, 1).reshape(-1):
+            for tt in arange(0, n, 1).reshape(-1):
                 A1_loc.append(append(dot(2, a_i[0:3, tt].T), -1))
                 b1_loc.append(norm(a_i[0:3, tt]) ** 2 - d_i[tt] ** 2)
             A1_loc = array(A1_loc)
@@ -107,12 +118,12 @@ def gtrs(
             A_loc = dot(W_loc, A1_loc)
             b_loc = dot(W_loc, b1_loc)
             if qq != 0:
-                P_pred = dot(dot(S, P), S.T) + Q
-                x_pred = dot(S, x_state[0:6, qq - 1])
+                P_pred = dot(dot(s, p), s.T) + q
+                x_pred = dot(s, x_state[0:6, qq - 1])
                 x_pred = x_pred.reshape(len(x_pred), 1)
                 A1_track = []
                 b1_track = []
-                for tt in arange(0, N, 1).reshape(-1):
+                for tt in arange(0, n, 1).reshape(-1):
                     A1_track.append(concatenate((dot(2, a_i[0:3, tt].T), zeros(size(x, 0)), [-1]), axis=0))
                     b1_track.append(norm(a_i[0:3, tt]) ** 2 - abs(d_i[tt] ** 2))
                 A1_track = array(A1_track)
@@ -140,8 +151,8 @@ def gtrs(
             min_lim = -1.0 / eig_1
             max_lim = 1000000.0
             tol = 0.001
-            N_iter = 30
-            lambda_loc = _bisection_fun(min_lim, max_lim, tol, N_iter, A_loc, D_loc, b_loc, f_loc)
+            n_iter = 30
+            lambda_loc = _bisection_fun(min_lim, max_lim, tol, n_iter, A_loc, D_loc, b_loc, f_loc)
             y_hat_loc = solve(
                 (dot(A_loc.T, A_loc) + dot(lambda_loc, D_loc) + dot(1e-06, eye(size(A_loc, 1)))),
                 (dot(A_loc.T, b_loc) - dot(lambda_loc, f_loc)),
@@ -149,18 +160,15 @@ def gtrs(
             if qq == 0:
                 x_loc[0:3, qq] = real(y_hat_loc[0:3, 0])
                 x_state[0:6, qq] = concatenate((x_loc[0:3, qq], [0], [0], [0]), axis=0)
-                P = eye(6)
+                p = eye(6)
                 estimated_trajectory.append(x_loc[0:3, qq])
             else:
                 x_loc = insert(x_loc, qq, real(y_hat_loc[0:3, 0]), axis=1)
                 eigen_values = _calc_eigen(A_track, D_track)
                 eig_1 = max(eigen_values)
                 min_lim = -1.0 / eig_1
-                max_lim = 1000000.0
-                tol = 0.001
-                N_iter = 30
                 lambda_track = _bisection_fun(
-                    min_lim, max_lim, tol, N_iter, A_track, D_track, b_track, f_track
+                    min_lim, max_lim, tol, n_iter, A_track, D_track, b_track, f_track
                 )
                 y_hat_track = solve(
                     (
@@ -174,7 +182,7 @@ def gtrs(
                 x_state[0:6, qq] = concatenate((real(y_hat_track[arange(0, size(x_state, 0))])), axis=0)
                 lk1 = subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1))
                 lk2 = subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1)).T
-                P = matmul(lk1, lk2)
+                p = matmul(lk1, lk2)
                 estimated_trajectory.append(x_loc[0:3, qq])
             uav_velocity = _velocity(x_loc[0:3, qq], destinations[ww, :])
             x_true[0] = x_true[0] + uav_velocity[0]
