@@ -99,63 +99,60 @@ def gtrs(
             # ---------------------------------------------------------------------
             # Estimation part
             # ---------------------------------------------------------------------
-            A1_loc = []
+            a1_loc = []
             b1_loc = []
-            A_track = []
-            D_track = []
+            a_track = []
+            d_track = []
             f_track = []
             b_track = []
             w_i_loc = array(sqrt(d_i ** (-1.0) / (sum(d_i ** (-1.0)))))
             for tt in arange(0, n, 1).reshape(-1):
-                A1_loc.append(append(dot(2, a_i[0:3, tt].T), -1))
+                a1_loc.append(append(dot(2, a_i[0:3, tt].T), -1))
                 b1_loc.append(norm(a_i[0:3, tt]) ** 2 - d_i[tt] ** 2)
-            A1_loc = array(A1_loc)
+            a1_loc = array(a1_loc)
             b1_loc = array(b1_loc)
-            W_loc = diag(w_i_loc.T[0])
-            D_loc = eye(4)
-            D_loc[3, 3] = 0
+            w_loc = diag(w_i_loc.T[0])
+            d_loc = eye(4)
+            d_loc[3, 3] = 0
             f_loc = array([0, 0, 0, -1.0 / 2.0]).reshape(4, 1)
-            A_loc = dot(W_loc, A1_loc)
-            b_loc = dot(W_loc, b1_loc)
+            a_loc = dot(w_loc, a1_loc)
+            b_loc = dot(w_loc, b1_loc)
             if qq != 0:
-                P_pred = dot(dot(s, p), s.T) + q
+                p_pred = dot(dot(s, p), s.T) + q
                 x_pred = dot(s, x_state[0:6, qq - 1])
                 x_pred = x_pred.reshape(len(x_pred), 1)
-                A1_track = []
+                a1_track = []
                 b1_track = []
                 for tt in arange(0, n, 1).reshape(-1):
-                    A1_track.append(concatenate((dot(2, a_i[0:3, tt].T), zeros(size(x, 0)), [-1]), axis=0))
+                    a1_track.append(concatenate((dot(2, a_i[0:3, tt].T), zeros(size(x, 0)), [-1]), axis=0))
                     b1_track.append(norm(a_i[0:3, tt]) ** 2 - abs(d_i[tt] ** 2))
-                A1_track = array(A1_track)
+                a1_track = array(a1_track)
                 b1_track = array(b1_track)
-                left_matrix = sqrtm(inv(P_pred))
+                left_matrix = sqrtm(inv(p_pred))
                 right_matrix = zeros((size(x_state, 0), 1))
-                A1_track = concatenate((A1_track, concatenate((left_matrix, right_matrix), axis=1)), axis=0)
-                A1_track[A1_track == math.inf] = 0
-                INF_P_pred = array(sqrtm(inv(P_pred)))
-                INF_P_pred[INF_P_pred == math.inf] = 0
-                b1_track = concatenate((b1_track, dot(INF_P_pred, x_pred)), axis=0)
+                a1_track = concatenate((a1_track, concatenate((left_matrix, right_matrix), axis=1)), axis=0)
+                a1_track[a1_track == math.inf] = 0
+                inf_p_pred = array(sqrtm(inv(p_pred)))
+                inf_p_pred[inf_p_pred == math.inf] = 0
+                b1_track = concatenate((b1_track, dot(inf_p_pred, x_pred)), axis=0)
                 a = dot(math.sqrt(1.0 / 2.0), w_i_loc.T)
                 b = dot(math.sqrt(1.0 / 8.0), ones((1, size(x_state, 0))))
-                W_track = concatenate((a, b), axis=1)
-                W_track = eye(size(W_track, 1)) * W_track
-                D_track = zeros((7, 7))
-                D_track[0, 0] = 1
-                D_track[1, 1] = 1
-                D_track[2, 2] = 1
+                w_track = concatenate((a, b), axis=1)
+                w_track = eye(size(w_track, 1)) * w_track
+                d_track = zeros((7, 7))
+                d_track[0, 0] = 1
+                d_track[1, 1] = 1
+                d_track[2, 2] = 1
                 f_track = array([0, 0, 0, 0, 0, 0, -1.0 / 2.0]).reshape(7, 1)
-                A_track = dot(W_track, A1_track)
-                b_track = dot(W_track, b1_track)
-            eigen_values = _calc_eigen(A_loc, D_loc)
+                a_track = dot(w_track, a1_track)
+                b_track = dot(w_track, b1_track)
+            eigen_values = _calc_eigen(a_loc, d_loc)
             eig_1 = max(eigen_values)
             min_lim = -1.0 / eig_1
-            max_lim = 1000000.0
-            tol = 0.001
-            n_iter = 30
-            lambda_loc = _bisection_fun(min_lim, max_lim, tol, n_iter, A_loc, D_loc, b_loc, f_loc)
+            lambda_loc = _bisection_fun(min_lim, max_lim, tol, n_iter, a_loc, d_loc, b_loc, f_loc)
             y_hat_loc = solve(
-                (dot(A_loc.T, A_loc) + dot(lambda_loc, D_loc) + dot(1e-06, eye(size(A_loc, 1)))),
-                (dot(A_loc.T, b_loc) - dot(lambda_loc, f_loc)),
+                (dot(a_loc.T, a_loc) + dot(lambda_loc, d_loc) + dot(1e-06, eye(size(a_loc, 1)))),
+                (dot(a_loc.T, b_loc) - dot(lambda_loc, f_loc)),
             )
             if qq == 0:
                 x_loc[0:3, qq] = real(y_hat_loc[0:3, 0])
@@ -164,19 +161,19 @@ def gtrs(
                 estimated_trajectory.append(x_loc[0:3, qq])
             else:
                 x_loc = insert(x_loc, qq, real(y_hat_loc[0:3, 0]), axis=1)
-                eigen_values = _calc_eigen(A_track, D_track)
+                eigen_values = _calc_eigen(a_track, d_track)
                 eig_1 = max(eigen_values)
                 min_lim = -1.0 / eig_1
                 lambda_track = _bisection_fun(
-                    min_lim, max_lim, tol, n_iter, A_track, D_track, b_track, f_track
+                    min_lim, max_lim, tol, n_iter, a_track, d_track, b_track, f_track
                 )
                 y_hat_track = solve(
                     (
-                        dot(A_track.T, A_track)
-                        + dot(lambda_track, D_track)
-                        + dot(1e-06, eye(size(A_track, 1)))
+                        dot(a_track.T, a_track)
+                        + dot(lambda_track, d_track)
+                        + dot(1e-06, eye(size(a_track, 1)))
                     ),
-                    (dot(A_track.T, b_track) - dot(lambda_track, f_track)),
+                    (dot(a_track.T, b_track) - dot(lambda_track, f_track)),
                 )
                 x_state = concatenate((x_state, zeros((size(x_state, 0), 1))), axis=1)
                 x_state[0:6, qq] = concatenate((real(y_hat_track[arange(0, size(x_state, 0))])), axis=0)
@@ -202,9 +199,9 @@ def _bisection_fun(
     min_lim: float,
     max_lim: float,
     tol: float,
-    N_iter: int,
-    A: NDArray,
-    D: NDArray,
+    n_iter: int,
+    a: NDArray,
+    d: NDArray,
     b: NDArray,
     f: NDArray,
 ) -> float:
@@ -214,9 +211,9 @@ def _bisection_fun(
         min_lim (float): Minimum interval value.
         max_lim (float): Maximum interval value.
         tol (float): Tolerance value
-        N_iter (int): The max number of interactions for the bisection procedure.
-        A (NDArray): Matrix A.
-        D (NDArray): Matrix D.
+        n_iter (int): The max number of interactions for the bisection procedure.
+        a (NDArray): Matrix A.
+        d (NDArray): Matrix D.
         b (NDArray): Matrix b.
         f (NDArray): Matrix f.
         Note: The definitions of the matrices can be seen in the paper.
@@ -227,9 +224,9 @@ def _bisection_fun(
     lambda_ = (min_lim + max_lim) / 2
     fun_val = 10**9
     num_iter = 1
-    while num_iter <= N_iter and abs(fun_val) > tol and abs(min_lim - max_lim) > 0.0001:
+    while num_iter <= n_iter and abs(fun_val) > tol and abs(min_lim - max_lim) > 0.0001:
         lambda_ = (min_lim + max_lim) / 2
-        fun_val = _fi_fun(lambda_, A, D, b, f)
+        fun_val = _fi_fun(lambda_, a, d, b, f)
         if fun_val > 0:
             min_lim = lambda_.copy()
         else:
@@ -238,13 +235,13 @@ def _bisection_fun(
     return lambda_
 
 
-def _fi_fun(lambda_1: float, A: NDArray, D: NDArray, b: NDArray, f: NDArray) -> NDArray:
+def _fi_fun(lambda_1: float, a: NDArray, d: NDArray, b: NDArray, f: NDArray) -> NDArray:
     """This function computes the fi value for a given lambda.
 
     Args:
         lambda_1 (float): Minimum interval value.
-        A (NDArray): Matrix A.
-        D (NDArray): Matrix D.
+        a (NDArray): Matrix A.
+        d (NDArray): Matrix D.
         b (NDArray): Matrix b.
         f (NDArray): Matrix f.
         Note: The definitions of the matrices can be seen in the paper.
@@ -252,22 +249,22 @@ def _fi_fun(lambda_1: float, A: NDArray, D: NDArray, b: NDArray, f: NDArray) -> 
     Returns:
         An NDArray with the fi value for the given input.
     """
-    g_ = dot(A.T, A)
-    gg_ = dot(lambda_1, D)
-    ggg_ = dot(1e-06, eye(size(D, 1)))
-    t_ = dot(A.T, b)
+    g_ = dot(a.T, a)
+    gg_ = dot(lambda_1, d)
+    ggg_ = dot(1e-06, eye(size(d, 1)))
+    t_ = dot(a.T, b)
     ttt_ = dot(lambda_1, f)
     y = solve((g_ + gg_ + ggg_), (t_ - ttt_))
-    fi = dot(dot(y.T, D), y) + dot(dot(2, f.T), y)
+    fi = dot(dot(y.T, d), y) + dot(dot(2, f.T), y)
     return fi
 
 
-def _calc_eigen(A: NDArray, D: NDArray) -> NDArray:
+def _calc_eigen(a: NDArray, d: NDArray) -> NDArray:
     """This function computes the Eigen values of the matrices.
 
     Args:
-        A (NDArray): Matrix A.
-        D (NDArray): Matrix D.
+        a (NDArray): Matrix A.
+        d (NDArray): Matrix D.
         Note: The definitions of the matrices can be seen in the paper.
 
     Returns:
@@ -277,11 +274,11 @@ def _calc_eigen(A: NDArray, D: NDArray) -> NDArray:
         Exception if the Eigen Values cannot be computed.
     """
     try:
-        left = dot(A.conj().transpose(), A)
+        left = dot(a.conj().transpose(), a)
         left = fractional_matrix_power(left, 0.5)
-        right = dot(A.conj().transpose(), A)
+        right = dot(a.conj().transpose(), a)
         right = fractional_matrix_power(right, 0.5)
-        aux = solve(left, D)
+        aux = solve(left, d)
         result = dot(aux, pinv(right))
         return eigvals(result)
     except Exception:

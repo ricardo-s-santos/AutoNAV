@@ -14,8 +14,6 @@ from .WLS import wls
     alterar nomes para ficheiros
     ver loops
     Atenção hardcoded
-
-    Por tol min lim maxlim como parametros opcionais
 https://typer.tiangolo.com/tutorial/first-steps/
 https://github.com/Textualize/rich
 https://rich.readthedocs.io/en/latest/introduction.html#quick-start
