@@ -51,7 +51,8 @@ def gtrs(
         max_lim (float): The maximum value for the interval in the bisection function.
 
     Returns:
-        The estimated trajectory computed using the GTRS algorithm for the given input scenario.
+        The estimated trajectory computed using the GTRS algorithm for the given input scenario
+        and the true trajectory that the UAV followed.
     """
     ts = 1  # Time sample in seconds
     s = eye(6)  # State transition matrix
@@ -78,6 +79,7 @@ def gtrs(
     qq = 0
     x_true = initial_uav_position[:]
     estimated_trajectory = []
+    true_trajectory = []
     ww = 0
     n_dest = len(destinations) - 1
     while ww <= n_dest:
@@ -175,6 +177,7 @@ def gtrs(
                 lk2 = subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1)).T
                 p = matmul(lk1, lk2)
                 estimated_trajectory.append(x_loc[0:3, qq])
+            true_trajectory.append(x_true[:])
             uav_velocity = _velocity(x_loc[0:3, qq], destinations[ww, :])
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
@@ -186,7 +189,7 @@ def gtrs(
             )
             qq += 1
         ww += 1
-    return array(estimated_trajectory)
+    return array([array(estimated_trajectory), array(true_trajectory)])
 
 
 def _bisection_fun(

@@ -5,6 +5,7 @@ from numpy import array, fromstring, insert
 
 from .file_handlers import _readpathfile
 from .GTRS import gtrs
+from .metrics import armse
 from .plots import plot_trajectories
 from .WLS import wls
 
@@ -59,7 +60,7 @@ def _main():
             a_i = array(a_i).T
         else:
             print("Please insert a valid option!")
-        K = int(input("Please insert the number of Measurement Samples (K)\n"))
+        k = int(input("Please insert the number of Measurement Samples (K)\n"))
         sigma = float(input("Please insert the noise level in meters (sigma)\n"))
         initial_uav_position = [10, 10, 5]
         filename = input("Please input the path to the Waypoints file\n")
@@ -67,20 +68,30 @@ def _main():
         if algorithm == "1":
             print("Running GTRS...")
             start_time = time.time()
-            estimated_trajectory = gtrs(a_i, n, K, sigma, destinations, initial_uav_position)
+            trajectories = gtrs(a_i, n, k, sigma, destinations, initial_uav_position)
             exec_time = time.time() - start_time
             print(f"GTRS finished in {exec_time:0,.2f} seconds.")
+            estimated_trajectory = trajectories[0]
+            true_trajectory = trajectories[1]
             # Add initial position of the UAV to the plot
             destinations = insert(destinations, 0, initial_uav_position, axis=0)
+            # Compute metrics
+            print(f"Average RMSE: {armse(estimated_trajectory, true_trajectory):0,.2f} (m)")
+            # Plot trajectories
             plot_trajectories(destinations, estimated_trajectory)
         elif algorithm == "2":
             print("Running WLS...")
             start_time = time.time()
-            estimated_trajectory = wls(a_i, n, K, sigma, destinations, initial_uav_position)
+            trajectories = wls(a_i, n, k, sigma, destinations, initial_uav_position)
             exec_time = time.time() - start_time
             print(f"WLS finished in {exec_time:0,.2f} seconds.")
+            estimated_trajectory = trajectories[0]
+            true_trajectory = trajectories[1]
             # Add initial position of the UAV to the plot
             destinations = insert(destinations, 0, initial_uav_position, axis=0)
+            # Compute metrics
+            print(f"Average RMSE: {armse(estimated_trajectory, true_trajectory):0,.2f} (m)")
+            # Plot trajectories
             plot_trajectories(destinations, estimated_trajectory)
     else:
         print("Please choose one of the available algorithms!")
