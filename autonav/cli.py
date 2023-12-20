@@ -54,9 +54,7 @@ def _main():
             n = int(input("Please insert the number of Anchors (N)\n"))
             a_i = []
             for i in range(0, n):
-                aux = input(
-                    f"Please insert the positions of anchor {i + 1} in the following format: x1, y1, z1\n"
-                )
+                aux = input(f"Please insert the positions of anchor {i + 1} in the following format: x1, y1, z1\n")
                 a_i.append(fromstring(aux, dtype=int, sep=","))
             a_i = array(a_i).T
         else:

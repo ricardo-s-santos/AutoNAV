@@ -164,15 +164,9 @@ def gtrs(
                 eigen_values = _calc_eigen(a_track, d_track)
                 eig_1 = max(eigen_values)
                 min_lim = -1.0 / eig_1
-                lambda_track = _bisection_fun(
-                    min_lim, max_lim, tol, n_iter, a_track, d_track, b_track, f_track
-                )
+                lambda_track = _bisection_fun(min_lim, max_lim, tol, n_iter, a_track, d_track, b_track, f_track)
                 y_hat_track = solve(
-                    (
-                        dot(a_track.T, a_track)
-                        + dot(lambda_track, d_track)
-                        + dot(1e-06, eye(size(a_track, 1)))
-                    ),
+                    (dot(a_track.T, a_track) + dot(lambda_track, d_track) + dot(1e-06, eye(size(a_track, 1)))),
                     (dot(a_track.T, b_track) - dot(lambda_track, f_track)),
                 )
                 x_state = concatenate((x_state, zeros((size(x_state, 0), 1))), axis=1)

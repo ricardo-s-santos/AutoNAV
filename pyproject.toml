@@ -20,17 +20,17 @@ autonav = "autonav.cli:_main"
 dev = ["isort", "black", "flake8", "flake8-isort", "flake8-black", "flake8-bugbear", "pre-commit"]
 
 [tool.black]
-line-length = 110
+line-length = 120
 target-version = ['py38']
 
 [tool.isort]
 profile = "black"
 src_paths = ["txtstats", "tests"]
-line_length = 110
+line_length = 120
 skip_gitignore = "True"
 
 [tool.flake8]
-max-line-length = 110
+max-line-length = 120
 max-doc-length = 150
 ignore = [
     "E203", # "whitespace before ’:’"", but that’s how black likes it
