@@ -27,7 +27,7 @@ def wls(
     Returns:
         The estimated trajectory computed using the WLS algorithm for the given input scenario.
     """
-    x_true = initial_uav_position
+    x_true = initial_uav_position[:]
     ww = 0
     n_dest = len(destinations) - 1
     estimated_trajectory = []

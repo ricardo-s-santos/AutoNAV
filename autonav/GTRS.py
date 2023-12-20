@@ -76,7 +76,7 @@ def gtrs(
     x_loc = zeros((3, 1))
     p = None
     qq = 0
-    x_true = initial_uav_position
+    x_true = initial_uav_position[:]
     estimated_trajectory = []
     ww = 0
     n_dest = len(destinations) - 1

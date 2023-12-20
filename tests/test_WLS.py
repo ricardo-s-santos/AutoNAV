@@ -4,7 +4,7 @@ import os
 from autonav.file_handlers import _readpathfile
 from autonav.plots import plot_trajectories
 from autonav.WLS import wls
-from numpy import array
+from numpy import array, insert
 
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
 filename = ROOT_DIR + "/Path.txt"
@@ -27,6 +27,7 @@ a_i = array(
         [B / 2, B, B / 8],
     ]
 ).T
-
-estimated_trajectory = wls(a_i, N, K, sigma, destinations, [10, 10, 5])
+initial_uav_position = [10, 10, 5]
+estimated_trajectory = wls(a_i, N, K, sigma, destinations, initial_uav_position)
+destinations = insert(destinations, 0, initial_uav_position, axis=0)
 plot_trajectories(destinations, estimated_trajectory)

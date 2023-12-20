@@ -1,7 +1,7 @@
 """This module contains the command line application."""
 import time
 
-from numpy import array, fromstring
+from numpy import array, fromstring, insert
 
 from .file_handlers import _readpathfile
 from .GTRS import gtrs
@@ -11,8 +11,6 @@ from .WLS import wls
 """
     Todo: Verify user input
     Ver text line
-    ver loops
-    Atenção hardcoded
 https://typer.tiangolo.com/tutorial/first-steps/
 https://github.com/Textualize/rich
 https://rich.readthedocs.io/en/latest/introduction.html#quick-start
@@ -65,21 +63,26 @@ def _main():
             print("Please insert a valid option!")
         K = int(input("Please insert the number of Measurement Samples (K)\n"))
         sigma = float(input("Please insert the noise level in meters (sigma)\n"))
+        initial_uav_position = [10, 10, 5]
         filename = input("Please input the path to the Waypoints file\n")
         destinations = _readpathfile(filename)
         if algorithm == "1":
             print("Running GTRS...")
             start_time = time.time()
-            estimated_trajectory = gtrs(a_i, n, K, sigma, destinations, [10, 10, 5])
+            estimated_trajectory = gtrs(a_i, n, K, sigma, destinations, initial_uav_position)
             exec_time = time.time() - start_time
             print(f"GTRS finished in {exec_time:0,.2f} seconds.")
+            # Add initial position of the UAV to the plot
+            destinations = insert(destinations, 0, initial_uav_position, axis=0)
             plot_trajectories(destinations, estimated_trajectory)
         elif algorithm == "2":
             print("Running WLS...")
             start_time = time.time()
-            estimated_trajectory = wls(a_i, n, K, sigma, destinations, [10, 10, 5])
+            estimated_trajectory = wls(a_i, n, K, sigma, destinations, initial_uav_position)
             exec_time = time.time() - start_time
             print(f"WLS finished in {exec_time:0,.2f} seconds.")
+            # Add initial position of the UAV to the plot
+            destinations = insert(destinations, 0, initial_uav_position, axis=0)
             plot_trajectories(destinations, estimated_trajectory)
     else:
         print("Please choose one of the available algorithms!")
