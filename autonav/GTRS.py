@@ -207,6 +207,9 @@ def _bisection_fun(
 ) -> float:
     """This function executes the bisection procedure to solve the GTRS problem.
 
+    Note:
+        The definitions of the matrices can be seen in the paper.
+
     Args:
         min_lim (float): Minimum interval value.
         max_lim (float): Maximum interval value.
@@ -216,7 +219,6 @@ def _bisection_fun(
         d (NDArray): Matrix D.
         b (NDArray): Matrix b.
         f (NDArray): Matrix f.
-        Note: The definitions of the matrices can be seen in the paper.
 
     Returns:
         The solution to the GTRS problem.
@@ -238,13 +240,15 @@ def _bisection_fun(
 def _fi_fun(lambda_1: float, a: NDArray, d: NDArray, b: NDArray, f: NDArray) -> NDArray:
     """This function computes the fi value for a given lambda.
 
+    Note:
+        The definitions of the matrices can be seen in the paper.
+
     Args:
         lambda_1 (float): Minimum interval value.
         a (NDArray): Matrix A.
         d (NDArray): Matrix D.
         b (NDArray): Matrix b.
         f (NDArray): Matrix f.
-        Note: The definitions of the matrices can be seen in the paper.
 
     Returns:
         An NDArray with the fi value for the given input.
@@ -262,10 +266,12 @@ def _fi_fun(lambda_1: float, a: NDArray, d: NDArray, b: NDArray, f: NDArray) -> 
 def _calc_eigen(a: NDArray, d: NDArray) -> NDArray:
     """This function computes the Eigen values of the matrices.
 
+    Note:
+        The definitions of the matrices can be seen in the paper.
+
     Args:
         a (NDArray): Matrix A.
         d (NDArray): Matrix D.
-        Note: The definitions of the matrices can be seen in the paper.
 
     Returns:
         The Eigen values for the given matrices.

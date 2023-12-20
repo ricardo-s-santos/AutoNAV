@@ -11,7 +11,6 @@ from .WLS import wls
 """
     Todo: Verify user input
     Ver text line
-    alterar nomes para ficheiros
     ver loops
     Atenção hardcoded
 https://typer.tiangolo.com/tutorial/first-steps/
