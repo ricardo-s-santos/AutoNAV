@@ -11,10 +11,10 @@ requires-python = ">=3.8"
 keywords = ["UAV", "Navigation", "Indoor"]
 license = { text = "MIT" }
 authors = [{ name = "Ricardo S. Santos", email = "f6221@ulusofona.pt" }]
-dependencies = ["numpy >= 1.26.2", "matplotlib >= 3.8.2", "scipy >= 1.11.3"]
+dependencies = ["numpy >= 1.26.2", "matplotlib >= 3.8.2", "scipy >= 1.11.3", "typer>= 0.1.0"]
 
 [project.scripts]
-autonav = "autonav.cli:_main"
+autonav = "autonav.cli:app"
 
 [project.optional-dependencies]
 dev = ["isort", "black", "flake8", "flake8-isort", "flake8-black", "flake8-bugbear", "pre-commit"]
@@ -34,6 +34,7 @@ max-line-length = 120
 max-doc-length = 150
 ignore = [
     "E203", # "whitespace before ’:’"", but that’s how black likes it
-    "W503"] # "line break before binary operator", conflicts with black]
+    "W503", # "line break before binary operator", conflicts with black
+    "A004"] # print from Rich conflicts]
 exclude = [".git", "__pycache__", ".*cache", "build", "dist", "env", "venv", ".eggs", "*.egg", "docs"]
 docstring-convention = "google" # flake8-docstrings

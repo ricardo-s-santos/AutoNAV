@@ -1,7 +1,9 @@
 """This module contains the command line application."""
 import time
 
+import typer
 from numpy import array, fromstring, insert
+from rich import print
 
 from .file_handlers import _readpathfile
 from .GTRS import gtrs
@@ -16,8 +18,10 @@ https://typer.tiangolo.com/tutorial/first-steps/
 https://github.com/Textualize/rich
 https://rich.readthedocs.io/en/latest/introduction.html#quick-start
 """
+app = typer.Typer()
 
 
+@app.command()
 def _main():
     """This is the CLI application function of the AutoNAV package.
 
@@ -27,9 +31,10 @@ def _main():
     Returns:
         Nothing.
     """
-    print("##################")
-    print("Welcome to Autonav")
-    print("##################")
+    print("[green]###################[/green]")
+    print("[bold red]Welcome to Autonav! [/bold red]")
+    print("[bold blue]© Copelabs - UL [/bold blue]")
+    print("[green]###################[/green]")
     print("Which algorithm you want to use (Insert the corresponding number)?")
     print("(1) GTRS")
     print("(2) WLS")
