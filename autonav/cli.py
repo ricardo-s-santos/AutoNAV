@@ -57,8 +57,8 @@ def _main():
             ]
         ).T
     else:
-        # length = IntPrompt.ask("Please insert the length of the scenario (x,y)")
-        # heigth = IntPrompt.ask("Please insert the height of the scenario (z)")
+        # width = IntPrompt.ask("Please insert the width of the scenario (x,y)")
+        # length = IntPrompt.ask("Please insert the length of the scenario (z)")
         n = IntPrompt.ask("Please insert the number of Anchors (N)")
         a_i = []
         for i in range(0, n):
@@ -89,7 +89,7 @@ def _main():
         # Compute metrics
         print(f"Average RMSE: {armse(estimated_trajectory, true_trajectory):0,.2f} (m)")
         # Plot trajectories
-        plot_trajectories(destinations, estimated_trajectory)
+        plot_trajectories(destinations, estimated_trajectory, a_i)
     elif algorithm == 2:
         start_time = time.time()
         with Progress(
@@ -108,4 +108,4 @@ def _main():
         # Compute metrics
         print(f"Average RMSE: {armse(estimated_trajectory, true_trajectory):0,.2f} (m)")
         # Plot trajectories
-        plot_trajectories(destinations, estimated_trajectory)
+        plot_trajectories(destinations, estimated_trajectory, a_i)
