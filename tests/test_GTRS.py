@@ -1,4 +1,4 @@
-"""This file contains the GTRS tests."""
+"""This file contains the GTRS.py tests."""
 import os
 
 from autonav.file_handlers import _readpathfile

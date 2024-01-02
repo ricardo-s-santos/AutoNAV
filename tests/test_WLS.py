@@ -1,4 +1,4 @@
-"""This file contains the WLS tests."""
+"""This file contains the WLS.py tests."""
 import os
 
 from autonav.file_handlers import _readpathfile
