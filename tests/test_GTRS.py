@@ -3,8 +3,8 @@ import os
 
 from autonav.file_handlers import _readpathfile
 from autonav.GTRS import gtrs
-from autonav.metrics import armse
-from autonav.plots import plot_trajectories
+from autonav.metrics import compute_armse
+from autonav.plots import plot_rmse, plot_trajectories
 from numpy import array, insert
 
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -33,6 +33,8 @@ true_trajectory = trajectories[1]
 # Add initial position of the UAV to the plot
 destinations = insert(destinations, 0, initial_uav_position, axis=0)
 # Compute metrics
-print(f"Average RMSE: {armse(estimated_trajectory, true_trajectory):0,.2f} (m)")
+print(f"Average RMSE: {compute_armse(estimated_trajectory, true_trajectory):0,.2f} (m)")
 # Plot trajectories
-plot_trajectories(destinations, estimated_trajectory)
+plot_trajectories(destinations, estimated_trajectory, a_i)
+# Plot metrics
+plot_rmse(true_trajectory, estimated_trajectory)

@@ -9,8 +9,8 @@ from rich.prompt import FloatPrompt, IntPrompt, Prompt
 
 from .file_handlers import _readpathfile
 from .GTRS import gtrs
-from .metrics import armse
-from .plots import plot_trajectories
+from .metrics import compute_armse
+from .plots import plot_rmse, plot_trajectories
 from .WLS import wls
 
 """
@@ -87,9 +87,11 @@ def _main():
         # Add initial position of the UAV to the plot
         destinations = insert(destinations, 0, initial_uav_position, axis=0)
         # Compute metrics
-        print(f"Average RMSE: {armse(estimated_trajectory, true_trajectory):0,.2f} (m)")
+        print(f"Average RMSE: {compute_armse(estimated_trajectory, true_trajectory):0,.2f} (m)")
         # Plot trajectories
         plot_trajectories(destinations, estimated_trajectory, a_i)
+        # Plot metrics
+        plot_rmse(true_trajectory, estimated_trajectory)
     elif algorithm == 2:
         start_time = time.time()
         with Progress(
@@ -106,6 +108,8 @@ def _main():
         # Add initial position of the UAV to the plot
         destinations = insert(destinations, 0, initial_uav_position, axis=0)
         # Compute metrics
-        print(f"Average RMSE: {armse(estimated_trajectory, true_trajectory):0,.2f} (m)")
+        print(f"Average RMSE: {compute_armse(estimated_trajectory, true_trajectory):0,.2f} (m)")
         # Plot trajectories
         plot_trajectories(destinations, estimated_trajectory, a_i)
+        # Plot metrics
+        plot_rmse(true_trajectory, estimated_trajectory)

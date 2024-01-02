@@ -3,6 +3,8 @@
 import matplotlib.pyplot as plt
 from numpy.typing import NDArray
 
+from .metrics import compute_rmse
+
 
 def plot_trajectories(ideal_trajectory: NDArray, estimated_trajectory: NDArray, a_i: NDArray):
     """This function plots the ideal and estimated trajectory.
@@ -48,5 +50,23 @@ def plot_trajectories(ideal_trajectory: NDArray, estimated_trajectory: NDArray, 
     )
     plt.xlabel("Width")
     plt.ylabel("Length")
+    plt.legend()
+    plt.show()
+
+
+def plot_rmse(true_trajectory: NDArray, estimated_trajectory: NDArray):
+    """This function plots the root mean squared error along the trajectory.
+
+    Args:
+        ideal_trajectory: The ideal trajectory that the UAV is supposed to follow.
+        estimated_trajectory: The estimated trajectory that the UAV followed.
+
+    Returns:
+        Nothing.
+    """
+    rmse = compute_rmse(estimated_trajectory, true_trajectory)
+    plt.plot(rmse, label="RMSE")
+    plt.xlabel("Iteration")
+    plt.ylabel("RMSE (m)")
     plt.legend()
     plt.show()
