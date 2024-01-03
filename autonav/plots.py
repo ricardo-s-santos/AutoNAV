@@ -61,8 +61,8 @@ def plot_comparison_between_algorithms(
 
         Args:
         ideal_trajectory: The ideal trajectory that the UAV is supposed to follow.
-        estimated_trajectory_GTRS: The estimated trajectory GTRS that the UAV followed.
-        estimated_trajectory_WLS: The estimated trajectory WLS that the UAV followed.
+        estimated_trajectory_GTRS: The estimated trajectory that the UAV followed using the GTRS algorithm.
+        estimated_trajectory_WLS: The estimated trajectory that the UAV followed using the WLS algorithm.
         a_i: The position of the anchors.
 
     Returns:
@@ -122,8 +122,10 @@ def plot_rmse_comparison_between_algorithms(
     """This function plots the root mean squared error along the trajectory.
 
     Args:
-        ideal_trajectory: The ideal trajectory that the UAV is supposed to follow.
-        estimated_trajectory: The estimated trajectory that the UAV followed.
+        true_trajectory_GTRS: The true trajectory that the UAV followed using the GTRS algorithm.
+        estimated_trajectory_GTRS: The estimated trajectory by the GTRS algorithm.
+        true_trajectory_WLS: The true trajectory that the UAV followed using the WLS algorithm.
+        estimated_trajectory_WLS: The estimated trajectory by the WLS algorithm.
 
     Returns:
         Nothing.
@@ -142,8 +144,8 @@ def plot_rmse(true_trajectory: NDArray, estimated_trajectory: NDArray):
     """This function plots the root mean squared error along the trajectory.
 
     Args:
-        ideal_trajectory: The ideal trajectory that the UAV is supposed to follow.
-        estimated_trajectory: The estimated trajectory that the UAV followed.
+        true_trajectory: The true trajectory that the UAV followed.
+        estimated_trajectory: The estimated trajectory.
 
     Returns:
         Nothing.
