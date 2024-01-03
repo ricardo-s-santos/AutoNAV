@@ -10,7 +10,7 @@ from rich.prompt import FloatPrompt, IntPrompt, Prompt
 from .file_handlers import _readpathfile
 from .GTRS import gtrs
 from .metrics import compute_armse
-from .plots import plot_rmse, plot_trajectories
+from .plots import plot_comparison_between_algorithms, plot_rmse, plot_trajectories
 from .WLS import wls
 
 """
@@ -36,7 +36,8 @@ def _main():
     print("[bold blue]© Copelabs - UL CUL [/bold blue]")
     print("[green]###################[/green]")
     algorithm = IntPrompt.ask(
-        "Which algorithm you want to use? \n [bold blue](1) GTRS [/bold blue]\n [bold green](2) WLS[/bold green]\n"
+        "Which algorithm you want to use? \n [bold blue](1) GTRS [/bold blue]\n [bold green](2) WLS[/bold green]\n \
+        [bold red](3) Both[/bold red]\n"
     )
     default = Prompt.ask("Do you want to use the default anchor number and positions?\n", choices=["y", "n"])
     if default == "y":
@@ -111,3 +112,37 @@ def _main():
         plot_trajectories(destinations, estimated_trajectory, a_i)
         # Plot metrics
         plot_rmse(true_trajectory, estimated_trajectory)
+    elif algorithm == 3:
+        # GTRS
+        start_time = time.time()
+        with Progress(
+            SpinnerColumn(),
+            TextColumn("[progress.description]{task.description}"),
+            transient=True,
+        ) as progress:
+            progress.add_task(description="Running GTRS...", total=None)
+            trajectories_GTRS = gtrs(a_i, n, k, sigma, destinations, initial_uav_position)
+        exec_time = time.time() - start_time
+        print(f"GTRS finished in {exec_time:0,.2f} seconds.")
+        estimated_trajectory_GTRS = trajectories_GTRS[0]
+        true_trajectory_GTRS = trajectories_GTRS[1]
+        # WLS
+        start_time = time.time()
+        with Progress(
+            SpinnerColumn(),
+            TextColumn("[progress.description]{task.description}"),
+            transient=True,
+        ) as progress:
+            progress.add_task(description="Running WLS...", total=None)
+            trajectories_WLS = wls(a_i, n, k, sigma, destinations, initial_uav_position)
+        exec_time = time.time() - start_time
+        print(f"WLS finished in {exec_time:0,.2f} seconds.")
+        estimated_trajectory_WLS = trajectories_WLS[0]
+        true_trajectory_WLS = trajectories_WLS[1]
+        # Add initial position of the UAV to the plot
+        destinations = insert(destinations, 0, initial_uav_position, axis=0)
+        # Compute metrics
+        print(f"Average RMSE GTRS: {compute_armse(estimated_trajectory_GTRS, true_trajectory_GTRS):0,.2f} (m)")
+        print(f"Average RMSE WLS: {compute_armse(estimated_trajectory_WLS, true_trajectory_WLS):0,.2f} (m)")
+        # Plot trajectories
+        plot_comparison_between_algorithms(destinations, estimated_trajectory_GTRS, estimated_trajectory_WLS, a_i)
