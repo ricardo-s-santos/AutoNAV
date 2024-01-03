@@ -113,6 +113,31 @@ def plot_comparison_between_algorithms(
     plt.show()
 
 
+def plot_rmse_comparison_between_algorithms(
+    true_trajectory_GTRS: NDArray,
+    estimated_trajectory_GTRS: NDArray,
+    true_trajectory_WLS: NDArray,
+    estimated_trajectory_WLS: NDArray,
+):
+    """This function plots the root mean squared error along the trajectory.
+
+    Args:
+        ideal_trajectory: The ideal trajectory that the UAV is supposed to follow.
+        estimated_trajectory: The estimated trajectory that the UAV followed.
+
+    Returns:
+        Nothing.
+    """
+    rmse_GTRS = compute_rmse(estimated_trajectory_GTRS, true_trajectory_GTRS)
+    rmse_WLS = compute_rmse(estimated_trajectory_WLS, true_trajectory_WLS)
+    plt.plot(rmse_GTRS, label="RMSE GTRS")
+    plt.plot(rmse_WLS, label="RMSE WLS")
+    plt.xlabel("Iteration")
+    plt.ylabel("RMSE (m)")
+    plt.legend()
+    plt.show()
+
+
 def plot_rmse(true_trajectory: NDArray, estimated_trajectory: NDArray):
     """This function plots the root mean squared error along the trajectory.
 

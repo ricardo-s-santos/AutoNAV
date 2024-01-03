@@ -10,7 +10,12 @@ from rich.prompt import FloatPrompt, IntPrompt, Prompt
 from .file_handlers import _readpathfile
 from .GTRS import gtrs
 from .metrics import compute_armse
-from .plots import plot_comparison_between_algorithms, plot_rmse, plot_trajectories
+from .plots import (
+    plot_comparison_between_algorithms,
+    plot_rmse,
+    plot_rmse_comparison_between_algorithms,
+    plot_trajectories,
+)
 from .WLS import wls
 
 """
@@ -146,3 +151,7 @@ def _main():
         print(f"Average RMSE WLS: {compute_armse(estimated_trajectory_WLS, true_trajectory_WLS):0,.2f} (m)")
         # Plot trajectories
         plot_comparison_between_algorithms(destinations, estimated_trajectory_GTRS, estimated_trajectory_WLS, a_i)
+        # Plot metrics
+        plot_rmse_comparison_between_algorithms(
+            true_trajectory_GTRS, estimated_trajectory_GTRS, true_trajectory_WLS, estimated_trajectory_WLS
+        )
