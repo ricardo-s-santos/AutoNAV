@@ -20,11 +20,21 @@ def _velocity(current_position: NDArray, destination_position: NDArray) -> NDArr
     param_reach_distance = 4
     param_smooth_factor = 2
     velocity_allowed = [0, 0, 0]
-    error_position = numpy.subtract(destination_position, current_position)
-    error_norm = sqrt(numpy.sum(numpy.square(error_position)))
-    if error_norm > 1.0:  # Longer Distance = More Speed
-        scale = param_max_velocity / error_norm
-        velocity_allowed = dot(error_position, scale)
-        if error_norm < param_reach_distance:  # Lower Distance = Less Speed
-            velocity_allowed = velocity_allowed * ((error_norm / param_reach_distance) ** param_smooth_factor)
+    """Check if parameters contain only numbers."""
+    if destination_position.dtype == float or destination_position.dtype == int:
+        if current_position.dtype == float or current_position.dtype == int:
+            if len(destination_position) == 3 and len(current_position) == 3:
+                error_position = numpy.subtract(destination_position, current_position)
+                error_norm = sqrt(numpy.sum(numpy.square(error_position)))
+                if error_norm > 1.0:  # Longer Distance = More Speed
+                    scale = param_max_velocity / error_norm
+                    velocity_allowed = dot(error_position, scale)
+                    if error_norm < param_reach_distance:  # Lower Distance = Less Speed
+                        velocity_allowed = velocity_allowed * (
+                            (error_norm / param_reach_distance) ** param_smooth_factor
+                        )
+        else:
+            raise TypeError("'current_position' must contain only numeric values")
+    else:
+        raise TypeError("'destination_position' must contain only numeric values")
     return velocity_allowed

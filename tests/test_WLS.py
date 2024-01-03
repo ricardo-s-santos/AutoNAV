@@ -14,7 +14,7 @@ N = 8  # Number of anchors
 M = 1  # Number of target
 K = 10  # Number of measurement samples
 Mc = 1  # Number of Monte Carlo runs
-sigma = 1  # Noise STD in meters
+sigma = 0  # Noise STD in meters
 B = 200  # Area border in meters
 a_i = array(
     [

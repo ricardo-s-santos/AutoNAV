@@ -14,8 +14,6 @@ from .plots import plot_rmse, plot_trajectories
 from .WLS import wls
 
 """
-    Todo: Verify user input
-    Ver text line
 https://typer.tiangolo.com/tutorial/first-steps/
 https://github.com/Textualize/rich
 https://rich.readthedocs.io/en/latest/introduction.html#quick-start
@@ -35,7 +33,7 @@ def _main():
     """
     print("[green]###################[/green]")
     print("[bold red]Welcome to Autonav! [/bold red]")
-    print("[bold blue]© Copelabs - UL [/bold blue]")
+    print("[bold blue]© Copelabs - UL CUL [/bold blue]")
     print("[green]###################[/green]")
     algorithm = IntPrompt.ask(
         "Which algorithm you want to use? \n [bold blue](1) GTRS [/bold blue]\n [bold green](2) WLS[/bold green]\n"
