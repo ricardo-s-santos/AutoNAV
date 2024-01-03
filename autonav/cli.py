@@ -41,8 +41,8 @@ def _main():
     print("[bold blue]© Copelabs - UL CUL [/bold blue]")
     print("[green]###################[/green]")
     algorithm = IntPrompt.ask(
-        "Which algorithm you want to use? \n [bold blue](1) GTRS [/bold blue]\n [bold green](2) WLS[/bold green]\n \
-        [bold red](3) Both[/bold red]\n"
+        "Which algorithm you want to use? \n [bold blue](1) GTRS [/bold blue]\n [bold green](2) WLS[/bold green]\n"
+        " [bold red](3) Both[/bold red]\n"
     )
     default = Prompt.ask("Do you want to use the default anchor number and positions?\n", choices=["y", "n"])
     if default == "y":
