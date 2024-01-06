@@ -10,9 +10,10 @@ from numpy.testing import assert_allclose
 def test_gtrs_no_noise(default_values):
     """This test pretends to see if the algorithm is correctly implemented by setting the noise to zero."""
     # Values used in test
-    K = 10  # Number of measurement samples
     sigma = 0  # Noise STD in meters
-    trajectories = gtrs(default_values[0], default_values[1], K, sigma, default_values[2], default_values[3])
+    trajectories = gtrs(
+        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4]
+    )
     gtrs_estimated_trajectory = trajectories[0]
     gtrs_true_trajectory = trajectories[1]
     # With sigma zero the trajectories should be the following ones if one performs the math

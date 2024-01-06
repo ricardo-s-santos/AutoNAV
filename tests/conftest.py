@@ -15,6 +15,7 @@ def default_values():
     destinations = _readpathfile(filename)
     N = 8  # Number of anchors
     B = 200  # Area border in meters
+    K = 50  # Number of measurement samples
     a_i = array(
         [
             [0, 0, 0],
@@ -28,4 +29,4 @@ def default_values():
         ]
     ).T
     initial_uav_position = [10, 10, 5]
-    return [a_i, N, destinations, initial_uav_position]
+    return [a_i, N, K, destinations, initial_uav_position]
