@@ -38,3 +38,6 @@ ignore = [
     "A004"] # print from Rich conflicts]
 exclude = [".git", "__pycache__", ".*cache", "build", "dist", "env", "venv", ".eggs", "*.egg", "docs"]
 docstring-convention = "google" # flake8-docstrings
+
+[tool.pytest.ini_options]
+markers = ["critical: The most critical tests"]

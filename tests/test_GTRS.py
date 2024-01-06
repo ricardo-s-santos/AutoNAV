@@ -1,10 +1,12 @@
 """This file contains the GTRS.py tests."""
 
+import pytest
 from autonav.GTRS import gtrs
 from numpy import array
 from numpy.testing import assert_allclose
 
 
+@pytest.mark.critical()
 def test_gtrs_no_noise(default_values):
     """This test pretends to see if the algorithm is correctly implemented by setting the noise to zero."""
     # Values used in test
