@@ -40,4 +40,8 @@ exclude = [".git", "__pycache__", ".*cache", "build", "dist", "env", "venv", ".e
 docstring-convention = "google" # flake8-docstrings
 
 [tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-v --tb=short --strict-markers"
+testpaths = [ "tests" ]
+xfail_strict = "true"
 markers = ["critical: The most critical tests"]
