@@ -7,9 +7,9 @@ from autonav.file_handlers import _readpathfile
 from numpy import array
 
 
-@pytest.fixture()
+@pytest.fixture(scope="session")
 def default_values():
-    """This fixture defines the default values to be used in the tests."""
+    """This fixture defines the default values to be used in the algorithm tests."""
     ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
     filename = ROOT_DIR + "/Path_small.txt"
     destinations = _readpathfile(filename)
