@@ -1,2 +1,6 @@
 site_name: Autonav
 site_url: https://ricardo-santos-21904332.github.io/AutoNAV/
+nav:
+  - Home: index.md
+  - About: about.md
+theme: readthedocs
