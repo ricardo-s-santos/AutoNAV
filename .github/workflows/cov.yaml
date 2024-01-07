@@ -22,10 +22,12 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pip --upgrade
-          pip install .[dev]
+          pip install .[devel]
       - name: Test with pytest and create coverage report
         run: pytest --cov=autonav --cov-report=xml --test-level=ci
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           files: ./coverage.xml
