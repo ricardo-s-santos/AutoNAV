@@ -11,7 +11,7 @@ from numpy import array
 def default_values():
     """This fixture defines the default values to be used in the algorithm tests."""
     ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
-    filename = ROOT_DIR + "/Path_small.txt"
+    filename = ROOT_DIR + "/path_files/Path_small.txt"
     destinations = _readpathfile(filename)
     N = 8  # Number of anchors
     B = 200  # Area border in meters
