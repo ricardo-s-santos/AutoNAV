@@ -6,7 +6,6 @@ from autonav.WLS import wls
 from numpy.testing import assert_allclose
 
 
-
 @pytest.mark.critical()
 def test_wls_no_noise(default_values, expected_trajectories_wls):
     This test pretends to see if the algorithm is correctly implemented by setting the noise to zero.

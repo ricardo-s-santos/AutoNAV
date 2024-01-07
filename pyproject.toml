@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.8"
 keywords = ["UAV", "Navigation", "Indoor"]
 license = { text = "MIT" }
-authors = [{ name = "Ricardo S. Santos", email = "f6221@ulusofona.pt" }]
+authors = [{ name = "Ricardo S. Santos", email = "p6221@ulusofona.pt" }]
 dependencies = [
     "numpy >= 1.20",
     "matplotlib >= 3.7.0",
@@ -30,7 +30,7 @@ devel = [
     "flake8-black",
     "flake8-bugbear",
     "pre-commit",
-    "pytest >= 7.0.0",
+    "pytest >= 7.0",
     "pytest-cov",
     "coverage",
 ]
