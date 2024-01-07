@@ -28,6 +28,6 @@ jobs:
     - name: Install dependencies
       run: |
         pip install pip --upgrade
-        pip install .[dev]
+        pip install .[devel]
     - name: Test with pytest
-      run: pytest --test-level=fast
+      run: pytest
