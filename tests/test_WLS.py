@@ -1,6 +1,5 @@
 """This file contains the WLS.py tests."""
 
-"""
 import pytest
 from autonav.WLS import wls
 from numpy.testing import assert_allclose
@@ -8,7 +7,7 @@ from numpy.testing import assert_allclose
 
 @pytest.mark.critical()
 def test_wls_no_noise(default_values, expected_trajectories_wls):
-    This test pretends to see if the algorithm is correctly implemented by setting the noise to zero.
+    """This test pretends to see if the algorithm is correctly implemented by setting the noise to zero."""
     # Values used in test
     sigma = 0  # Noise STD in meters
     trajectories = wls(
@@ -19,4 +18,3 @@ def test_wls_no_noise(default_values, expected_trajectories_wls):
     # With sigma zero the trajectories should be the following ones if one performs the math
     assert_allclose(expected_trajectories_wls[0], wls_estimated_trajectory)
     assert_allclose(expected_trajectories_wls[1], wls_true_trajectory)
-"""
