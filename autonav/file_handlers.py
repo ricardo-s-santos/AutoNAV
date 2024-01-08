@@ -16,13 +16,11 @@ def _readpathfile(filename: str) -> NDArray:
         The waypoints needed to guide the drone.
     """
     positions = []
-    try:  # See if file exists
-        os.path.isfile(filename)
-    except FileNotFoundError:
-        raise FileNotFoundError("File not found, please check path.") from None
-    else:
+    if os.path.isfile(filename):  # See if file exists
         with open(filename, "r") as file:
             csv_file = csv.reader(file)
             for line in csv_file:
                 positions.append([float(x) for x in line])
+    else:
+        raise FileNotFoundError("File not found, please check path.") from None
     return array(positions)
