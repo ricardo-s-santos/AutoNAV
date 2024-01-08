@@ -78,11 +78,13 @@ def wls(a_i: NDArray, n: int, k: int, sigma: float, destinations: NDArray, initi
                 xi_est.append(solve(dot(a2.T, a2) + (1 * 10 ** (-6)) * eye(3), dot(a2.T, b2)))
                 di_xy = norm(xi_est[0][0:2])
                 xi_est[ii][2] = (
-                    cmath.sqrt((d_i[0] ** 2) - (di_xy**2)).real + cmath.sqrt((d_i[0] ** 2) - (di_xy**2)).imag
+                    cmath.sqrt((d_i[0] ** 2)[0] - (di_xy**2)).real + cmath.sqrt((d_i[0] ** 2)[0] - (di_xy**2)).imag
                 )
-                phi_i.append(math.atan2(xi_est[ii][1] - a_i[1, ii], xi_est[ii][0] - a_i[0, ii]) * 180 / math.pi)
+                phi_i.append(
+                    math.atan2((xi_est[ii][1] - a_i[1, ii])[0], (xi_est[ii][0] - a_i[0, ii])[0]) * 180 / math.pi
+                )
                 alpha_i.append(
-                    math.acos((xi_est[ii][2] - a_i[2, ii]) / (norm(xi_est[:][ii] - a_i[:, ii].reshape(len(a_i), 1))))
+                    math.acos((xi_est[ii][2] - a_i[2, ii])[0] / (norm(xi_est[:][ii] - a_i[:, ii].reshape(len(a_i), 1))))
                     * 180
                     / math.pi
                 )
