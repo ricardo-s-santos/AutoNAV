@@ -39,5 +39,8 @@ def compute_armse(estimated_trajectory: NDArray, true_trajectory: NDArray) -> fl
         The average root mean squared error between the true and the estimated positions of the UAV.
     """
     rmse = compute_rmse(estimated_trajectory, true_trajectory)
-    armse = sum(rmse) / len(rmse)
+    if len(rmse) != 0:
+        armse = sum(rmse) / len(rmse)
+    else:
+        raise ZeroDivisionError("RMSE is empty!")
     return armse
