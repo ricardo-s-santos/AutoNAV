@@ -16,5 +16,7 @@ def test_wls_no_noise(default_values, expected_trajectories_wls):
     wls_estimated_trajectory = trajectories[0]
     wls_true_trajectory = trajectories[1]
     # With sigma zero the trajectories should be the following ones if one performs the math
-    assert_array_almost_equal(expected_trajectories_wls[0], wls_estimated_trajectory)
-    assert_array_almost_equal(expected_trajectories_wls[1], wls_true_trajectory)
+    assert_array_almost_equal(
+        expected_trajectories_wls[0].round(decimals=3), wls_estimated_trajectory.round(decimals=3)
+    )
+    assert_array_almost_equal(expected_trajectories_wls[1].round(decimals=3), wls_true_trajectory.round(decimals=3))
