@@ -3,7 +3,7 @@ import cmath
 import itertools
 import math
 
-from autonav.randomGenerator import randomGenerator
+from autonav.random_generator import randomGenerator
 from autonav.velocity import _velocity
 from numpy import array, asarray, cos, dot, eye, float32, median, sin, sqrt
 from numpy.lib import scimath

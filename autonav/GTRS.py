@@ -2,7 +2,7 @@
 import math
 
 from autonav.file_handlers import _readpathfile
-from autonav.randomGenerator import randomGenerator
+from autonav.random_generator import randomGenerator
 from autonav.velocity import _velocity
 from numpy import (
     append,
