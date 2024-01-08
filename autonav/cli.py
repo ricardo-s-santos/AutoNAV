@@ -76,6 +76,7 @@ def _main():
     filename = Prompt.ask("Please input the path to the Waypoints file")
     destinations = _readpathfile(filename)
     if algorithm == 1:
+        # GTRS
         start_time = time.time()
         with Progress(
             SpinnerColumn(),
@@ -97,6 +98,7 @@ def _main():
         # Plot metrics
         plot_rmse(true_trajectory, estimated_trajectory)
     elif algorithm == 2:
+        # WLS
         start_time = time.time()
         with Progress(
             SpinnerColumn(),
@@ -118,7 +120,7 @@ def _main():
         # Plot metrics
         plot_rmse(true_trajectory, estimated_trajectory)
     elif algorithm == 3:
-        # GTRS
+        # Both
         start_time = time.time()
         with Progress(
             SpinnerColumn(),
