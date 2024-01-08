@@ -1,8 +1,8 @@
 """This file contains the GTRS.py tests."""
 
 import pytest
-from autonav.GTRS import gtrs
-from numpy.testing import assert_allclose
+from autonav.GTRS import _calc_eigen, gtrs
+from numpy.testing import assert_allclose, assert_array_equal
 
 
 @pytest.mark.critical()
@@ -18,3 +18,9 @@ def test_gtrs_no_noise(default_values, expected_trajectories_gtrs):
     # With sigma zero the trajectories should be the following ones if one performs the math
     assert_allclose(expected_trajectories_gtrs[0], gtrs_estimated_trajectory)
     assert_allclose(expected_trajectories_gtrs[1], gtrs_true_trajectory)
+
+
+def test_calc_eigen_incorrect_parameters():
+    """This test tests the _calc_eigen function with incorrect parameters."""
+    eigen = _calc_eigen([], [])
+    assert_array_equal([0], eigen)
