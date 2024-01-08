@@ -2,7 +2,7 @@
 
 import pytest
 from autonav.WLS import wls
-from numpy.testing import assert_allclose
+from numpy.testing import assert_array_almost_equal
 
 
 @pytest.mark.critical()
@@ -16,5 +16,5 @@ def test_wls_no_noise(default_values, expected_trajectories_wls):
     wls_estimated_trajectory = trajectories[0]
     wls_true_trajectory = trajectories[1]
     # With sigma zero the trajectories should be the following ones if one performs the math
-    assert_allclose(expected_trajectories_wls[0].round(decimals=5), wls_estimated_trajectory.round(decimals=5))
-    assert_allclose(expected_trajectories_wls[1].round(decimals=5), wls_true_trajectory.round(decimals=5))
+    assert_array_almost_equal(expected_trajectories_wls[0], wls_estimated_trajectory)
+    assert_array_almost_equal(expected_trajectories_wls[1], wls_true_trajectory)
