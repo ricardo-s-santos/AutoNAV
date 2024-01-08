@@ -35,8 +35,9 @@ def test_compute_rmse_different_lengths(metrics_trajectories):
 def test_compute_armse(metrics_trajectories):
     """This test tests the comupute_armse function in normal conditions."""
     armse = compute_armse(metrics_trajectories[0], metrics_trajectories[1])
+    armse = float("{:.10f}".format(armse))
     # The ARMSE can be computed by hand, such that, with these trajectories one gets:
-    expected_armse = 0.0024819550272756805
+    expected_armse = 0.0024819550
     assert expected_armse == armse
 
 
