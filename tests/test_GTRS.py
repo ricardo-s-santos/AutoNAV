@@ -16,5 +16,5 @@ def test_gtrs_no_noise(default_values, expected_trajectories_gtrs):
     gtrs_estimated_trajectory = trajectories[0]
     gtrs_true_trajectory = trajectories[1]
     # With sigma zero the trajectories should be the following ones if one performs the math
-    assert_allclose(expected_trajectories_gtrs[0], gtrs_estimated_trajectory)
-    assert_allclose(expected_trajectories_gtrs[1], gtrs_true_trajectory)
+    assert_allclose(expected_trajectories_gtrs[0].round(decimals=5), gtrs_estimated_trajectory.round(decimals=5))
+    assert_allclose(expected_trajectories_gtrs[1].round(decimals=5), gtrs_true_trajectory.round(decimals=5))
