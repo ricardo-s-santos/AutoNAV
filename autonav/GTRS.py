@@ -1,6 +1,8 @@
 """This module contains the GTRS algorithm functions."""
 import math
 
+from autonav.file_handlers import _readpathfile
+from autonav.randomGenerator import randomGenerator
 from autonav.velocity import _velocity
 from numpy import (
     append,
@@ -21,7 +23,6 @@ from numpy import (
     zeros,
 )
 from numpy.linalg import eigvals, inv, norm, pinv, solve
-from numpy.random import randn
 from numpy.typing import NDArray
 from scipy.linalg import fractional_matrix_power, sqrtm
 
@@ -33,6 +34,7 @@ def gtrs(
     sigma: float,
     destinations: NDArray,
     initial_uav_position: list,
+    noise_seed=0,
     tol: float = 0.001,
     n_iter: int = 30,
     max_lim: float = 1000000.0,
@@ -46,6 +48,7 @@ def gtrs(
         sigma (float): The noise level in meters.
         destinations (NDArray): The intermediate points need for navigation in 3D.
         initial_uav_position (list): The initial UAV position in 3D.
+        noise_seed (int): The seed to generate the noise.
         tol (float): The tolerance for the bisection function.
         n_iter (int): The max number of iterations for the bisection function.
         max_lim (float): The maximum value for the interval in the bisection function.
@@ -95,7 +98,9 @@ def gtrs(
             # ---------------------------------------------------------------------
             di_k = sqrt(((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2))
             di_k = array([di_k]).T
-            di_k = di_k + (sigma * randn(n, k))
+            # di_k_bom = di_k + (sigma * randn(n, k))
+            noise_seed += 1
+            di_k = di_k + (sigma * randomGenerator(n, k, noise_seed))
             d_i = median(di_k, axis=1)
             d_i = array([d_i]).T
             # ---------------------------------------------------------------------
@@ -287,3 +292,27 @@ def _calc_eigen(a: NDArray, d: NDArray) -> NDArray:
     except Exception:
         print("An exception occurred")
         return array([0])
+
+
+if __name__ == "__main__":
+    b = 200
+    n = 8
+    a_i = array(
+        [
+            [0, 0, 0],
+            [0, b, 0],
+            [b / 2, 0, 0],
+            [b / 2, b, 0],
+            [0, 0, b / 8],
+            [0, b, b / 8],
+            [b / 2, 0, b / 8],
+            [b / 2, b, b / 8],
+        ]
+    ).T
+    k = 50
+    sigma = 1
+    initial_uav_position = [10, 10, 5]
+    destinations = _readpathfile(
+        "/Users/ricardo/Documents/Doutoramento/Software De Investigação/AutoNAV/tests/path_files/Path_small.txt"
+    )
+    gtrs(a_i, n, k, sigma, destinations, initial_uav_position)

@@ -31,7 +31,7 @@ def test_read_file():
 
 
 def test_file_not_found():
-    """Test for non existing file."""
+    """Test for non-existing file."""
     ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
     filename = ROOT_DIR + "/path_files/Path_not_found.txt"
     with pytest.raises(FileNotFoundError):

@@ -3,15 +3,17 @@ import cmath
 import itertools
 import math
 
+from autonav.randomGenerator import randomGenerator
 from autonav.velocity import _velocity
 from numpy import array, asarray, cos, dot, eye, float32, median, sin, sqrt
 from numpy.lib import scimath
 from numpy.linalg import norm, solve
-from numpy.random import randn
 from numpy.typing import NDArray
 
 
-def wls(a_i: NDArray, n: int, k: int, sigma: float, destinations: NDArray, initial_uav_position: list) -> NDArray:
+def wls(
+    a_i: NDArray, n: int, k: int, sigma: float, destinations: NDArray, initial_uav_position: list, noise_seed=0
+) -> NDArray:
     """This function executes the WLS algorithm.
 
     Args:
@@ -21,6 +23,7 @@ def wls(a_i: NDArray, n: int, k: int, sigma: float, destinations: NDArray, initi
         sigma (float): The noise level in meters.
         destinations (NDArray): The intermediate points need for navigation in 3D.
         initial_uav_position (list): The initial UAV position in 3D.
+        noise_seed (int): The seed to generate the noise.
 
     Returns:
         The estimated trajectory computed using the WLS algorithm for the given input scenario
@@ -44,7 +47,9 @@ def wls(a_i: NDArray, n: int, k: int, sigma: float, destinations: NDArray, initi
             # ---------------------------------------------------------------------
             di_k = sqrt(((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2))
             di_k = array([di_k]).T
-            di_k = di_k + (sigma * randn(n, k))
+            # di_k = di_k + (sigma * randn(n, k))
+            noise_seed += 1  # I need to change the seed in each iteration, otherwise does not work.
+            di_k = di_k + (sigma * randomGenerator(n, k, noise_seed))
             d_i = median(di_k, axis=1)
             d_i = array([d_i]).T
             # ---------------------------------------------------------------------
