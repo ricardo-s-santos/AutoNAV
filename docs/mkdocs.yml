@@ -4,8 +4,9 @@ nav:
   - Home: index.md
   - Functions: functions.md
   - Examples: examples.md
-  - About: about.md
-theme: readthedocs
+
+theme:
+  name: material
 
 plugins:
   - mkdocstrings:
