@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from autonav.file_handlers import _readpathfile
+from autonav.file_handlers import readpathfile
 from numpy import array
 from numpy.testing import assert_array_equal
 
@@ -12,7 +12,7 @@ def test_read_file():
     """This test the reading of input file."""
     ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
     filename = ROOT_DIR + "/path_files/Path_small.txt"
-    destinations = _readpathfile(filename)
+    destinations = readpathfile(filename)
     expected_destinations = array(
         [
             [75.0, 5.0, 5.0],
@@ -35,4 +35,4 @@ def test_file_not_found():
     ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
     filename = ROOT_DIR + "/path_files/Path_not_found.txt"
     with pytest.raises(FileNotFoundError):
-        _readpathfile(filename)
+        readpathfile(filename)

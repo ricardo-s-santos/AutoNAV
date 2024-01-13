@@ -4,7 +4,7 @@ import itertools
 import math
 
 from autonav.random_generator import randomGenerator
-from autonav.velocity import _velocity
+from autonav.velocity import velocity
 from numpy import array, asarray, cos, dot, eye, float32, median, sin, sqrt
 from numpy.lib import scimath
 from numpy.linalg import norm, solve
@@ -107,7 +107,7 @@ def wls(
             x_est = asarray(solve(dot(dot(a.T, w.T), dot(w, a)), dot(dot(a.T, w.T), dot(w, b))).real)
             estimated_trajectory.append(x_est[:, 0])
             true_trajectory.append(x_true[:])
-            uav_velocity = _velocity(x_est[:, 0], destinations[ww, :])
+            uav_velocity = velocity(x_est[:, 0], destinations[ww, :])
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
             x_true[2] = x_true[2] + uav_velocity[2]

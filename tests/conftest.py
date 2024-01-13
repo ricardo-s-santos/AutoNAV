@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from autonav.file_handlers import _readpathfile
+from autonav.file_handlers import readpathfile
 from numpy import array, insert
 
 
@@ -12,7 +12,7 @@ def default_values():
     """This fixture defines the default values to be used in the algorithm tests."""
     ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
     filename = ROOT_DIR + "/path_files/Path_small.txt"
-    destinations = _readpathfile(filename)
+    destinations = readpathfile(filename)
     N = 8  # Number of anchors
     B = 200  # Area border in meters
     K = 50  # Number of measurement samples
@@ -37,7 +37,7 @@ def ideal_trajectory():
     """This fixture contains the ideal trajectory for the plots.py tests."""
     ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
     filename = ROOT_DIR + "/path_files/Path_small.txt"
-    ideal_trajectory = _readpathfile(filename)
+    ideal_trajectory = readpathfile(filename)
     ideal_trajectory = insert(ideal_trajectory, 0, [10, 10, 5], axis=0)
     return ideal_trajectory
 

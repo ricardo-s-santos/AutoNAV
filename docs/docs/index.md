@@ -17,7 +17,7 @@ After installing the package one can import the algorithms and necessary depende
 
 ```python
 from autonav import gtrs, wls
-from autonav.file_handlers import _readpathfile
+from autonav.file_handlers import readpathfile
 from autonav.plots import plot_trajectories
 from numpy import array
 

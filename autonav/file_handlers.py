@@ -6,7 +6,7 @@ from numpy import array
 from numpy.typing import NDArray
 
 
-def _readpathfile(filename: str) -> NDArray:
+def readpathfile(filename: str) -> NDArray:
     """This function reads the Path file.
 
     Args:

@@ -7,7 +7,7 @@ from rich import print
 from rich.progress import Progress, SpinnerColumn, TextColumn
 from rich.prompt import FloatPrompt, IntPrompt, Prompt
 
-from .file_handlers import _readpathfile
+from .file_handlers import readpathfile
 from .GTRS import gtrs
 from .metrics import compute_armse
 from .plots import (
@@ -77,7 +77,7 @@ def _main():
     sigma = FloatPrompt.ask("Please insert the noise level in meters (sigma)")
     initial_uav_position = [10, 10, 5]
     filename = Prompt.ask("Please input the path to the Waypoints file")
-    destinations = _readpathfile(filename)
+    destinations = readpathfile(filename)
     if algorithm == 1:
         # GTRS
         start_time = time.time()
