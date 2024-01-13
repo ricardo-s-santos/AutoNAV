@@ -22,6 +22,9 @@ from .WLS import wls
 https://typer.tiangolo.com/tutorial/first-steps/
 https://github.com/Textualize/rich
 https://rich.readthedocs.io/en/latest/introduction.html#quick-start
+
+
+Ver pathlib para construir caminhos
 """
 app = typer.Typer()
 

@@ -4,7 +4,7 @@ import os
 
 import pytest
 from autonav.file_handlers import _readpathfile
-from numpy import array
+from numpy import array, insert
 
 
 @pytest.fixture(scope="session")
@@ -30,6 +30,16 @@ def default_values():
     ).T
     initial_uav_position = [10, 10, 5]
     return [a_i, N, K, destinations, initial_uav_position]
+
+
+@pytest.fixture(scope="session")
+def ideal_trajectory():
+    """This fixture contains the ideal trajectory for the plots.py tests."""
+    ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
+    filename = ROOT_DIR + "/path_files/Path_small.txt"
+    ideal_trajectory = _readpathfile(filename)
+    ideal_trajectory = insert(ideal_trajectory, 0, [10, 10, 5], axis=0)
+    return ideal_trajectory
 
 
 @pytest.fixture(scope="session")
