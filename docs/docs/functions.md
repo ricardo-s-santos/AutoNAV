@@ -16,5 +16,4 @@ Apart from the algorithms, several auxiliary functions are available. In this pa
 
 ## Other functions
 
-::: autonav.velocity
 ::: autonav.file_handlers
