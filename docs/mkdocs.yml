@@ -2,5 +2,24 @@ site_name: Autonav
 site_url: https://ricardo-santos-21904332.github.io/AutoNAV/
 nav:
   - Home: index.md
+  - Functions: functions.md
+  - Examples: examples.md
   - About: about.md
 theme: readthedocs
+
+plugins:
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          import:
+            - https://docs.python.org/3/objects.inv
+            - https://numpy.org/doc/stable/objects.inv
+          options:
+            docstring_style: google
+            show_root_toc_entry: false
+            show_submodules: no
+            heading_level: 2
+            line_length: 80
+            show_signature_annotations: true
+            separate_signature: true

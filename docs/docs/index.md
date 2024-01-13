@@ -1,17 +1,52 @@
-# Welcome to MkDocs
+# AutoNAV
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+A Python package for simulating UAV Navigation in Satellite-Less Environments. The package contains two algorithms the GTRS and WLS whose goal is to estimate and navigate a UAV. Apart from these algorithms a hand-full of other functions and features are also provided, such as, measure the performance using metrics and plot the trajectories.
+## Installation
 
-## Commands
+Install from PyPI:
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+```sh
+pip install --upgrade pip
+pip install autonav
+```
 
-## Project layout
+## First Steps
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+After installing the package one can import the algorithms and necessary dependencies as follows:
+
+```python
+from autonav import gtrs, wls
+from autonav.file_handlers import _readpathfile
+from autonav.plots import plot_trajectories
+from numpy import array
+
+```
+
+Afterwards, one can create the necessary values to run the algorithms:
+
+```python
+b = 200
+n = 8
+a_i = array(
+    [
+    [0, 0, 0],
+    [0, b, 0],
+    [b / 2, 0, 0],
+    [b / 2, b, 0],
+    [0, 0, b / 8],
+    [0, b, b / 8],
+    [b / 2, 0, b / 8],
+    [b / 2, b, b / 8],]
+    ).T
+k = 50
+sigma = 1
+initial_uav_position = [10, 10, 5]
+destinations = _readpathfile("tests/path_files/Path.txt")
+```
+
+Finally, call the GTRS or WLS algorithm and plot the trajectories:
+
+```python
+[estimated_trajectory, true_trajectory] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position)
+plot_trajectories(destinations, estimated_trajectory, a_i)
+```
