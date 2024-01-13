@@ -3,7 +3,7 @@ import math
 
 from autonav.file_handlers import readpathfile
 from autonav.random_generator import randomGenerator
-from autonav.velocity import velocity
+from autonav.velocity import _velocity
 from numpy import (
     append,
     arange,
@@ -183,7 +183,7 @@ def gtrs(
                 p = matmul(lk1, lk2)
                 estimated_trajectory.append(x_loc[0:3, qq])
             true_trajectory.append(x_true[:])
-            uav_velocity = velocity(x_loc[0:3, qq], destinations[ww, :])
+            uav_velocity = _velocity(x_loc[0:3, qq], destinations[ww, :])
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
             x_true[2] = x_true[2] + uav_velocity[2]
