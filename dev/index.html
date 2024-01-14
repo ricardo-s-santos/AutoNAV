@@ -268,6 +268,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -311,6 +320,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tests
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -329,7 +347,20 @@
 <h1 id="for-developers">For developers</h1>
 <p>If you wish to add more features to AutoNAV, feel free to install it in developer mode as follows.</p>
 <h2 id="installing-for-development">Installing for development</h2>
-<pre><code class="language-python">
+<p>With the commands below, one will install all the necessary development dependencies.</p>
+<pre><code class="language-python">git clone https://github.com/Ricardo-Santos-21904332/AutoNAV.git
+cd autonav
+python -m venv env
+source env/bin/activate
+pip install -e .[dev]
+pre-commit install
+</code></pre>
+<h2 id="tests">Tests</h2>
+<p>The AutoNAV package contains several tests to assess its quality. These tests can be runned with the command:</p>
+<pre><code class="language-python">pytest
+</code></pre>
+<p>A coverage report can also be created with the command:</p>
+<pre><code class="language-python">pytest --cov=autonav --cov-report=html
 </code></pre>
 
 
