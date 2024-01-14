@@ -4,6 +4,7 @@ nav:
   - Home: index.md
   - Functions: functions.md
   - Examples: examples.md
+  - Development: dev.md
 
 theme:
   name: material

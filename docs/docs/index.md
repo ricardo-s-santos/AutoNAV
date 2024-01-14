@@ -50,3 +50,4 @@ Finally, call the GTRS or WLS algorithm and plot the trajectories:
 [estimated_trajectory, true_trajectory] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position)
 plot_trajectories(destinations, estimated_trajectory, a_i)
 ```
+![Trajectories](https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/trajectories.png?raw=true)
