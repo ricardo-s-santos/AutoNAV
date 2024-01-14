@@ -8,6 +8,7 @@ nav:
 
 theme:
     name: material
+    logo: https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/icon120x120.png?raw=true
 
 plugins:
   - mkdocstrings:
