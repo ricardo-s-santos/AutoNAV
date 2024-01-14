@@ -35,7 +35,6 @@ devel = [
     "coverage",
     "mkdocs-material>=7.1.11",
     "mkdocstrings[python]>=0.19.0",
-    "mkdocs-dracula-theme",
 ]
 
 [tool.black]
