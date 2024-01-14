@@ -1,164 +1,552 @@
+
 <!doctype html>
-<html lang="en">
-
-<head>
-        <title>Functions - Autonav</title>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
         <link rel="canonical" href="https://ricardo-santos-21904332.github.io/AutoNAV/functions/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../examples/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
+        <title>Functions - Autonav</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
         
-
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../assets/css/dracula-ui.css">
-        <link rel="stylesheet" href="../assets/css/mkdocs.css">
-            <link href="../assets/_mkdocstrings.css" rel="stylesheet">
-
         
-            <link  rel="icon" type="image/x-icon" href="../assets/img/favicon.ico">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
         
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
-                <script>hljs.initHighlightingOnLoad();</script>
-
-</head>
-
-<body class="drac-bg-black-secondary drac-text-grey-ternary drac-text drac-scrollbar-purple">
-
-    <main class="d-flex">
-
-        <!-- block sidebar -->
-            <nav id="sidebar" class="sidebar drac-bg-black">
-    <div class="custom-menu">
-        <button type="button" id="sidebarCollapse" class="btn btn-primary">
-            <i class="fa fa-bars"></i>
-            <span class="sr-only">Menu</span>
-        </button>
+        <a href="#available-functions-and-documentation" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
-
-    <div class="p-4">
-        
-
-        <div class="drac-text-center">
-            
-                <span class="drac-text drac-line-height drac-text-white">Autonav</span>
-            
-        </div>
-
-        <div class="drac-box flex-column">
-            <ul class="dot-ul">
-                <li><div class="dot-li drac-bg-cyan"></div></li>
-                <li><div class="dot-li drac-bg-green"></div></li>
-                <li><div class="dot-li drac-bg-orange"></div></li>
-                <li><div class="dot-li drac-bg-pink"></div></li>
-                <li><div class="dot-li drac-bg-purple"></div></li>
-                <li><div class="dot-li drac-bg-red"></div></li>
-                <li><div class="dot-li drac-bg-yellow"></div></li>
-            </ul>
-        </div>
-
-        <hr class="drac-divider" />
-
-        <!-- block menu -->
-        <ul class="mb-5 drac-list drac-list-none">
-            
-            <li class="drac-box">
-                <a href=".."
-                    class="
-                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-                    Home
-                </a>
-            </li>
-            <li class="drac-box">
-                <a href="./"
-                    class=" active 
-                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-                    Functions
-                </a>
-            </li>
-            <li class="drac-box">
-                <a href="../examples/"
-                    class="
-                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-                    Examples
-                </a>
-            </li>
-            <li class="drac-box">
-                <a href="../dev/"
-                    class="
-                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
-                    Development
-                </a>
-            </li>
-        </ul>
-        <!-- endblock -->
+    <div data-md-component="announce">
+      
     </div>
-</nav>
-        <!-- endblock -->
+    
+    
+      
 
-        <nav class="divider drac-bg-purple-cyan"></nav>
+  
 
-        <div class="content">
-            <!-- block header -->
-                <header>
-    <nav class="navbar navbar-expand-xl drac-bg-purple"">
-        <div class="container-fluid">
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Autonav" class="md-header__button md-logo" aria-label="Autonav" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Autonav
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
             
-            <button class="navbar-toggler w-100 text-center" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsMenu"
-                aria-controls="navbarsMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse flex-column ml-auto" id="navbarsMenu">
-                <ul class="navbar-nav text-md-center">
-
-                    <!-- block preview -->
-                    <li class="nav-item">
-                            
-        <div class="container">
-            <div class="row row-preview">
-                <div class="col">
-                    <a href=".."
-                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover">
-                        <i class="fa fa-arrow-left"></i> Previous
-                    </a>
-                </div>
-                <div class="col">
-                    <a href="../examples/"
-                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover" style="padding-left: 3%;">
-                        Next <i class="fa fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
+              Functions
+            
+          </span>
         </div>
-                    </li>
-                    <!--  endblock -->
-
-                    <!-- block search -->
-                    <li class="nav-item">
-                    </li>
-                    <!--  endblock -->
-
-                    <!-- block source -->
-                    <li class="nav-item">
-                        
-                    </li>
-                    <!--  endblock -->
-
-                </ul>
-            </div>
-
-        </div>
-    </nav>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+  </nav>
+  
 </header>
-            <!-- endblock -->
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
 
-            <!-- block content -->
-                <section class="p-md-5 section-content">
-    <article>
-        <p><h1 id="available-functions-and-documentation">Available Functions and Documentation</h1>
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Autonav" class="md-nav__button md-logo" aria-label="Autonav" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Autonav
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Functions
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Functions
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Algorithms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.gtrs" class="md-nav__link">
+    <span class="md-ellipsis">
+      gtrs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.wls" class="md-nav__link">
+    <span class="md-ellipsis">
+      wls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plots
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.plots.plot_comparison_between_algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      plot_comparison_between_algorithms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.plots.plot_rmse" class="md-nav__link">
+    <span class="md-ellipsis">
+      plot_rmse
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.plots.plot_rmse_comparison_between_algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      plot_rmse_comparison_between_algorithms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.plots.plot_trajectories" class="md-nav__link">
+    <span class="md-ellipsis">
+      plot_trajectories
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.metrics.compute_armse" class="md-nav__link">
+    <span class="md-ellipsis">
+      compute_armse
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.metrics.compute_rmse" class="md-nav__link">
+    <span class="md-ellipsis">
+      compute_rmse
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other functions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.file_handlers.readpathfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      readpathfile
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Examples
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dev/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Development
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      Algorithms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.gtrs" class="md-nav__link">
+    <span class="md-ellipsis">
+      gtrs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.wls" class="md-nav__link">
+    <span class="md-ellipsis">
+      wls
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plots" class="md-nav__link">
+    <span class="md-ellipsis">
+      Plots
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.plots.plot_comparison_between_algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      plot_comparison_between_algorithms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.plots.plot_rmse" class="md-nav__link">
+    <span class="md-ellipsis">
+      plot_rmse
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.plots.plot_rmse_comparison_between_algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      plot_rmse_comparison_between_algorithms
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.plots.plot_trajectories" class="md-nav__link">
+    <span class="md-ellipsis">
+      plot_trajectories
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Metrics
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.metrics.compute_armse" class="md-nav__link">
+    <span class="md-ellipsis">
+      compute_armse
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.metrics.compute_rmse" class="md-nav__link">
+    <span class="md-ellipsis">
+      compute_rmse
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#other-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other functions
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autonav.file_handlers.readpathfile" class="md-nav__link">
+    <span class="md-ellipsis">
+      readpathfile
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="available-functions-and-documentation">Available Functions and Documentation</h1>
 <p>Apart from the algorithms, several auxiliary functions are available. In this pages, one can find these functions and there respective documentation.</p>
 <h2 id="algorithms">Algorithms</h2>
 
@@ -2273,30 +2661,58 @@ a_i: The position of the anchors.
 
   </div>
 
-</div></p>
-    </article>
-</section>
-            <!-- endblock -->
+</div>
 
-            <!-- block footer -->
-                <footer>
-    <div class="d-flex flex-sm-row justify-content-between py-2 border-top drac-text-black drac-bg-cyan-green">
-        <a href="https://github.com/dracula/mkdocs" target="_blank" style="padding-left: 1%;"
-            class="footer-text drac-anchor drac-text-black drac-text-purple--hover">
-            Made with Dracula Theme for MkDocs
-        </a>
-    </div>
-</footer>
-            <!-- endblock -->
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
-
-    </main>
-
-        <script>var base_url = '..';</script>
-        <script src="../assets/js/jquery-3.3.1.slim.min.js""></script>
-        <script src="../assets/js/bootstrap.bundle.min.js""></script>
-        <script src="../assets/js/mkdocs.js""></script>
-
-</body>
-
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+    
+  </body>
 </html>
