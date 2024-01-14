@@ -54,7 +54,7 @@ Finally, call the GTRS or WLS algorithm and plot the trajectories:
 plot_trajectories(destinations, estimated_trajectory, a_i)
 ```
 
-![Preview](https://raw.githubusercontent.com/uRicardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/trajectories.png)
+![Preview](https://raw.githubusercontent.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/trajectories.png)
 
 ## Reference
 
