@@ -1,7 +1,6 @@
 """This module contains the GTRS algorithm functions."""
 import math
 
-from autonav.file_handlers import readpathfile
 from autonav.random_generator import randomGenerator
 from autonav.velocity import _velocity
 from numpy import (
@@ -292,27 +291,3 @@ def _calc_eigen(a: NDArray, d: NDArray) -> NDArray:
     except Exception:
         print("An exception occurred")
         return array([0])
-
-
-if __name__ == "__main__":
-    b = 200
-    n = 8
-    a_i = array(
-        [
-            [0, 0, 0],
-            [0, b, 0],
-            [b / 2, 0, 0],
-            [b / 2, b, 0],
-            [0, 0, b / 8],
-            [0, b, b / 8],
-            [b / 2, 0, b / 8],
-            [b / 2, b, b / 8],
-        ]
-    ).T
-    k = 50
-    sigma = 1
-    initial_uav_position = [10, 10, 5]
-    destinations = readpathfile(
-        "/Users/ricardo/Documents/Doutoramento/Software De Investigação/AutoNAV/tests/path_files/Path_small.txt"
-    )
-    gtrs(a_i, n, k, sigma, destinations, initial_uav_position)
