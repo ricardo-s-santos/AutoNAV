@@ -7,7 +7,7 @@ nav:
   - Development: dev.md
 
 theme:
-  name: material
+    name: dracula
 
 plugins:
   - mkdocstrings:
