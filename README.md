@@ -3,13 +3,12 @@
 [![docs](https://img.shields.io/badge/docs-click_here-blue.svg)](https://ricardo-santos-21904332.github.io/AutoNAV/)
 [![PyPI](https://img.shields.io/pypi/v/autonav)](https://pypi.org/project/autonav/)
 
-# AutoNAV
-
-A Python package for simulating UAV Navigation in Satellite-Less Environments. The package contains two algorithms the GTRS and WLS whose goal is to estimate and navigate a UAV.
 
 <p align="center">
   <img src="https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/icon.png?raw=true" alt="image" width="100" height="auto">
 </p>
+
+A Python package for simulating UAV Navigation in Satellite-Less Environments. The package contains two algorithms the GTRS and WLS whose goal is to estimate and navigate a UAV.
 
 ## Installation
 
