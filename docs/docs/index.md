@@ -20,7 +20,6 @@ from autonav import gtrs, wls
 from autonav.file_handlers import readpathfile
 from autonav.plots import plot_trajectories
 from numpy import array
-
 ```
 
 Afterwards, one can create the necessary values to run the algorithms:
