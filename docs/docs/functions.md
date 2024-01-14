@@ -1,6 +1,6 @@
 # Available Functions and Documentation
 
-Apart from the algorithms, several auxiliary functions are available. In this pages, one can find these functions and there respective documentation.
+Apart from the algorithms, several auxiliary functions are available. In this page, one can find all the available functions and there respective documentation.
 
 ## Algorithms
 

@@ -11,7 +11,7 @@ git clone https://github.com/Ricardo-Santos-21904332/AutoNAV.git
 cd autonav
 python -m venv env
 source env/bin/activate
-pip install -e .[dev]
+pip install -e .[devel]
 pre-commit install
 ```
 
