@@ -7,7 +7,7 @@
   <img src="https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/icon.png?raw=true" alt="image" width="200" height="auto">
 </p>
 
-A Python package for simulating UAV Navigation in Satellite-Less Environments. The package contains two algorithms the GTRS and WLS whose goal is to estimate and navigate a UAV.
+A Python package for simulating UAV Navigation in Satellite-Less Environments. The package contains two algorithms the GTRS [1] and WLS [2] whose goal is to estimate and navigate a UAV.
 
 ## Installation
 
@@ -60,6 +60,11 @@ plot_trajectories(destinations, estimated_trajectory, a_i)
 
 ![Trajectories](https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/trajectories.png?raw=true)
 
-## Reference
+## References
+
+[1] J. P. Matos-Carvalho, R. Santos, S. Tomic and M. Beko, "GTRS-Based Algorithm for UAV Navigation in Indoor Environments Employing Range Measurements and Odometry," in IEEE Access, vol. 9, pp. 89120-89132, 2021, doi: 10.1109/ACCESS.2021.3089900. https://ieeexplore.ieee.org/document/9456863
+
+[2] Santos, Ricardo; Matos‐Carvalho, J. P.; Tomic, Slavisa; Beko, Marko: 'WLS algorithm for UAV navigation in satellite‐less environments', IET Wireless Sensor Systems, 2022, 12, (3-4), p. 93-102, DOI: 10.1049/wss2.12041
+IET Digital Library, https://ietresearch.onlinelibrary.wiley.com/doi/full/10.1049/wss2.12041
 
 ## License
