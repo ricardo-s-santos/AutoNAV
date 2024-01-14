@@ -2,6 +2,10 @@
 
 A Python package for simulating UAV Navigation in Satellite-Less Environments. The package contains two algorithms the GTRS and WLS whose goal is to estimate and navigate a UAV. Apart from these algorithms a hand-full of other functions and features are also provided, such as, measure the performance using metrics and plot the trajectories.
 
+<div style="text-align:center">
+  <img src="https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/icon.png?raw=true" alt="image" width="200" height="auto">
+</div>
+
 ## Installation
 
 Install from PyPI:
