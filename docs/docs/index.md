@@ -1,5 +1,3 @@
-# AutoNAV
-
 <div style="text-align:center">
   <img src="https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/icon.png?raw=true" alt="image" width="200" height="auto">
 </div>
