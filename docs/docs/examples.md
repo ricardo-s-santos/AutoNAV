@@ -104,4 +104,4 @@ print(f"Average RMSE: {compute_armse(estimated_trajectory, true_trajectory):0,.2
 
 ```
 
-![Trajectories](https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/wls.png?raw=true)
+![Trajectories](https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/rmse.png?raw=true)
