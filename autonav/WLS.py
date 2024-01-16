@@ -5,7 +5,7 @@ import math
 
 from autonav.random_generator import randomGenerator
 from autonav.velocity import _velocity
-from numpy import array, asarray, cos, dot, eye, float32, median, sin, sqrt
+from numpy import array, asarray, cos, dot, eye, float32, median, sin, size, sqrt
 from numpy.lib import scimath
 from numpy.linalg import norm, solve
 from numpy.typing import NDArray
@@ -29,6 +29,19 @@ def wls(
         The estimated trajectory computed using the WLS algorithm for the given input scenario
         and the true trajectory that the UAV followed.
     """
+    # Validate inputs
+    if size(a_i, axis=1) != n:
+        raise ValueError("The length of a_i must be equal to N.")
+    if k < 0:
+        raise ValueError("K must be positive.")
+    if sigma < 0:
+        raise ValueError("Sigma must be positive.")
+    if size(destinations) == 0:
+        raise ValueError("Waypoints cannot be empty.")
+    if size(destinations, axis=1) != 3:
+        raise ValueError("Waypoints must contain the 3 coordinates (x, y, z).")
+    if len(initial_uav_position) != 3:
+        raise ValueError("Initial UAV position must contain the 3 coordinates (x, y, z).")
     x_true = initial_uav_position[:]
     ww = 0
     n_dest = len(destinations) - 1

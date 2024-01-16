@@ -1,7 +1,10 @@
 """This file contains the WLS.py tests."""
 
+import re
+
 import pytest
 from autonav.WLS import wls
+from numpy import array
 from numpy.testing import assert_allclose
 
 
@@ -16,13 +19,13 @@ def test_wls_no_noise(default_values, expected_trajectories_wls):
     wls_estimated_trajectory = trajectories[0]
     wls_true_trajectory = trajectories[1]
     # With sigma zero the trajectories should be the following ones if one performs the math
-    assert_allclose(expected_trajectories_wls[0].round(decimals=2), wls_estimated_trajectory.round(decimals=2))
-    assert_allclose(expected_trajectories_wls[1].round(decimals=2), wls_true_trajectory.round(decimals=2))
+    assert_allclose(expected_trajectories_wls[0], wls_estimated_trajectory)
+    assert_allclose(expected_trajectories_wls[1], wls_true_trajectory)
 
 
 @pytest.mark.critical()
 def test_wls_reproducibility(default_values):
-    """This test pretends to see if the algorithm is correctly implemented by setting the noise to zero."""
+    """This test pretends to see if the algorithm is reproducible."""
     # Values used in test
     sigma = 0  # Noise STD in meters
     trajectories = wls(
@@ -39,3 +42,42 @@ def test_wls_reproducibility(default_values):
     # Check to see if both results are equal
     assert_allclose(wls_estimated_trajectory_1, wls_estimated_trajectory_2)
     assert_allclose(wls_true_trajectory_1, wls_true_trajectory_2)
+
+
+@pytest.mark.critical()
+def test_WLS_exceptions(default_values):
+    """This test tests the expected exceptions with wrong args."""
+    sigma = 0
+    # Case n != size(a_i, axis=1)
+    with pytest.raises(ValueError, match=re.escape("The length of a_i must be equal to N.")):
+        wls(default_values[0], 10, default_values[2], sigma, default_values[3], default_values[4])
+    # Case k < 0
+    with pytest.raises(ValueError, match=re.escape("K must be positive.")):
+        wls(default_values[0], default_values[1], -1, sigma, default_values[3], default_values[4])
+    # Case sigma < 0
+    with pytest.raises(ValueError, match=re.escape("Sigma must be positive.")):
+        wls(default_values[0], default_values[1], default_values[2], -1, default_values[3], default_values[4])
+    # Case destinations with wrong coordinates
+    with pytest.raises(ValueError, match=re.escape("Waypoints must contain the 3 coordinates (x, y, z).")):
+        wls(default_values[0], default_values[1], default_values[2], sigma, array([[1, 2]]), default_values[4])
+    # Case empty destinations
+    with pytest.raises(ValueError, match=re.escape("Waypoints cannot be empty.")):
+        wls(default_values[0], default_values[1], default_values[2], sigma, array([]), default_values[4])
+    # Case initial_uav_position with wrong coordinates
+    with pytest.raises(ValueError, match=re.escape("Initial UAV position must contain the 3 coordinates (x, y, z).")):
+        wls(default_values[0], default_values[1], default_values[2], sigma, default_values[3], [1, 2])
+
+
+def test_wls_optional_parameters(default_values, expected_trajectories_wls):
+    """This test pretends to see if the algorithm correctly accepts optional parameters."""
+    # Values used in test
+    sigma = 0  # Noise STD in meters
+    noise_seed = 1
+    trajectories = wls(
+        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4], noise_seed
+    )
+    wls_estimated_trajectory = trajectories[0]
+    wls_true_trajectory = trajectories[1]
+    # With sigma zero the trajectories should be the following ones if one performs the math
+    assert_allclose(expected_trajectories_wls[2], wls_estimated_trajectory)
+    assert_allclose(expected_trajectories_wls[3], wls_true_trajectory)
