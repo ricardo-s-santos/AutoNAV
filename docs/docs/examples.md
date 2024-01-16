@@ -83,3 +83,25 @@ plot_trajectories(destinations, estimated_trajectory, a_i)
 ![Trajectories](https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/wls.png?raw=true)
 
 # Extract the RMSE and ARMSE from the algorithms
+
+To compute the ARMSE and plot the RMSE in each iteration and considering the same settings as in the previous example run:
+
+```python
+from autonav import wls
+from autonav.file_handlers import readpathfile
+from autonav.plots import plot_trajectories, plot_rmse
+from autonav.metrics import compute_armse
+from numpy import array
+```
+
+
+Finally, call the WLS and plot the trajectories:
+
+```python
+[estimated_trajectory, true_trajectory] = wls(a_i, n, k, sigma, destinations, initial_uav_position)
+plot_rmse(true_trajectory, estimated_trajectory)
+print(f"Average RMSE: {compute_armse(estimated_trajectory, true_trajectory):0,.2f} (m)")
+
+```
+
+![Trajectories](https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/wls.png?raw=true)
