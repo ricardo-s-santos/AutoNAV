@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
     
     
       
@@ -274,6 +274,67 @@
 
 <h1 id="examples">Examples</h1>
 <p>In this page a few examples of the algorithms in action are provided.</p>
+<h1 id="run-and-plot-the-trajctories-using-the-gtrs-algorithm">Run and plot the trajctories using the GTRS algorithm</h1>
+<pre><code class="language-python">from autonav import gtrs
+from autonav.file_handlers import readpathfile
+from autonav.plots import plot_trajectories
+from numpy import array
+</code></pre>
+<p>Afterwards, one can create the necessary values to run the algorithms:</p>
+<pre><code class="language-python">b = 200
+n = 8
+a_i = array(
+    [
+    [0, 0, 0],
+    [0, b, 0],
+    [b / 2, 0, 0],
+    [b / 2, b, 0],
+    [0, 0, b / 8],
+    [0, b, b / 8],
+    [b / 2, 0, b / 8],
+    [b / 2, b, b / 8],]
+    ).T
+k = 50
+sigma = 1
+initial_uav_position = [10, 10, 5]
+destinations = readpathfile(&quot;tests/path_files/Path.txt&quot;)
+</code></pre>
+<p>Finally, call the GTRS algorithm and plot the trajectories:</p>
+<pre><code class="language-python">[estimated_trajectory, true_trajectory] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position)
+plot_trajectories(destinations, estimated_trajectory, a_i)
+</code></pre>
+<p><img alt="Trajectories" src="https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/gtrs.png?raw=true" /></p>
+<h1 id="run-and-plot-the-trajctories-using-the-wls-algorithm">Run and plot the trajctories using the WLS algorithm</h1>
+<pre><code class="language-python">from autonav import wls
+from autonav.file_handlers import readpathfile
+from autonav.plots import plot_trajectories
+from numpy import array
+</code></pre>
+<p>Afterwards, one can create the necessary values to run the algorithms:</p>
+<pre><code class="language-python">b = 200
+n = 8
+a_i = array(
+    [
+    [0, 0, 0],
+    [0, b, 0],
+    [b / 2, 0, 0],
+    [b / 2, b, 0],
+    [0, 0, b / 8],
+    [0, b, b / 8],
+    [b / 2, 0, b / 8],
+    [b / 2, b, b / 8],]
+    ).T
+k = 50
+sigma = 1
+initial_uav_position = [10, 10, 5]
+destinations = readpathfile(&quot;tests/path_files/Path.txt&quot;)
+</code></pre>
+<p>Finally, call the WLS and plot the trajectories:</p>
+<pre><code class="language-python">[estimated_trajectory, true_trajectory] = wls(a_i, n, k, sigma, destinations, initial_uav_position)
+plot_trajectories(destinations, estimated_trajectory, a_i)
+</code></pre>
+<p><img alt="Trajectories" src="https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/wls.png?raw=true" /></p>
+<h1 id="extract-the-rmse-and-armse-from-the-algorithms">Extract the RMSE and ARMSE from the algorithms</h1>
 
 
 
@@ -320,10 +381,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../assets/javascripts/bundle.7389ff0e.min.js"></script>
       
     
   </body>
