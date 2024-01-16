@@ -56,6 +56,26 @@ def gtrs(
         The estimated trajectory computed using the GTRS algorithm for the given input scenario
         and the true trajectory that the UAV followed.
     """
+    # Validate inputs
+    if size(a_i, axis=1) != n:
+        raise ValueError("The length of a_i must be equal to N.")
+    if k < 0:
+        raise ValueError("K must be positive.")
+    if sigma < 0:
+        raise ValueError("Sigma must be positive.")
+    if size(destinations) == 0:
+        raise ValueError("Waypoints cannot be empty.")
+    if size(destinations, axis=1) != 3:
+        raise ValueError("Waypoints must contain the 3 coordinates (x, y, z).")
+    if len(initial_uav_position) != 3:
+        raise ValueError("Initial UAV position must contain the 3 coordinates (x, y, z).")
+    # Test optional inputs
+    if tol < 0:
+        raise ValueError("Tolerance must be positive.")
+    if n_iter < 0:
+        raise ValueError("Number of Bisection iterations must be positive.")
+    if max_lim < 0:
+        raise ValueError("The maximum value for the interval in the bisection function must be positive.")
     ts = 1  # Time sample in seconds
     s = eye(6)  # State transition matrix
     s[0, 3] = ts
