@@ -48,7 +48,7 @@ a_i = array(
 k = 50
 sigma = 1
 initial_uav_position = [10, 10, 5]
-destinations = _readpathfile("tests/path_files/Path.txt")
+destinations = readpathfile("tests/path_files/Path.txt")
 ```
 
 Finally, call the GTRS or WLS algorithm and plot the trajectories:
