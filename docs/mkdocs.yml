@@ -1,5 +1,6 @@
 site_name: Autonav
 site_url: https://ricardo-santos-21904332.github.io/AutoNAV/
+repo_url: https://github.com/Ricardo-Santos-21904332/AutoNAV
 nav:
   - Home: index.md
   - Functions: functions.md
@@ -8,10 +9,39 @@ nav:
 
 theme:
     name: material
+    palette:
+     # Palette toggle for automatic mode
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      primary: blue
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to system preference
     logo: https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/icon120x120.png?raw=true
     favicon: https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/favicon.ico?raw=true
+    features:
+      - navigation.instant
+      - navigation.expand
+      - navigation.indexes
+      - navigation.tabs
+      - navigation.tabs.sticky
+      - toc.integrate
 
 plugins:
+  - search
   - mkdocstrings:
       default_handler: python
       handlers:
