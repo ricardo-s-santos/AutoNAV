@@ -55,7 +55,7 @@ def test_GTRS_exceptions(default_values):
     with pytest.raises(ValueError, match=re.escape("K must be positive.")):
         gtrs(default_values[0], default_values[1], -1, sigma, default_values[3], default_values[4])
     # Case sigma < 0
-    with pytest.raises(ValueError, match=re.escape("Sigma must be positive.")):
+    with pytest.raises(ValueError, match=re.escape("Sigma must be between 0 and 5.")):
         gtrs(default_values[0], default_values[1], default_values[2], -1, default_values[3], default_values[4])
     # Case destinations with wrong coordinates
     with pytest.raises(ValueError, match=re.escape("Waypoints must contain the 3 coordinates (x, y, z).")):

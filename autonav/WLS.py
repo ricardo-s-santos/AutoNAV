@@ -34,8 +34,8 @@ def wls(
         raise ValueError("The length of a_i must be equal to N.")
     if k < 0:
         raise ValueError("K must be positive.")
-    if sigma < 0:
-        raise ValueError("Sigma must be positive.")
+    if sigma < 0 or sigma > 5:
+        raise ValueError("Sigma must be between 0 and 5.")
     if size(destinations) == 0:
         raise ValueError("Waypoints cannot be empty.")
     if size(destinations, axis=1) != 3:
