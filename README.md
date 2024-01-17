@@ -68,3 +68,5 @@ plot_trajectories(destinations, estimated_trajectory, a_i)
 IET Digital Library, https://ietresearch.onlinelibrary.wiley.com/doi/full/10.1049/wss2.12041
 
 ## License
+
+[MIT License](LICENSE)
