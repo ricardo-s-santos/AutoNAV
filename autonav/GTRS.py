@@ -118,6 +118,8 @@ def gtrs(
             di_k = sqrt(((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2))
             di_k = array([di_k]).T
             # di_k_bom = di_k + (sigma * randn(n, k))
+            # escrver no artigo que temos uma seed nova para cada MC
+            # Criar um novo gerador para cada mc
             noise_seed += 1
             di_k = di_k + (sigma * randomGenerator(n, k, noise_seed))
             d_i = median(di_k, axis=1)
