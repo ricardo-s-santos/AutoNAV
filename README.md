@@ -69,4 +69,4 @@ IET Digital Library, https://ietresearch.onlinelibrary.wiley.com/doi/full/10.104
 
 ## License
 
-[MIT License](LICENSE)
+[MIT License](LICENSE.txt)
