@@ -104,6 +104,8 @@ def gtrs(
     true_trajectory = []
     ww = 0
     n_dest = len(destinations) - 1
+    # Generator to create random numbers (see line 122)
+    gen = randomGenerator(noise_seed)
     while ww <= n_dest:
         distance = math.sqrt(
             (x_true[0] - destinations[ww][0]) ** 2
@@ -117,11 +119,7 @@ def gtrs(
             # ---------------------------------------------------------------------
             di_k = sqrt(((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2))
             di_k = array([di_k]).T
-            # di_k_bom = di_k + (sigma * randn(n, k))
-            # escrver no artigo que temos uma seed nova para cada MC
-            # Criar um novo gerador para cada mc
-            noise_seed += 1
-            di_k = di_k + (sigma * randomGenerator(n, k, noise_seed))
+            di_k = di_k + (sigma * gen.standard_normal(size=(n, k)))
             d_i = median(di_k, axis=1)
             d_i = array([d_i]).T
             # ---------------------------------------------------------------------

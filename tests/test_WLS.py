@@ -27,7 +27,7 @@ def test_wls_no_noise(default_values, expected_trajectories_wls):
 def test_wls_reproducibility(default_values):
     """This test pretends to see if the algorithm is reproducible."""
     # Values used in test
-    sigma = 0  # Noise STD in meters
+    sigma = 1  # Noise STD in meters
     trajectories = wls(
         default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4]
     )
