@@ -13,9 +13,6 @@ def plot_trajectories(ideal_trajectory: NDArray, estimated_trajectory: NDArray, 
         ideal_trajectory: The ideal trajectory that the UAV is supposed to follow.
         estimated_trajectory: The estimated trajectory that the UAV followed.
         a_i: The position of the anchors.
-
-    Returns:
-        Nothing.
     """
     ax = plt.axes(projection="3d")
     a_i_label = "a_i"
@@ -56,10 +53,10 @@ def plot_trajectories(ideal_trajectory: NDArray, estimated_trajectory: NDArray, 
 
 def plot_comparison_between_algorithms(
     ideal_trajectory: NDArray, estimated_trajectory_GTRS: NDArray, estimated_trajectory_WLS: NDArray, a_i: NDArray
-):
+) -> None:
     """This function plots the ideal and estimated trajectory for both algorithms.
 
-        Args:
+    Args:
         ideal_trajectory: The ideal trajectory that the UAV is supposed to follow.
         estimated_trajectory_GTRS: The estimated trajectory that the UAV followed using the GTRS algorithm.
         estimated_trajectory_WLS: The estimated trajectory that the UAV followed using the WLS algorithm.
@@ -118,7 +115,7 @@ def plot_rmse_comparison_between_algorithms(
     estimated_trajectory_GTRS: NDArray,
     true_trajectory_WLS: NDArray,
     estimated_trajectory_WLS: NDArray,
-):
+) -> None:
     """This function plots the root mean squared error along the trajectory.
 
     Args:
@@ -140,7 +137,7 @@ def plot_rmse_comparison_between_algorithms(
     plt.show()
 
 
-def plot_rmse(true_trajectory: NDArray, estimated_trajectory: NDArray):
+def plot_rmse(true_trajectory: NDArray, estimated_trajectory: NDArray) -> None:
     """This function plots the root mean squared error along the trajectory.
 
     Args:
