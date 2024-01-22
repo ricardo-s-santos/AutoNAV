@@ -2,7 +2,7 @@
 
 In this page a few examples of the algorithms in action are provided.
 
-# Run and plot the trajctories using the GTRS algorithm
+## Run and plot the trajectories using the GTRS algorithm
 
 ```python
 from autonav import gtrs
@@ -42,7 +42,7 @@ plot_trajectories(destinations, estimated_trajectory, a_i)
 
 ![Trajectories](https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/gtrs.png?raw=true)
 
-# Run and plot the trajctories using the WLS algorithm
+## Run and plot the trajectories using the WLS algorithm
 
 ```python
 from autonav import wls
@@ -82,7 +82,7 @@ plot_trajectories(destinations, estimated_trajectory, a_i)
 
 ![Trajectories](https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/wls.png?raw=true)
 
-# Extract the RMSE and ARMSE from the algorithms
+## Extract the RMSE and ARMSE from the algorithms
 
 To compute the ARMSE and plot the RMSE in each iteration and considering the same settings as in the previous example run:
 
@@ -93,7 +93,6 @@ from autonav.plots import plot_trajectories, plot_rmse
 from autonav.metrics import compute_armse
 from numpy import array
 ```
-
 
 Finally, call the WLS and plot the trajectories:
 
