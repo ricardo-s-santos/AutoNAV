@@ -60,3 +60,11 @@ plugins:
             line_length: 80
             show_signature_annotations: true
             separate_signature: true
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      guess_lang: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
