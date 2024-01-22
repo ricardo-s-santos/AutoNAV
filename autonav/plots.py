@@ -6,13 +6,16 @@ from numpy.typing import NDArray
 from .metrics import compute_rmse
 
 
-def plot_trajectories(ideal_trajectory: NDArray, estimated_trajectory: NDArray, a_i: NDArray):
+def plot_trajectories(ideal_trajectory: NDArray, estimated_trajectory: NDArray, a_i: NDArray) -> None:
     """This function plots the ideal and estimated trajectory.
 
     Args:
         ideal_trajectory: The ideal trajectory that the UAV is supposed to follow.
         estimated_trajectory: The estimated trajectory that the UAV followed.
         a_i: The position of the anchors.
+
+    Returns:
+        Nothing.
     """
     ax = plt.axes(projection="3d")
     a_i_label = "a_i"
