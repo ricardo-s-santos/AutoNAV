@@ -18,6 +18,11 @@ dependencies = [
     "typer>= 0.1.0",
 ]
 
+[project.urls]
+"Bug Reports" = "https://github.com/Ricardo-Santos-21904332/AutoNAV/issues"
+"Documentation" = "https://clugen.github.io/pyclugen/"
+"Source" = "https://ricardo-santos-21904332.github.io/AutoNAV/"
+
 [project.scripts]
 autonav = "autonav.cli:app"
 
