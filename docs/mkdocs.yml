@@ -7,6 +7,9 @@ nav:
   - Examples: examples.md
   - Development: dev.md
 
+watch:
+  - ../autonav
+
 theme:
     name: material
     palette:
