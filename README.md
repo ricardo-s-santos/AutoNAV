@@ -1,10 +1,10 @@
-![example workflow](https://github.com/Ricardo-Santos-21904332/AutoNAV/actions/workflows/test.yml/badge.svg)
-[![codecov](https://codecov.io/gh/Ricardo-Santos-21904332/AutoNAV/graph/badge.svg?token=LCR7KDRK3E)](https://codecov.io/gh/Ricardo-Santos-21904332/AutoNAV)
-[![docs](https://img.shields.io/badge/docs-click_here-blue.svg)](https://ricardo-santos-21904332.github.io/AutoNAV/)
+![example workflow](https://github.com/ricardo-s-santos/AutoNAV/actions/workflows/test.yml/badge.svg)
+[![codecov](https://codecov.io/gh/ricardo-s-santos/AutoNAV/graph/badge.svg?token=LCR7KDRK3E)](https://codecov.io/gh/ricardo-s-santos/AutoNAV)
+[![docs](https://img.shields.io/badge/docs-click_here-blue.svg)](https://ricardo-s-santos.github.io/AutoNAV/)
 [![PyPI](https://img.shields.io/pypi/v/autonav)](https://pypi.org/project/autonav/)
 
 <p align="center">
-  <img src="https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/icon.png?raw=true" alt="image" width="200" height="auto">
+  <img src="https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/icon.png?raw=true" alt="image" width="200" height="auto">
 </p>
 
 A Python package for simulating UAV Navigation in Satellite-Less Environments. The package contains two algorithms the GTRS <a href="https://ieeexplore.ieee.org/document/9456863">[1]</a> and WLS <a href="https://ietresearch.onlinelibrary.wiley.com/doi/full/10.1049/wss2.12041">[2]</a>  whose goal is to estimate and navigate a UAV.
@@ -58,7 +58,7 @@ Finally, call the GTRS or WLS algorithm and plot the trajectories:
 plot_trajectories(destinations, estimated_trajectory, a_i)
 ```
 
-![Trajectories](https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/trajectories.png?raw=true)
+![Trajectories](https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/trajectories.png?raw=true)
 
 ## References
 

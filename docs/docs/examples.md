@@ -40,7 +40,7 @@ Finally, call the GTRS algorithm and plot the trajectories:
 plot_trajectories(destinations, estimated_trajectory, a_i)
 ```
 
-![Trajectories](https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/gtrs.png?raw=true)
+![Trajectories](https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/gtrs.png?raw=true)
 
 ## Run and plot the trajectories using the WLS algorithm
 
@@ -80,7 +80,7 @@ Finally, call the WLS and plot the trajectories:
 plot_trajectories(destinations, estimated_trajectory, a_i)
 ```
 
-![Trajectories](https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/wls.png?raw=true)
+![Trajectories](https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/wls.png?raw=true)
 
 ## Extract the RMSE and ARMSE from the algorithms
 
@@ -103,4 +103,4 @@ print(f"Average RMSE: {compute_armse(estimated_trajectory, true_trajectory):0,.2
 
 ```
 
-![Trajectories](https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/rmse.png?raw=true)
+![Trajectories](https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/rmse.png?raw=true)

@@ -1,6 +1,6 @@
 site_name: Autonav
-site_url: https://ricardo-santos-21904332.github.io/AutoNAV/
-repo_url: https://github.com/Ricardo-Santos-21904332/AutoNAV
+site_url: https://ricardo-s-santos.github.io/AutoNAV/
+repo_url: https://github.com/ricardo-s-santos/AutoNAV
 nav:
   - Home: index.md
   - Functions: functions.md
@@ -33,8 +33,8 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to system preference
-    logo: https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/icon120x120.png?raw=true
-    favicon: https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/favicon.ico?raw=true
+    logo: https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/icon120x120.png?raw=true
+    favicon: https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/favicon.ico?raw=true
     features:
       - navigation.instant
       - navigation.expand

@@ -19,9 +19,9 @@ dependencies = [
 ]
 
 [project.urls]
-"Bug Reports" = "https://github.com/Ricardo-Santos-21904332/AutoNAV/issues"
-"Documentation" = "https://clugen.github.io/pyclugen/"
-"Source" = "https://ricardo-santos-21904332.github.io/AutoNAV/"
+"Bug Reports" = "https://github.com/ricardo-s-santos/AutoNAV/issues"
+"Documentation" = "https://ricardo-s-santos.github.io/AutoNAV/"
+"Source" = "https://github.com/ricardo-s-santos/AutoNAV"
 
 [project.scripts]
 autonav = "autonav.cli:app"
