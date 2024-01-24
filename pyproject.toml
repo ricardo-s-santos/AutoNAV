@@ -15,16 +15,12 @@ dependencies = [
     "numpy >= 1.20",
     "matplotlib >= 3.7.0",
     "scipy >= 1.10",
-    "typer>= 0.1.0",
 ]
 
 [project.urls]
 "Bug Reports" = "https://github.com/ricardo-s-santos/AutoNAV/issues"
 "Documentation" = "https://ricardo-s-santos.github.io/AutoNAV/"
 "Source" = "https://github.com/ricardo-s-santos/AutoNAV"
-
-[project.scripts]
-autonav = "autonav.cli:app"
 
 [project.optional-dependencies]
 devel = [
@@ -34,9 +30,11 @@ devel = [
     "flake8-isort",
     "flake8-black",
     "flake8-bugbear",
+    "mypy",
     "pre-commit",
     "pytest >= 7.0",
     "pytest-cov",
+    "pytest-mypy",
     "coverage",
     "mkdocs-material>=7.1.11",
     "mkdocstrings[python]>=0.19.0",
@@ -51,6 +49,10 @@ profile = "black"
 src_paths = ["txtstats", "tests"]
 line_length = 120
 skip_gitignore = "True"
+
+[tool.mypy]
+python_version = "3.8"
+warn_unused_ignores = true
 
 [tool.flake8]
 max-line-length = 120
@@ -76,7 +78,7 @@ docstring-convention = "google" # flake8-docstrings
 
 [tool.pytest.ini_options]
 minversion = "7.0"
-addopts = "-v --tb=short --strict-markers"
+addopts = "-v --tb=short --strict-markers --mypy"
 testpaths = ["tests"]
 xfail_strict = "true"
 markers = ["critical: The most critical tests"]
