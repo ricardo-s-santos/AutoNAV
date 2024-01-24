@@ -17,13 +17,13 @@ def wls(
     """This function executes the WLS algorithm.
 
     Args:
-        a_i (NDArray): The true position of the anchors in 3D.
-        n (int): The number of anchors.
-        k (int): The number of measurements.
-        sigma (float): The noise level in meters.
-        destinations (NDArray): The intermediate points need for navigation in 3D.
-        initial_uav_position (list): The initial UAV position in 3D.
-        noise_seed (int): The seed to generate the noise.
+        a_i: The true position of the anchors in 3D.
+        n: The number of anchors.
+        k: The number of measurements.
+        sigma: The noise level in meters.
+        destinations: The intermediate points need for navigation in 3D.
+        initial_uav_position: The initial UAV position in 3D.
+        noise_seed: The seed to generate the noise.
 
     Returns:
         The estimated trajectory computed using the WLS algorithm for the given input scenario

@@ -41,16 +41,16 @@ def gtrs(
     """This function executes the GTRS algorithm.
 
     Args:
-        a_i (NDArray): The true position of the anchors in 3D.
-        n (int): The number of anchors.
-        k (int): The number of measurements.
-        sigma (float): The noise level in meters.
-        destinations (NDArray): The intermediate points need for navigation in 3D.
-        initial_uav_position (list): The initial UAV position in 3D.
-        noise_seed (int): The seed to generate the noise.
-        tol (float): The tolerance for the bisection function.
-        n_iter (int): The max number of iterations for the bisection function.
-        max_lim (float): The maximum value for the interval in the bisection function.
+        a_i: The true position of the anchors in 3D.
+        n: The number of anchors.
+        k: The number of measurements.
+        sigma: The noise level in meters.
+        destinations: The intermediate points need for navigation in 3D.
+        initial_uav_position: The initial UAV position in 3D.
+        noise_seed: The seed to generate the noise.
+        tol: The tolerance for the bisection function.
+        n_iter: The max number of iterations for the bisection function.
+        max_lim: The maximum value for the interval in the bisection function.
 
     Returns:
         The estimated trajectory computed using the GTRS algorithm for the given input scenario
@@ -232,14 +232,14 @@ def _bisection_fun(
         The definitions of the matrices can be seen in the paper.
 
     Args:
-        min_lim (float): Minimum interval value.
-        max_lim (float): Maximum interval value.
-        tol (float): Tolerance value
-        n_iter (int): The max number of interactions for the bisection procedure.
-        a (NDArray): Matrix A.
-        d (NDArray): Matrix D.
-        b (NDArray): Matrix b.
-        f (NDArray): Matrix f.
+        min_lim: Minimum interval value.
+        max_lim: Maximum interval value.
+        tol: Tolerance value
+        n_iter: The max number of interactions for the bisection procedure.
+        a: Matrix A.
+        d: Matrix D.
+        b: Matrix b.
+        f: Matrix f.
 
     Returns:
         The solution to the GTRS problem.
@@ -266,10 +266,10 @@ def _fi_fun(lambda_1: float, a: NDArray, d: NDArray, b: NDArray, f: NDArray) -> 
 
     Args:
         lambda_1 (float): Minimum interval value.
-        a (NDArray): Matrix A.
-        d (NDArray): Matrix D.
-        b (NDArray): Matrix b.
-        f (NDArray): Matrix f.
+        a: Matrix A.
+        d: Matrix D.
+        b: Matrix b.
+        f: Matrix f.
 
     Returns:
         An NDArray with the fi value for the given input.
@@ -291,8 +291,8 @@ def _calc_eigen(a: NDArray, d: NDArray) -> NDArray:
         The definitions of the matrices can be seen in the paper.
 
     Args:
-        a (NDArray): Matrix A.
-        d (NDArray): Matrix D.
+        a: Matrix A.
+        d: Matrix D.
 
     Returns:
         The Eigen values for the given matrices.
