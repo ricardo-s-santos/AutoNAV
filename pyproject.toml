@@ -11,6 +11,14 @@ requires-python = ">=3.8"
 keywords = ["UAV", "Navigation", "Indoor"]
 license = { text = "MIT" }
 authors = [{ name = "Ricardo S. Santos", email = "p6221@ulusofona.pt" }]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering"
+]
 dependencies = [
     "numpy >= 1.20",
     "matplotlib >= 3.7.0",
