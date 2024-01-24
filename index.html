@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/favicon.ico?raw=true">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.4">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.5">
     
     
       
@@ -501,39 +501,39 @@
 <p>A Python package for simulating UAV Navigation in Satellite-Less Environments. The package contains two algorithms the GTRS and WLS whose goal is to estimate and navigate a UAV. Apart from these algorithms a hand-full of other functions and features are also provided, such as, measure the performance using metrics and plot the trajectories.</p>
 <h2 id="installation">Installation</h2>
 <p>Install from PyPI:</p>
-<pre><code class="language-sh">pip install --upgrade pip
-pip install autonav
-</code></pre>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pip<span class="w"> </span>install<span class="w"> </span>autonav
+</code></pre></div>
 <h2 id="first-steps">First Steps</h2>
 <p>After installing the package one can import the algorithms and necessary dependencies as follows:</p>
-<pre><code class="language-python">from autonav import gtrs, wls
-from autonav.file_handlers import readpathfile
-from autonav.plots import plot_trajectories
-from numpy import array
-</code></pre>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span> <span class="nn">autonav</span> <span class="kn">import</span> <span class="n">gtrs</span><span class="p">,</span> <span class="n">wls</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span> <span class="nn">autonav.file_handlers</span> <span class="kn">import</span> <span class="n">readpathfile</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="kn">from</span> <span class="nn">autonav.plots</span> <span class="kn">import</span> <span class="n">plot_trajectories</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">array</span>
+</code></pre></div>
 <p>Afterwards, one can create the necessary values to run the algorithms:</p>
-<pre><code class="language-python">b = 200
-n = 8
-a_i = array(
-    [
-    [0, 0, 0],
-    [0, b, 0],
-    [b / 2, 0, 0],
-    [b / 2, b, 0],
-    [0, 0, b / 8],
-    [0, b, b / 8],
-    [b / 2, 0, b / 8],
-    [b / 2, b, b / 8],]
-    ).T
-k = 50
-sigma = 1
-initial_uav_position = [10, 10, 5]
-destinations = readpathfile(&quot;tests/path_files/Path.txt&quot;)
-</code></pre>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">b</span> <span class="o">=</span> <span class="mi">200</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">n</span> <span class="o">=</span> <span class="mi">8</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">a_i</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="p">[</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="p">[</span><span class="n">b</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="p">[</span><span class="n">b</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">8</span><span class="p">],</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">8</span><span class="p">],</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="p">[</span><span class="n">b</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">8</span><span class="p">],</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="p">[</span><span class="n">b</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">8</span><span class="p">],]</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="n">k</span> <span class="o">=</span> <span class="mi">50</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="n">sigma</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="n">initial_uav_position</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="n">destinations</span> <span class="o">=</span> <span class="n">readpathfile</span><span class="p">(</span><span class="s2">&quot;tests/path_files/Path.txt&quot;</span><span class="p">)</span>
+</code></pre></div>
 <p>Finally, call the GTRS or WLS algorithm and plot the trajectories:</p>
-<pre><code class="language-python">[estimated_trajectory, true_trajectory] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position)
-plot_trajectories(destinations, estimated_trajectory, a_i)
-</code></pre>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">[</span><span class="n">estimated_trajectory</span><span class="p">,</span> <span class="n">true_trajectory</span><span class="p">]</span> <span class="o">=</span> <span class="n">gtrs</span><span class="p">(</span><span class="n">a_i</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">initial_uav_position</span><span class="p">)</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">plot_trajectories</span><span class="p">(</span><span class="n">destinations</span><span class="p">,</span> <span class="n">estimated_trajectory</span><span class="p">,</span> <span class="n">a_i</span><span class="p">)</span>
+</code></pre></div>
 <p><img alt="Trajectories" src="https://github.com/Ricardo-Santos-21904332/AutoNAV/blob/main/docs/docs/figures/trajectories.png?raw=true" /></p>
 
 
@@ -581,10 +581,10 @@ plot_trajectories(destinations, estimated_trajectory, a_i)
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.expand", "navigation.indexes", "navigation.tabs", "navigation.tabs.sticky", "toc.integrate"], "search": "assets/javascripts/workers/search.c011b7c0.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.instant", "navigation.expand", "navigation.indexes", "navigation.tabs", "navigation.tabs.sticky", "toc.integrate"], "search": "assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.7389ff0e.min.js"></script>
+      <script src="assets/javascripts/bundle.c18c5fb9.min.js"></script>
       
     
   </body>
