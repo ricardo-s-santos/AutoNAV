@@ -16,6 +16,9 @@ def wls(
 ) -> NDArray:
     """This function executes the WLS algorithm.
 
+    [See here more details about the WLS algorithm.]
+    (https://ietresearch.onlinelibrary.wiley.com/doi/full/10.1049/wss2.12041)
+
     Args:
         a_i: The true position of the anchors in 3D.
         n: The number of anchors.

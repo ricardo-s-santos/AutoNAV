@@ -40,6 +40,8 @@ def gtrs(
 ) -> NDArray:
     """This function executes the GTRS algorithm.
 
+    [See here more details about the GTRS algorithm.](https://ieeexplore.ieee.org/document/9456863)
+
     Args:
         a_i: The true position of the anchors in 3D.
         n: The number of anchors.
