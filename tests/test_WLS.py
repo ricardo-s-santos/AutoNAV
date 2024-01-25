@@ -9,12 +9,12 @@ from numpy.testing import assert_allclose
 
 
 @pytest.mark.critical()
-def test_wls_no_noise(default_values, expected_trajectories_wls):
+def test_wls_no_noise(default_values, expected_trajectories_wls, seeds):
     """This test pretends to see if the algorithm is correctly implemented by setting the noise to zero."""
     # Values used in test
     sigma = 0  # Noise STD in meters
     trajectories = wls(
-        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4]
+        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4], seeds[0]
     )
     wls_estimated_trajectory = trajectories[0]
     wls_true_trajectory = trajectories[1]
@@ -24,18 +24,18 @@ def test_wls_no_noise(default_values, expected_trajectories_wls):
 
 
 @pytest.mark.critical()
-def test_wls_reproducibility(default_values):
+def test_wls_reproducibility(default_values, seeds):
     """This test pretends to see if the algorithm is reproducible."""
     # Values used in test
     sigma = 1  # Noise STD in meters
     trajectories = wls(
-        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4]
+        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4], seeds[0]
     )
     wls_estimated_trajectory_1 = trajectories[0]
     wls_true_trajectory_1 = trajectories[1]
     # Call WLS again
     trajectories = wls(
-        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4]
+        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4], seeds[0]
     )
     wls_estimated_trajectory_2 = trajectories[0]
     wls_true_trajectory_2 = trajectories[1]

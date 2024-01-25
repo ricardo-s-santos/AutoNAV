@@ -43,6 +43,17 @@ def ideal_trajectory():
 
 
 @pytest.fixture(scope="session")
+def seeds():
+    """This fixture contains the seeds for the GTRS and WLS tests."""
+    return [
+        0,
+        5,
+        10,
+        20,
+    ]
+
+
+@pytest.fixture(scope="session")
 def metrics_trajectories():
     """This fixture contains the trajectories for the metrics.py tests."""
     estimated_trajectory = array(
