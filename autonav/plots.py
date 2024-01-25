@@ -25,7 +25,9 @@ def plot_trajectories(
     Returns:
         A list of Matplotlib Axes object containing the ideal and estimated trajectory comparison.
     """
-    names_of_the_algorithms = ["GTRS", "WLS"]
+    # User didn't input names_of_the_algorithms
+    if names_of_the_algorithms is None:
+        names_of_the_algorithms = ["GTRS", "WLS"]
     if len(estimated_trajectories) == len(names_of_the_algorithms):
         axes = []
         for j in range(len(estimated_trajectories)):
@@ -88,7 +90,9 @@ def plot_rmse(
     Returns:
         An NDArray object containing the RMSE comparison.
     """
-    names_of_the_algorithms = ["GTRS", "WLS"]
+    # User didn't input names_of_the_algorithms
+    if names_of_the_algorithms is None:
+        names_of_the_algorithms = ["GTRS", "WLS"]
     if len(estimated_trajectories) == len(true_trajectories):
         fig, axs = plt.subplots(len(estimated_trajectories), sharey=True)
         # Space between subplots
@@ -101,6 +105,4 @@ def plot_rmse(
             ax.set(xlabel="Iteration", ylabel="RMSE")
         return axs
     else:
-        raise ValueError(
-            "The number of algorithms must be the same in estimated_trajectories and names_of_the_algorithms."
-        )
+        raise ValueError("The number of algorithms must be the same in estimated_trajectories and true_trajectories.")
