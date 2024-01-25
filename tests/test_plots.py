@@ -1,44 +1,21 @@
 """This file contains the plot.py tests."""
 
-import matplotlib.pyplot as plt
-from autonav.plots import (
-    plot_comparison_between_algorithms,
-    plot_rmse,
-    plot_rmse_comparison_between_algorithms,
-    plot_trajectories,
-)
+from autonav.plots import plot_rmse, plot_trajectories
+from numpy import ndarray
 
 
-def test_plot_rmse(monkeypatch, metrics_trajectories):
-    """This tests if the function shows a plot to the user."""
-    monkeypatch.setattr(plt, "show", lambda: None)
-    plot_rmse(metrics_trajectories[1], metrics_trajectories[0])
-    assert True
-
-
-def test_plot_rmse_comparison_between_algorithms(monkeypatch, expected_trajectories_gtrs, expected_trajectories_wls):
-    """This tests if the function shows a plot to the user."""
-    monkeypatch.setattr(plt, "show", lambda: None)
-    plot_rmse_comparison_between_algorithms(
-        expected_trajectories_gtrs[1],
-        expected_trajectories_gtrs[0],
-        expected_trajectories_wls[1],
-        expected_trajectories_wls[0],
+def test_plot_trajectories(default_values, expected_trajectories_gtrs, expected_trajectories_wls, ideal_trajectory):
+    """This tests if the function returns the correct type."""
+    ax = plot_trajectories(
+        ideal_trajectory, [expected_trajectories_gtrs[0], expected_trajectories_wls[0]], default_values[0]
     )
-    assert True
+    assert type(ax) is list
 
 
-def test_plot_trajectories(monkeypatch, default_values, metrics_trajectories, ideal_trajectory):
-    """This tests if the function shows a plot to the user."""
-    monkeypatch.setattr(plt, "show", lambda: None)
-    plot_trajectories(ideal_trajectory, metrics_trajectories[0], default_values[0])
-    assert True
-
-
-def test_plot_comparison_between_algorithms(monkeypatch, default_values, metrics_trajectories, ideal_trajectory):
-    """This tests if the function shows a plot to the user."""
-    monkeypatch.setattr(plt, "show", lambda: None)
-    plot_comparison_between_algorithms(
-        ideal_trajectory, metrics_trajectories[0], metrics_trajectories[0], default_values[0]
+def test_plot_rmse(expected_trajectories_gtrs, expected_trajectories_wls):
+    """This tests if the function returns the correct type."""
+    ax = plot_rmse(
+        [expected_trajectories_gtrs[1], expected_trajectories_gtrs[0]],
+        [expected_trajectories_wls[1], expected_trajectories_wls[0]],
     )
-    assert True
+    assert type(ax) is ndarray

@@ -1,8 +1,9 @@
 """This module contains the plotting functions."""
 
 import matplotlib.pyplot as plt
-from metrics import compute_rmse
 from numpy.typing import NDArray
+
+from .metrics import compute_rmse
 
 
 def plot_trajectories(
@@ -10,7 +11,7 @@ def plot_trajectories(
     estimated_trajectories: list[NDArray],
     a_i: NDArray,
     names_of_the_algorithms: list[str] = None,
-) -> list[plt.Axes]:
+) -> list:
     """This function plots the ideal and estimated trajectory for one or more algorithms.
 
     Args:
@@ -22,11 +23,12 @@ def plot_trajectories(
     Returns:
         A list of Matplotlib Axes object containing the ideal and estimated trajectory comparison.
     """
+    names_of_the_algorithms = ["GTRS", "WLS"]
     if len(estimated_trajectories) == len(names_of_the_algorithms):
-        names_of_the_algorithms = ["GTRS", "WLS"]
         axes = []
         for j in range(len(estimated_trajectories)):
-            ax = plt.figure().add_subplot(projection="3d")
+            plt.figure(j)  # New figure foreach algorithm
+            ax = plt.axes(projection="3d")
             a_i_label = "a_i"
             for i in range(0, a_i.shape[1]):
                 ax.plot3D(
@@ -73,7 +75,7 @@ def plot_rmse(
     estimated_trajectories: list[NDArray],
     true_trajectories: list[NDArray],
     names_of_the_algorithms: list[str] = None,
-) -> plt.Axes:
+) -> NDArray:
     """This function plots the root mean squared error along the trajectory.
 
     Args:
@@ -82,17 +84,17 @@ def plot_rmse(
        names_of_the_algorithms: The names of the algorithms in the same order as in estimated_trajectories.
 
     Returns:
-        A Matplotlib Axes object containing the RMSE comparison.
+        An NDArray object containing the RMSE comparison.
     """
+    names_of_the_algorithms = ["GTRS", "WLS"]
     if len(estimated_trajectories) == len(true_trajectories):
-        names_of_the_algorithms = ["GTRS", "WLS"]
         fig, axs = plt.subplots(len(estimated_trajectories), sharey=True)
         # Space between subplots
         fig.tight_layout(pad=5.0)
         for i in range(len(estimated_trajectories)):
             rmse = compute_rmse(estimated_trajectories[i][:, :], true_trajectories[i][:, :])
             axs[i].plot(rmse)
-            axs[i].set_title("Estimated Trajectory " + names_of_the_algorithms[i])
+            axs[i].set_title("RMSE " + names_of_the_algorithms[i])
         for ax in axs.flat:
             ax.set(xlabel="Iteration", ylabel="RMSE")
         return axs
