@@ -80,10 +80,10 @@ def plot_rmse(
     true_trajectories: List[NDArray],
     names_of_the_algorithms: List[str] = None,
 ) -> NDArray:
-    """This function plots the root mean squared error along the trajectory.
+    """This function plots the root mean squared error along the trajectory for one or more algorithms.
 
     Args:
-       estimated_trajectories: The estimated trajectory that the UAV followed using the GTRS algorithm.
+       estimated_trajectories: The estimated trajectory that the UAV followed.
        true_trajectories: The true trajectory that the UAV followed.
        names_of_the_algorithms: The names of the algorithms in the same order as in estimated_trajectories.
 
