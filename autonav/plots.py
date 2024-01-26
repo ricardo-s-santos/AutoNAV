@@ -1,6 +1,6 @@
 """This module contains the plotting functions."""
 
-from typing import List
+from typing import List, Optional
 
 import matplotlib.pyplot as plt
 from numpy.typing import NDArray
@@ -12,7 +12,7 @@ def plot_trajectories(
     ideal_trajectory: NDArray,
     estimated_trajectories: List[NDArray],
     a_i: NDArray,
-    names_of_the_algorithms: List[str] = None,
+    names_of_the_algorithms: Optional[List[str]] = None,
 ) -> list:
     """This function plots the ideal and estimated trajectory for one or more algorithms.
 
@@ -78,7 +78,7 @@ def plot_trajectories(
 def plot_rmse(
     estimated_trajectories: List[NDArray],
     true_trajectories: List[NDArray],
-    names_of_the_algorithms: List[str] = None,
+    names_of_the_algorithms: Optional[List[str]] = None,
 ) -> NDArray:
     """This function plots the root mean squared error along the trajectory for one or more algorithms.
 

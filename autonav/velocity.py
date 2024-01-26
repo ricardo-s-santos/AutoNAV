@@ -6,7 +6,7 @@ from numpy import dot
 from numpy.typing import NDArray
 
 
-def _velocity(current_position: NDArray, destination_position: NDArray) -> NDArray:
+def _velocity(current_position: NDArray, destination_position: NDArray) -> list:
     """This function computes the max speed allowed to the UAV according to the distance to the destination.
 
     Args:

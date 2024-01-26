@@ -75,7 +75,7 @@ def wls(
             phi_i = []
             alpha_i = []
             for ii in range(0, n):
-                a2 = []
+                a2_list = []
                 b2 = []
                 kk = [ii + 1]
                 for jj in range(0, n):
@@ -90,11 +90,11 @@ def wls(
                     combinations = array(list(itertools.combinations(kk, 2)))
                     gg = combinations[uu, 0]
                     hh = combinations[uu, 1]
-                    a2.append(2 * (a_i[0:3, gg - 1] - a_i[0:3, hh - 1]).T)
+                    a2_list.append(2 * (a_i[0:3, gg - 1] - a_i[0:3, hh - 1]).T)
                     b2.append(
                         d_i[hh - 1] ** 2 - d_i[gg - 1] ** 2 - norm(a_i[0:3, hh - 1]) ** 2 + norm(a_i[0:3, gg - 1]) ** 2
                     )
-                a2 = asarray(a2, dtype=float32)
+                a2: NDArray = asarray(a2_list, dtype=float32)
                 b2 = asarray(b2, dtype=float32)
                 xi_est.append(solve(dot(a2.T, a2) + (1 * 10 ** (-6)) * eye(3), dot(a2.T, b2)))
                 di_xy = norm(xi_est[0][0:2])
