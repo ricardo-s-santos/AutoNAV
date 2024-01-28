@@ -9,8 +9,9 @@ from numpy.testing import assert_allclose, assert_array_equal
 
 
 @pytest.mark.critical()
-def test_gtrs_no_noise(default_values, expected_trajectories_gtrs):
+def test_gtrs_no_noise(default_values, expected_trajectories_gtrs_sigma_0):
     """This test pretends to see if the algorithm is correctly implemented by setting the noise to zero."""
+    # This test does not use seeds because the noise is set to zero.
     # Values used in test
     sigma = 0  # Noise STD in meters
     trajectories = gtrs(
@@ -19,23 +20,23 @@ def test_gtrs_no_noise(default_values, expected_trajectories_gtrs):
     gtrs_estimated_trajectory = trajectories[0]
     gtrs_true_trajectory = trajectories[1]
     # With sigma zero the trajectories should be the following ones if one performs the math
-    assert_allclose(expected_trajectories_gtrs[0], gtrs_estimated_trajectory)
-    assert_allclose(expected_trajectories_gtrs[1], gtrs_true_trajectory)
+    assert_allclose(expected_trajectories_gtrs_sigma_0[0], gtrs_estimated_trajectory)
+    assert_allclose(expected_trajectories_gtrs_sigma_0[1], gtrs_true_trajectory)
 
 
 @pytest.mark.critical()
-def test_gtrs_reproducibility(default_values):
+def test_gtrs_reproducibility(default_values, seeds):
     """This test pretends to see if the algorithm is reproducible."""
     # Values used in test
     sigma = 1  # Noise STD in meters
     trajectories = gtrs(
-        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4]
+        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4], seeds[0]
     )
     gtrs_estimated_trajectory_1 = trajectories[0]
     gtrs_true_trajectory_1 = trajectories[1]
     # Call GTRS again
     trajectories = gtrs(
-        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4]
+        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4], seeds[0]
     )
     gtrs_estimated_trajectory_2 = trajectories[0]
     gtrs_true_trajectory_2 = trajectories[1]
@@ -103,11 +104,11 @@ def test_GTRS_exceptions(default_values):
         )
 
 
-def test_gtrs_optional_parameters(default_values, expected_trajectories_gtrs):
+def test_gtrs_optional_parameters(default_values, expected_trajectories_gtrs_sigma_1, seeds):
     """This test pretends to see if the algorithm correctly accepts optional parameters."""
     # Values used in test
-    sigma = 0  # Noise STD in meters
-    noise_seed = 1
+    sigma = 1  # Noise STD in meters
+    noise_seed = seeds[0]
     tol = 0.0015
     n_iter = 35
     max_lim = 1000005.0
@@ -126,8 +127,8 @@ def test_gtrs_optional_parameters(default_values, expected_trajectories_gtrs):
     gtrs_estimated_trajectory = trajectories[0]
     gtrs_true_trajectory = trajectories[1]
     # With sigma zero the trajectories should be the following ones if one performs the math
-    assert_allclose(expected_trajectories_gtrs[2], gtrs_estimated_trajectory)
-    assert_allclose(expected_trajectories_gtrs[3], gtrs_true_trajectory)
+    assert_allclose(expected_trajectories_gtrs_sigma_1[0], gtrs_estimated_trajectory)
+    assert_allclose(expected_trajectories_gtrs_sigma_1[1], gtrs_true_trajectory)
 
 
 def test_calc_eigen_incorrect_parameters():

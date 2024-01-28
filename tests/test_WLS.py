@@ -9,18 +9,19 @@ from numpy.testing import assert_allclose
 
 
 @pytest.mark.critical()
-def test_wls_no_noise(default_values, expected_trajectories_wls, seeds):
+def test_wls_no_noise(default_values, expected_trajectories_wls_sigma_0):
     """This test pretends to see if the algorithm is correctly implemented by setting the noise to zero."""
+    # This test does not use seeds because the noise is set to zero.
     # Values used in test
     sigma = 0  # Noise STD in meters
     trajectories = wls(
-        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4], seeds[0]
+        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4]
     )
     wls_estimated_trajectory = trajectories[0]
     wls_true_trajectory = trajectories[1]
     # With sigma zero the trajectories should be the following ones if one performs the math
-    assert_allclose(expected_trajectories_wls[0], wls_estimated_trajectory)
-    assert_allclose(expected_trajectories_wls[1], wls_true_trajectory)
+    assert_allclose(expected_trajectories_wls_sigma_0[0], wls_estimated_trajectory)
+    assert_allclose(expected_trajectories_wls_sigma_0[1], wls_true_trajectory)
 
 
 @pytest.mark.critical()
@@ -68,16 +69,14 @@ def test_WLS_exceptions(default_values):
         wls(default_values[0], default_values[1], default_values[2], sigma, default_values[3], [1, 2])
 
 
-def test_wls_optional_parameters(default_values, expected_trajectories_wls):
+def test_wls_optional_parameters(default_values, expected_trajectories_wls_sigma_1, seeds):
     """This test pretends to see if the algorithm correctly accepts optional parameters."""
     # Values used in test
-    sigma = 0  # Noise STD in meters
-    noise_seed = 1
+    sigma = 1  # Noise STD in meters
     trajectories = wls(
-        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4], noise_seed
+        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4], seeds[0]
     )
     wls_estimated_trajectory = trajectories[0]
     wls_true_trajectory = trajectories[1]
-    # With sigma zero the trajectories should be the following ones if one performs the math
-    assert_allclose(expected_trajectories_wls[2], wls_estimated_trajectory)
-    assert_allclose(expected_trajectories_wls[3], wls_true_trajectory)
+    assert_allclose(expected_trajectories_wls_sigma_1[0], wls_estimated_trajectory)
+    assert_allclose(expected_trajectories_wls_sigma_1[1], wls_true_trajectory)

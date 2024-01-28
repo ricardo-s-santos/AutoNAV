@@ -15,16 +15,10 @@ def test_read_file():
     destinations = readpathfile(filename)
     expected_destinations = array(
         [
-            [75.0, 5.0, 5.0],
-            [75.0, 10.0, 5.0],
-            [75.0, 20.0, 5.0],
-            [75.0, 23.0, 5.0],
-            [55.0, 23.0, 5.0],
+            [35.0, 5.0, 5.0],
+            [35.0, 20.0, 5.0],
             [35.0, 23.0, 5.0],
-            [25.0, 23.0, 5.0],
-            [15.0, 23.0, 5.0],
-            [10.0, 23.0, 5.0],
-            [10.0, 50.0, 5.0],
+            [25.0, 30.0, 5.0],
         ]
     )
     assert_array_equal(expected_destinations, destinations)

@@ -33,7 +33,7 @@ def gtrs(
     sigma: float,
     destinations: NDArray,
     initial_uav_position: list,
-    noise_seed=0,
+    noise_seed=1,
     tol: float = 0.001,
     n_iter: int = 30,
     max_lim: float = 1000000.0,

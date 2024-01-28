@@ -12,7 +12,7 @@ from numpy.typing import NDArray
 
 
 def wls(
-    a_i: NDArray, n: int, k: int, sigma: float, destinations: NDArray, initial_uav_position: list, noise_seed=0
+    a_i: NDArray, n: int, k: int, sigma: float, destinations: NDArray, initial_uav_position: list, noise_seed=1
 ) -> NDArray:
     """This function executes the WLS algorithm.
 
