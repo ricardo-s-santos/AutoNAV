@@ -5,7 +5,7 @@ import math
 
 from autonav.random_generator import randomGenerator
 from autonav.velocity import _velocity
-from numpy import array, asarray, cos, dot, eye, float32, median, sin, size, sqrt
+from numpy import array, asarray, cos, dot, eye, float32, median, round, sin, size, sqrt
 from numpy.lib import scimath
 from numpy.linalg import norm, solve
 from numpy.typing import NDArray
@@ -120,11 +120,14 @@ def wls(
             u_i_3 = sin((phi_i * math.pi) / 180).T
             u_i_4 = cos((alpha_i * math.pi) / 180).T
             u_i = array([[u_i_1 * u_i_2], [u_i_3 * u_i_2], [u_i_4]], dtype=float32).reshape(3, n)
-            a = asarray(u_i.T, dtype=float32)
-            b = d_i + (sum(u_i * a_i).T.reshape(n, 1))
+            a_1 = asarray(u_i.T, dtype=float32)
+            b_1 = d_i + (sum(u_i * a_i).T.reshape(n, 1))
             w_i = asarray((1 / d_i) / (sum(1 / d_i)))
             w = asarray(eye(n) * scimath.sqrt(w_i))
-            x_est = asarray(solve(dot(dot(a.T, w.T), dot(w, a)), dot(dot(a.T, w.T), dot(w, b))))
+            a_loc = dot(w, a_1)
+            b_loc = dot(w, b_1)
+            x_est = asarray(solve(dot(a_loc.T, a_loc) + (1 * 10 ** (-6)) * eye(3), dot(a_loc.T, b_loc)))
+            x_est = round(x_est, decimals=4)  # Save only four decimal places
             estimated_trajectory.append(x_est[:, 0])
             true_trajectory.append(x_true[:])
             uav_velocity = _velocity(x_est[:, 0], destinations[ww, :])
