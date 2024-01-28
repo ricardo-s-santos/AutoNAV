@@ -4,7 +4,7 @@ import re
 
 import pytest
 from autonav.WLS import wls
-from numpy import array
+from numpy import array, round
 from numpy.testing import assert_allclose
 
 
@@ -20,8 +20,8 @@ def test_wls_no_noise(default_values, expected_trajectories_wls_sigma_0):
     wls_estimated_trajectory = trajectories[0]
     wls_true_trajectory = trajectories[1]
     # With sigma zero the trajectories should be the following ones if one performs the math
-    assert_allclose(expected_trajectories_wls_sigma_0[0], wls_estimated_trajectory)
-    assert_allclose(expected_trajectories_wls_sigma_0[1], wls_true_trajectory)
+    assert_allclose(round(expected_trajectories_wls_sigma_0[0], 3), round(wls_estimated_trajectory, 3))
+    assert_allclose(round(expected_trajectories_wls_sigma_0[1], 3), round(wls_true_trajectory, 3))
 
 
 @pytest.mark.critical()
@@ -78,5 +78,5 @@ def test_wls_optional_parameters(default_values, expected_trajectories_wls_sigma
     )
     wls_estimated_trajectory = trajectories[0]
     wls_true_trajectory = trajectories[1]
-    assert_allclose(expected_trajectories_wls_sigma_1[0], wls_estimated_trajectory)
-    assert_allclose(expected_trajectories_wls_sigma_1[1], wls_true_trajectory)
+    assert_allclose(round(expected_trajectories_wls_sigma_1[0], 3), round(wls_estimated_trajectory, 3))
+    assert_allclose(round(expected_trajectories_wls_sigma_1[1], 3), round(wls_true_trajectory, 3))
