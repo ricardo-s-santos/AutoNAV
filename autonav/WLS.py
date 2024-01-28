@@ -127,14 +127,14 @@ def wls(
             a_loc = dot(w, a_1)
             b_loc = dot(w, b_1)
             x_est = asarray(solve(dot(a_loc.T, a_loc) + (1 * 10 ** (-6)) * eye(3), dot(a_loc.T, b_loc)))
-            x_est = round(x_est, decimals=4)  # Save only four decimal places
+            x_est = round(x_est, decimals=3)  # Save only three decimal places
             estimated_trajectory.append(x_est[:, 0])
             true_trajectory.append(x_true[:])
             uav_velocity = _velocity(x_est[:, 0], destinations[ww, :])
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
             x_true[2] = x_true[2] + uav_velocity[2]
-            x_true = list(around(array(x_true), 4))
+            x_true = list(around(array(x_true), 3))
             distance = math.sqrt(
                 (x_true[0] - destinations[ww][0]) ** 2
                 + (x_true[1] - destinations[ww][1]) ** 2
