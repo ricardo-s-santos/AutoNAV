@@ -124,7 +124,7 @@ def wls(
             b = d_i + (sum(u_i * a_i).T.reshape(n, 1))
             w_i = asarray((1 / d_i) / (sum(1 / d_i)))
             w = asarray(eye(n) * scimath.sqrt(w_i))
-            x_est = asarray(solve(dot(dot(a.T, w.T), dot(w, a)), dot(dot(a.T, w.T), dot(w, b))).real)
+            x_est = asarray(solve(dot(dot(a.T, w.T), dot(w, a)), dot(dot(a.T, w.T), dot(w, b))))
             estimated_trajectory.append(x_est[:, 0])
             true_trajectory.append(x_true[:])
             uav_velocity = _velocity(x_est[:, 0], destinations[ww, :])
