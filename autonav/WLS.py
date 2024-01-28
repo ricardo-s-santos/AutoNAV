@@ -5,7 +5,7 @@ import math
 
 from autonav.random_generator import randomGenerator
 from autonav.velocity import _velocity
-from numpy import array, asarray, cos, dot, eye, float32, median, round, sin, size, sqrt
+from numpy import around, array, asarray, cos, dot, eye, float32, median, round, sin, size, sqrt
 from numpy.lib import scimath
 from numpy.linalg import norm, solve
 from numpy.typing import NDArray
@@ -134,6 +134,7 @@ def wls(
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
             x_true[2] = x_true[2] + uav_velocity[2]
+            x_true = list(around(array(x_true), 4))
             distance = math.sqrt(
                 (x_true[0] - destinations[ww][0]) ** 2
                 + (x_true[1] - destinations[ww][1]) ** 2

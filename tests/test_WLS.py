@@ -78,6 +78,5 @@ def test_wls_optional_parameters(default_values, expected_trajectories_wls_sigma
     )
     wls_estimated_trajectory = trajectories[0]
     wls_true_trajectory = trajectories[1]
-    print(repr(wls_true_trajectory))
     assert_allclose(expected_trajectories_wls_sigma_1[0], wls_estimated_trajectory)
     assert_allclose(expected_trajectories_wls_sigma_1[1], wls_true_trajectory)
