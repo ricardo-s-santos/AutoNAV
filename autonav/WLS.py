@@ -5,7 +5,7 @@ import math
 
 from autonav.random_generator import randomGenerator
 from autonav.velocity import _velocity
-from numpy import around, array, asarray, cos, dot, eye, float32, median, round, sin, size, sqrt
+from numpy import around, array, asarray, cos, dot, eye, median, round, sin, size, sqrt, zeros
 from numpy.lib import scimath
 from numpy.linalg import norm, solve
 from numpy.typing import NDArray
@@ -71,12 +71,10 @@ def wls(
             # ---------------------------------------------------------------------
             # Estimation part
             # ---------------------------------------------------------------------
-            xi_est = []
-            phi_i = []
-            alpha_i = []
+            xi_est = zeros(shape=(3, n))
+            phi_i = zeros(shape=(n, 1))
+            alpha_i = zeros(shape=(n, 1))
             for ii in range(0, n):
-                a2_list = []
-                b2 = []
                 kk = [ii + 1]
                 for jj in range(0, n):
                     total = 0
@@ -86,41 +84,34 @@ def wls(
                         total += 1
                     if ii != jj and total > 0:
                         kk.append(jj + 1)
+                a2 = zeros(shape=(len(array(list(itertools.combinations(kk, 2)))), 3))
+                b2 = zeros(shape=(len(array(list(itertools.combinations(kk, 2)))), 1))
                 for uu in range(0, len(array(list(itertools.combinations(kk, 2))))):
                     combinations = array(list(itertools.combinations(kk, 2)))
                     gg = combinations[uu, 0]
                     hh = combinations[uu, 1]
-                    a2_list.append(2 * (a_i[0:3, gg - 1] - a_i[0:3, hh - 1]).T)
-                    b2.append(
+                    a2[uu, :] = 2 * (a_i[0:3, gg - 1] - a_i[0:3, hh - 1]).T
+                    b2[uu] = (
                         d_i[hh - 1] ** 2 - d_i[gg - 1] ** 2 - norm(a_i[0:3, hh - 1]) ** 2 + norm(a_i[0:3, gg - 1]) ** 2
                     )
-                a2: NDArray = asarray(a2_list, dtype=float32)
-                b2 = asarray(b2, dtype=float32)
-                xi_est.append(solve(dot(a2.T, a2) + (1 * 10 ** (-6)) * eye(3), dot(a2.T, b2)))
-                di_xy = norm(xi_est[0][0:2])
-                xi_est[ii][2] = (cmath.sqrt((d_i[0] ** 2)[0] - (di_xy**2)).real) + (
+                xi_est[:, [ii]] = solve(dot(a2.T, a2) + (1 * 10 ** (-6)) * eye(3), dot(a2.T, b2))
+                di_xy = norm(xi_est[0:2, 0])
+                xi_est[2][ii] = (cmath.sqrt((d_i[0] ** 2)[0] - (di_xy**2)).real) + (
                     cmath.sqrt((d_i[0] ** 2)[0] - (di_xy**2)).imag
                 )
-                phi_i.append(
-                    (math.atan2((xi_est[ii][1] - a_i[1, ii])[0], (xi_est[ii][0] - a_i[0, ii])[0]) * 180) / math.pi
+                phi_i[ii] = math.atan2((xi_est[1][ii] - a_i[1, ii]), (xi_est[0][ii] - a_i[0, ii])) * 180 / math.pi
+                alpha_i[ii] = (
+                    math.acos((xi_est[2][ii] - a_i[2, ii]) / (norm(xi_est[:, ii] - a_i[:, ii]))) * 180 / math.pi
                 )
-                alpha_i.append(
-                    (
-                        math.acos(
-                            (xi_est[ii][2] - a_i[2, ii])[0] / (norm(xi_est[:][ii] - a_i[:, ii].reshape(len(a_i), 1)))
-                        )
-                        * 180
-                    )
-                    / math.pi
-                )
-            phi_i = asarray(phi_i, dtype=float32)
-            alpha_i = asarray(alpha_i, dtype=float32)
             u_i_1 = cos((phi_i * math.pi) / 180).T
             u_i_2 = sin((alpha_i * math.pi) / 180).T
             u_i_3 = sin((phi_i * math.pi) / 180).T
             u_i_4 = cos((alpha_i * math.pi) / 180).T
-            u_i = array([[u_i_1 * u_i_2], [u_i_3 * u_i_2], [u_i_4]], dtype=float32).reshape(3, n)
-            a_1 = asarray(u_i.T, dtype=float32)
+            u_i = zeros(shape=(3, n))
+            u_i[0, :] = u_i_1 * u_i_2
+            u_i[1, :] = u_i_3 * u_i_2
+            u_i[2, :] = u_i_4
+            a_1 = u_i.T
             b_1 = d_i + (sum(u_i * a_i).T.reshape(n, 1))
             w_i = asarray((1 / d_i) / (sum(1 / d_i)))
             w = asarray(eye(n) * scimath.sqrt(w_i))

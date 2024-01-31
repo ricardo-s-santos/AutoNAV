@@ -2,11 +2,11 @@
 from math import sqrt
 
 import numpy
-from numpy import dot
+from numpy import dot, zeros
 from numpy.typing import NDArray
 
 
-def _velocity(current_position: NDArray, destination_position: NDArray) -> list:
+def _velocity(current_position: NDArray, destination_position: NDArray) -> NDArray:
     """This function computes the max speed allowed to the UAV according to the distance to the destination.
 
     Args:
@@ -19,7 +19,7 @@ def _velocity(current_position: NDArray, destination_position: NDArray) -> list:
     param_max_velocity = 2
     param_reach_distance = 4
     param_smooth_factor = 2
-    velocity_allowed = [0, 0, 0]
+    velocity_allowed = zeros(3)
     """Check if parameters contain only numbers."""
     if destination_position.dtype == float or destination_position.dtype == int:
         if current_position.dtype == float or current_position.dtype == int:

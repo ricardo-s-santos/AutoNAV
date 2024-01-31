@@ -7,6 +7,8 @@ from autonav.WLS import wls
 from numpy import array, round
 from numpy.testing import assert_allclose
 
+# Assert all close tolerance testes. Não é preciso todos os arrays para comparar
+
 
 @pytest.mark.critical()
 def test_wls_no_noise(default_values, expected_trajectories_wls_sigma_0):
