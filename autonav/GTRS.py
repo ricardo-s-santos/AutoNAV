@@ -278,7 +278,7 @@ def _fi_fun(lambda_1: float, a: NDArray, d: NDArray, b: NDArray, f: NDArray) -> 
     ttt_ = dot(lambda_1, f)
     y = solve((g_ + gg_ + ggg_), (t_ - ttt_))
     fi = dot(dot(y.T, d), y) + dot(dot(2, f.T), y)
-    return float(real(fi))
+    return real(fi[0])
 
 
 def _calc_eigen(a: NDArray, d: NDArray) -> NDArray:

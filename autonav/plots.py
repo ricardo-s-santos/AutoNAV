@@ -35,7 +35,7 @@ def plot_trajectories(
             ax = plt.axes(projection="3d")
             a_i_label = "a_i"
             for i in range(0, a_i.shape[1]):
-                ax.plot3D(
+                ax.plot(
                     a_i[0][i],
                     a_i[1][i],
                     a_i[2][i],
@@ -46,7 +46,7 @@ def plot_trajectories(
                     label=a_i_label,
                 )
                 a_i_label = "_nolegend_"  # Legend only in the first iteration
-            ax.plot3D(
+            ax.plot(
                 ideal_trajectory[:, 0],
                 ideal_trajectory[:, 1],
                 ideal_trajectory[:, 2],
@@ -55,7 +55,7 @@ def plot_trajectories(
                 linewidth=3.0,
                 alpha=0.7,
             )
-            ax.plot3D(
+            ax.plot(
                 estimated_trajectories[j][:, 0],
                 estimated_trajectories[j][:, 1],
                 estimated_trajectories[j][:, 2],
