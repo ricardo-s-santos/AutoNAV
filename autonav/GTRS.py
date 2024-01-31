@@ -97,9 +97,9 @@ def gtrs(
             ]
         ),
     )
-    x_state = zeros((6, 1))
-    x_loc = zeros((3, 1))
-    p = None
+    x_state = zeros(shape=(6, 1))
+    x_loc = zeros(shape=(3, 1))
+    p = eye(6)
     qq = 0
     x_true = initial_uav_position[:]
     estimated_trajectory = []
@@ -127,18 +127,14 @@ def gtrs(
             # ---------------------------------------------------------------------
             # Estimation part
             # ---------------------------------------------------------------------
-            a1_loc = []
-            b1_loc = []
-            a_track = []
-            d_track = []
-            f_track = []
-            b_track = []
+            a1_loc = zeros(shape=(n, 4))
+            b1_loc = zeros(shape=(n, 1))
+            a_track = zeros(shape=(n + 6, 7))
+            b_track = zeros(shape=(n + 6, 1))
             w_i_loc = array(sqrt(d_i ** (-1.0) / (sum(d_i ** (-1.0)))))
             for tt in arange(0, n, 1).reshape(-1):
-                a1_loc.append(append(dot(2, a_i[0:3, tt].T), -1))
-                b1_loc.append(norm(a_i[0:3, tt]) ** 2 - d_i[tt] ** 2)
-            a1_loc = array(a1_loc)
-            b1_loc = array(b1_loc)
+                a1_loc[tt] = append(dot(2, a_i[0:3, tt].T), -1)
+                b1_loc[tt] = norm(a_i[0:3, tt]) ** 2 - d_i[tt] ** 2
             w_loc = diag(w_i_loc.T[0])
             d_loc = eye(4)
             d_loc[3, 3] = 0
@@ -146,16 +142,15 @@ def gtrs(
             a_loc = dot(w_loc, a1_loc)
             b_loc = dot(w_loc, b1_loc)
             if qq != 0:
-                p_pred = dot(dot(s, p), s.T) + q
+                aux = dot(s, p)
+                p_pred = dot(aux, s.T) + q
                 x_pred = dot(s, x_state[0:6, qq - 1])
                 x_pred = x_pred.reshape(len(x_pred), 1)
-                a1_track = []
-                b1_track = []
+                a1_track = zeros(shape=(n, 7))
+                b1_track = zeros(shape=(n, 1))
                 for tt in arange(0, n, 1).reshape(-1):
-                    a1_track.append(concatenate((dot(2, a_i[0:3, tt].T), zeros(size(x, 0)), [-1]), axis=0))
-                    b1_track.append(norm(a_i[0:3, tt]) ** 2 - abs(d_i[tt] ** 2))
-                a1_track = array(a1_track)
-                b1_track = array(b1_track)
+                    a1_track[tt] = concatenate((dot(2, a_i[0:3, tt].T), zeros(size(x, 0)), [-1]), axis=0)
+                    b1_track[tt] = norm(a_i[0:3, tt]) ** 2 - abs(d_i[tt] ** 2)
                 left_matrix = sqrtm(inv(p_pred))
                 right_matrix = zeros((size(x_state, 0), 1))
                 a1_track = concatenate((a1_track, concatenate((left_matrix, right_matrix), axis=1)), axis=0)
@@ -184,7 +179,7 @@ def gtrs(
             )
             if qq == 0:
                 x_loc[0:3, qq] = real(y_hat_loc[0:3, 0])
-                x_state[0:6, qq] = concatenate((x_loc[0:3, qq], [0], [0], [0]), axis=0)
+                x_state[0:6, qq] = concatenate((x_loc[0:3, qq], zeros(3)), axis=0)
                 p = eye(6)
                 estimated_trajectory.append(x_loc[0:3, qq])
             else:
@@ -247,20 +242,20 @@ def _bisection_fun(
         The solution to the GTRS problem.
     """
     lambda_ = (min_lim + max_lim) / 2
-    fun_val = 10**9
+    fun_val = 1.0 * 10**9
     num_iter = 1
     while num_iter <= n_iter and abs(fun_val) > tol and abs(min_lim - max_lim) > 0.0001:
         lambda_ = (min_lim + max_lim) / 2
         fun_val = _fi_fun(lambda_, a, d, b, f)
         if fun_val > 0:
-            min_lim = lambda_.copy()
+            min_lim = (min_lim + max_lim) / 2
         else:
-            max_lim = lambda_.copy()
+            max_lim = (min_lim + max_lim) / 2
         num_iter = num_iter + 1
     return lambda_
 
 
-def _fi_fun(lambda_1: float, a: NDArray, d: NDArray, b: NDArray, f: NDArray) -> NDArray:
+def _fi_fun(lambda_1: float, a: NDArray, d: NDArray, b: NDArray, f: NDArray) -> float:
     """This function computes the fi value for a given lambda.
 
     Note:
@@ -274,7 +269,7 @@ def _fi_fun(lambda_1: float, a: NDArray, d: NDArray, b: NDArray, f: NDArray) -> 
         f: Matrix f.
 
     Returns:
-        An NDArray with the fi value for the given input.
+        An float with the fi value for the given input.
     """
     g_ = dot(a.T, a)
     gg_ = dot(lambda_1, d)
@@ -283,7 +278,7 @@ def _fi_fun(lambda_1: float, a: NDArray, d: NDArray, b: NDArray, f: NDArray) -> 
     ttt_ = dot(lambda_1, f)
     y = solve((g_ + gg_ + ggg_), (t_ - ttt_))
     fi = dot(dot(y.T, d), y) + dot(dot(2, f.T), y)
-    return fi
+    return float(real(fi))
 
 
 def _calc_eigen(a: NDArray, d: NDArray) -> NDArray:

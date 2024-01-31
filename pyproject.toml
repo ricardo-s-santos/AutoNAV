@@ -62,6 +62,7 @@ skip_gitignore = "True"
 [tool.mypy]
 python_version = "3.8"
 warn_unused_ignores = true
+ignore_missing_imports = true
 
 [tool.flake8]
 max-line-length = 120
