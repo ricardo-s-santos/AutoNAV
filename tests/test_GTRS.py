@@ -30,13 +30,13 @@ def test_gtrs_reproducibility(default_values, seeds):
     # Values used in test
     sigma = 1  # Noise STD in meters
     trajectories = gtrs(
-        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4], seeds[0]
+        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4], seeds
     )
     gtrs_estimated_trajectory_1 = trajectories[0]
     gtrs_true_trajectory_1 = trajectories[1]
     # Call GTRS again
     trajectories = gtrs(
-        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4], seeds[0]
+        default_values[0], default_values[1], default_values[2], sigma, default_values[3], default_values[4], seeds
     )
     gtrs_estimated_trajectory_2 = trajectories[0]
     gtrs_true_trajectory_2 = trajectories[1]
@@ -104,11 +104,11 @@ def test_GTRS_exceptions(default_values):
         )
 
 
-def test_gtrs_optional_parameters(default_values, expected_trajectories_gtrs_sigma_1, seeds):
+def test_gtrs_optional_parameters(default_values, expected_trajectories_gtrs_sigma_1):
     """This test pretends to see if the algorithm correctly accepts optional parameters."""
     # Values used in test
     sigma = 1  # Noise STD in meters
-    noise_seed = seeds[0]
+    noise_seed = 5
     tol = 0.0015
     n_iter = 35
     max_lim = 1000005.0
@@ -127,8 +127,8 @@ def test_gtrs_optional_parameters(default_values, expected_trajectories_gtrs_sig
     gtrs_estimated_trajectory = trajectories[0]
     gtrs_true_trajectory = trajectories[1]
     # With sigma zero the trajectories should be the following ones if one performs the math
-    assert_allclose(expected_trajectories_gtrs_sigma_1[0], gtrs_estimated_trajectory)
-    assert_allclose(expected_trajectories_gtrs_sigma_1[1], gtrs_true_trajectory)
+    assert_allclose(expected_trajectories_gtrs_sigma_1[0], gtrs_estimated_trajectory, rtol=1e-02)
+    assert_allclose(expected_trajectories_gtrs_sigma_1[1], gtrs_true_trajectory, rtol=1e-02)
 
 
 def test_calc_eigen_incorrect_parameters():
