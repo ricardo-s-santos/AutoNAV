@@ -1,4 +1,5 @@
 """This module contains the WLS algorithm."""
+
 import cmath
 import itertools
 import math
@@ -12,7 +13,7 @@ from numpy.typing import NDArray
 
 
 def wls(
-    a_i: NDArray, n: int, k: int, sigma: float, destinations: NDArray, initial_uav_position: list, noise_seed=1
+    a_i: NDArray, n: int, k: int, sigma: float, destinations: NDArray, initial_uav_position: list, noise_seed: int = 1
 ) -> NDArray:
     """This function executes the WLS algorithm.
 

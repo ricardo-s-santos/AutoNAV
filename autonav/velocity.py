@@ -1,4 +1,5 @@
 """This module contains the velocity functions."""
+
 from math import sqrt
 
 import numpy

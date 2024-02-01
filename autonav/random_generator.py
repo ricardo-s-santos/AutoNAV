@@ -1,4 +1,5 @@
 """This module contains the random generator needed to compute the noise."""
+
 from numpy.random import PCG64, Generator
 
 

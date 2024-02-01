@@ -1,4 +1,5 @@
 """This module contains the GTRS algorithm functions."""
+
 import math
 
 from autonav.random_generator import random_generator
@@ -33,7 +34,7 @@ def gtrs(
     sigma: float,
     destinations: NDArray,
     initial_uav_position: list,
-    noise_seed=1,
+    noise_seed: int = 1,
     tol: float = 0.001,
     n_iter: int = 30,
     max_lim: float = 1000000.0,

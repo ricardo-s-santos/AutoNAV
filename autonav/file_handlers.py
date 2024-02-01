@@ -1,4 +1,5 @@
 """This module contains the functions to read the Path.txt file."""
+
 import csv
 import os
 
