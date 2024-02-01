@@ -38,6 +38,7 @@ devel = [
     "flake8-isort",
     "flake8-black",
     "flake8-bugbear",
+    "Flake8-pyproject",
     "mypy",
     "pre-commit",
     "pytest >= 7.0",
