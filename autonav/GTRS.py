@@ -1,7 +1,7 @@
 """This module contains the GTRS algorithm functions."""
 import math
 
-from autonav.random_generator import randomGenerator
+from autonav.random_generator import random_generator
 from autonav.velocity import _velocity
 from numpy import (
     append,
@@ -107,7 +107,7 @@ def gtrs(
     ww = 0
     n_dest = len(destinations) - 1
     # Generator to create random numbers (see line 122)
-    gen = randomGenerator(noise_seed)
+    gen = random_generator(noise_seed)
     while ww <= n_dest:
         distance = math.sqrt(
             (x_true[0] - destinations[ww][0]) ** 2

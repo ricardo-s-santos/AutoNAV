@@ -10,33 +10,33 @@ from numpy import array, insert
 @pytest.fixture(scope="session")
 def default_values():
     """This fixture defines the default values to be used in the algorithm tests."""
-    ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
-    filename = ROOT_DIR + "/path_files/Path_small.txt"
+    root_dir = os.path.dirname(os.path.realpath(__file__))
+    filename = root_dir + "/path_files/Path_small.txt"
     destinations = readpathfile(filename)
-    N = 8  # Number of anchors
-    B = 200  # Area border in meters
-    K = 50  # Number of measurement samples
+    n = 8  # Number of anchors
+    b = 200  # Area border in meters
+    k = 50  # Number of measurement samples
     a_i = array(
         [
             [0, 0, 0],
-            [0, B, 0],
-            [B / 2, 0, 0],
-            [B / 2, B, 0],
-            [0, 0, B / 8],
-            [0, B, B / 8],
-            [B / 2, 0, B / 8],
-            [B / 2, B, B / 8],
+            [0, b, 0],
+            [b / 2, 0, 0],
+            [b / 2, b, 0],
+            [0, 0, b / 8],
+            [0, b, b / 8],
+            [b / 2, 0, b / 8],
+            [b / 2, b, b / 8],
         ]
     ).T
     initial_uav_position = [10, 10, 5]
-    return [a_i, N, K, destinations, initial_uav_position]
+    return [a_i, n, k, destinations, initial_uav_position]
 
 
 @pytest.fixture(scope="session")
 def ideal_trajectory():
     """This fixture contains the ideal trajectory for the plots.py tests."""
-    ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
-    filename = ROOT_DIR + "/path_files/Path_small.txt"
+    root_dir = os.path.dirname(os.path.realpath(__file__))
+    filename = root_dir + "/path_files/Path_small.txt"
     ideal_trajectory = readpathfile(filename)
     ideal_trajectory = insert(ideal_trajectory, 0, [10, 10, 5], axis=0)
     return ideal_trajectory

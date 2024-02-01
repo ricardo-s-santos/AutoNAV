@@ -10,8 +10,8 @@ from numpy.testing import assert_array_equal
 
 def test_read_file():
     """This test the reading of input file."""
-    ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
-    filename = ROOT_DIR + "/path_files/Path_small.txt"
+    root_dir = os.path.dirname(os.path.realpath(__file__))
+    filename = root_dir + "/path_files/Path_small.txt"
     destinations = readpathfile(filename)
     expected_destinations = array(
         [
@@ -26,7 +26,7 @@ def test_read_file():
 
 def test_file_not_found():
     """Test for non-existing file."""
-    ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
-    filename = ROOT_DIR + "/path_files/Path_not_found.txt"
+    root_dir = os.path.dirname(os.path.realpath(__file__))
+    filename = root_dir + "/path_files/Path_not_found.txt"
     with pytest.raises(FileNotFoundError):
         readpathfile(filename)

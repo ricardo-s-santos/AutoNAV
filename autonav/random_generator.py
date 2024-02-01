@@ -2,7 +2,7 @@
 from numpy.random import PCG64, Generator
 
 
-def randomGenerator(seed):
+def random_generator(seed):
     """This function creates a generator to be used by the algorithms.
 
     Args:

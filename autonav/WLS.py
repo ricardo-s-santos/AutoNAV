@@ -3,7 +3,7 @@ import cmath
 import itertools
 import math
 
-from autonav.random_generator import randomGenerator
+from autonav.random_generator import random_generator
 from autonav.velocity import _velocity
 from numpy import array, asarray, cos, dot, eye, median, sin, size, sqrt, zeros
 from numpy.lib import scimath
@@ -51,7 +51,7 @@ def wls(
     estimated_trajectory = []
     true_trajectory = []
     # Generator to create random numbers (see line 65)
-    gen = randomGenerator(noise_seed)
+    gen = random_generator(noise_seed)
     while ww <= n_dest:
         distance = math.sqrt(
             (x_true[0] - destinations[ww][0]) ** 2
