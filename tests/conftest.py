@@ -42,7 +42,7 @@ def ideal_trajectory():
     return ideal_trajectory
 
 
-@pytest.fixture(scope="session", params=[5, 20000, 900000])
+@pytest.fixture(scope="session", params=[5, 24612, 93456558])
 def seeds(request):
     """This fixture contains the seeds for the GTRS and WLS tests."""
     return request.param
