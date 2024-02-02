@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "autonav"
-version = "0.0.1"
+version = "1.0.0"
 description = "Research software for navigating a UAV in indoor environments"
 readme = "README.md"
 requires-python = ">=3.8"
@@ -12,7 +12,7 @@ keywords = ["UAV", "Navigation", "Indoor"]
 license = { text = "MIT" }
 authors = [{ name = "Ricardo S. Santos", email = "p6221@ulusofona.pt" }]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python :: 3",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
