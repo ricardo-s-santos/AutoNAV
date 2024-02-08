@@ -57,7 +57,7 @@ def gtrs(
 
     Returns:
         The estimated trajectory computed using the GTRS algorithm for the given input scenario
-        and the true trajectory that the UAV followed.
+          and the true trajectory that the UAV followed.
     """
     # Validate inputs
     if size(a_i, axis=1) != n:
