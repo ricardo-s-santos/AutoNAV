@@ -59,7 +59,7 @@ plot_trajectories(destinations, estimated_trajectory, a_i)
 ```
 
 <p align="center">
-  <img width="460" height="300" src="https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/trajectories_plot.png?raw=true">
+  <img src="https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/trajectories_plot.png?raw=true" alt="image" width="auto" height="auto">
 </p>
 
 ## References
