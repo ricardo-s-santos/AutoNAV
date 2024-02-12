@@ -20,6 +20,8 @@ pip install autonav
 After installing the package one can import the algorithms and necessary dependencies as follows:
 
 ```python
+import matplotlib.pyplot as plt
+
 from autonav import gtrs, wls
 from autonav.file_handlers import readpathfile
 from autonav.plots import plot_trajectories
@@ -52,7 +54,8 @@ Finally, call the GTRS or WLS algorithm and plot the trajectories:
 
 ```python
 [estimated_trajectory, true_trajectory] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position)
-plot_trajectories(destinations, estimated_trajectory, a_i)
+plot_trajectories(destinations, [estimated_trajectory], a_i, ['GTRS'])
+plt.show()
 ```
 
-![Trajectories](https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/trajectories.png?raw=true)
+![Trajectories](https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/trajectories_plot.png?raw=true)
