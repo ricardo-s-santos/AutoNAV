@@ -66,7 +66,7 @@ def plot_trajectories(
             ax.set_title("Estimated Trajectory " + names_of_the_algorithms[j])
             ax.set_xlabel("Width (m)")
             ax.set_ylabel("Length (m)")
-            ax.set_zlabel("Heigth (m)")
+            ax.set(zlabel="Heigth (m)")
             ax.legend()
             axes.append(ax)
         return axes
