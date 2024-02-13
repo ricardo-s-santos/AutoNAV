@@ -58,4 +58,6 @@ plot_trajectories(destinations, [estimated_trajectory], a_i, ['GTRS'])
 plt.show()
 ```
 
-![Trajectories](https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/trajectories_plot.png?raw=true)
+<p align="center">
+  <img src="https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/trajectories_plot.png?raw=true" alt="image" width="auto" height="auto">
+</p>
