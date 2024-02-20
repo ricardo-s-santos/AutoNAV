@@ -62,7 +62,7 @@ def gtrs(
     # Validate inputs
     if size(a_i, axis=1) != n:
         raise ValueError("The length of a_i must be equal to N.")
-    if k < 0:
+    if k <= 0:
         raise ValueError("K must be positive.")
     if sigma < 0 or sigma > 5:
         raise ValueError("Sigma must be between 0 and 5.")
