@@ -1,4 +1,4 @@
-"""This module contains the functions to read the Path.txt file."""
+"""This module contains the functions to read the Path.csv file."""
 
 import csv
 import os
