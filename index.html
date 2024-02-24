@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/favicon.ico?raw=true">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.9">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.11">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.f2e4d321.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.7e359304.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
@@ -653,7 +653,7 @@
 <a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="n">k</span> <span class="o">=</span> <span class="mi">50</span>
 <a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="n">sigma</span> <span class="o">=</span> <span class="mi">1</span>
 <a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="n">initial_uav_position</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="n">destinations</span> <span class="o">=</span> <span class="n">readpathfile</span><span class="p">(</span><span class="s2">&quot;tests/path_files/Path.txt&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="n">destinations</span> <span class="o">=</span> <span class="n">readpathfile</span><span class="p">(</span><span class="s2">&quot;docs/docs/examples/Path.csv&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>Finally, call the GTRS or WLS algorithm and plot the trajectories:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">[</span><span class="n">estimated_trajectory</span><span class="p">,</span> <span class="n">true_trajectory</span><span class="p">]</span> <span class="o">=</span> <span class="n">gtrs</span><span class="p">(</span><span class="n">a_i</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">initial_uav_position</span><span class="p">)</span>
