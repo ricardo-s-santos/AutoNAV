@@ -23,7 +23,7 @@ a_i = array(
 k = 50
 sigma = 1
 initial_uav_position = [10, 10, 5]
-destinations = readpathfile("Path.txt")
+destinations = readpathfile("Path.csv")
 
 [estimated_trajectory, true_trajectory] = wls(a_i, n, k, sigma, destinations, initial_uav_position)
 plot_trajectories(destinations, [estimated_trajectory], a_i, ['WLS'])

@@ -24,7 +24,7 @@ a_i = array(
 k = 50
 sigma = 1
 initial_uav_position = [10, 10, 5]
-destinations = readpathfile("Path.txt")
+destinations = readpathfile("Path.csv")
 
 [estimated_trajectory_gtrs, true_trajectory_gtrs] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position)
 [estimated_trajectory_wls, true_trajectory_wls] = wls(a_i, n, k, sigma, destinations, initial_uav_position)

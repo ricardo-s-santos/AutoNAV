@@ -11,7 +11,7 @@ from numpy import array, insert
 def default_values():
     """This fixture defines the default values to be used in the algorithm tests."""
     root_dir = os.path.dirname(os.path.realpath(__file__))
-    filename = root_dir + "/path_files/Path_small.txt"
+    filename = root_dir + "/path_files/Path_small.csv"
     destinations = readpathfile(filename)
     n = 8  # Number of anchors
     b = 200  # Area border in meters
@@ -36,7 +36,7 @@ def default_values():
 def ideal_trajectory():
     """This fixture contains the ideal trajectory for the plots.py tests."""
     root_dir = os.path.dirname(os.path.realpath(__file__))
-    filename = root_dir + "/path_files/Path_small.txt"
+    filename = root_dir + "/path_files/Path_small.csv"
     ideal_trajectory = readpathfile(filename)
     ideal_trajectory = insert(ideal_trajectory, 0, [10, 10, 5], axis=0)
     return ideal_trajectory

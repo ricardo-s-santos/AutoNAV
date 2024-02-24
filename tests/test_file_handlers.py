@@ -11,7 +11,7 @@ from numpy.testing import assert_array_equal
 def test_read_file():
     """This test the reading of input file."""
     root_dir = os.path.dirname(os.path.realpath(__file__))
-    filename = root_dir + "/path_files/Path_small.txt"
+    filename = root_dir + "/path_files/Path_small.csv"
     destinations = readpathfile(filename)
     expected_destinations = array(
         [
@@ -27,6 +27,6 @@ def test_read_file():
 def test_file_not_found():
     """Test for non-existing file."""
     root_dir = os.path.dirname(os.path.realpath(__file__))
-    filename = root_dir + "/path_files/Path_not_found.txt"
+    filename = root_dir + "/path_files/Path_not_found.csv"
     with pytest.raises(FileNotFoundError):
         readpathfile(filename)
