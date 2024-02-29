@@ -10,9 +10,9 @@ from numpy.typing import NDArray
 def _velocity(
     current_position: NDArray,
     destination_position: NDArray,
-    param_max_velocity: int = 2,
-    param_reach_distance: int = 4,
-    param_smooth_factor: int = 2,
+    param_max_velocity: int,
+    param_reach_distance: int,
+    param_smooth_factor: int,
 ) -> NDArray:
     """This function computes the max speed allowed to the UAV according to the distance to the destination.
 
