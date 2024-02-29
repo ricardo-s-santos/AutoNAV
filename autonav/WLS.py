@@ -4,16 +4,26 @@ import cmath
 import itertools
 import math
 
-from autonav.random_generator import random_generator
-from autonav.velocity import _velocity
 from numpy import array, asarray, cos, dot, eye, median, sin, size, sqrt, zeros
 from numpy.lib import scimath
 from numpy.linalg import norm, solve
 from numpy.typing import NDArray
 
+from autonav.random_generator import random_generator
+from autonav.velocity import _velocity
+
 
 def wls(
-    a_i: NDArray, n: int, k: int, sigma: float, destinations: NDArray, initial_uav_position: list, noise_seed: int = 1
+    a_i: NDArray,
+    n: int,
+    k: int,
+    sigma: float,
+    destinations: NDArray,
+    initial_uav_position: list,
+    param_max_velocity: int = 2,
+    param_reach_distance: int = 4,
+    param_smooth_factor: int = 2,
+    noise_seed: int = 1,
 ) -> NDArray:
     """This function executes the WLS algorithm.
 
@@ -121,7 +131,9 @@ def wls(
             x_est = asarray(solve(dot(a_loc.T, a_loc) + (1 * 10 ** (-6)) * eye(3), dot(a_loc.T, b_loc)))
             estimated_trajectory.append(x_est[:, 0])
             true_trajectory.append(x_true[:])
-            uav_velocity = _velocity(x_est[:, 0], destinations[ww, :])
+            uav_velocity = _velocity(
+                x_est[:, 0], destinations[ww, :], param_max_velocity, param_reach_distance, param_smooth_factor
+            )
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
             x_true[2] = x_true[2] + uav_velocity[2]

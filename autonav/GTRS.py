@@ -2,8 +2,6 @@
 
 import math
 
-from autonav.random_generator import random_generator
-from autonav.velocity import _velocity
 from numpy import (
     append,
     arange,
@@ -26,6 +24,9 @@ from numpy.linalg import eigvals, inv, norm, pinv, solve
 from numpy.typing import NDArray
 from scipy.linalg import fractional_matrix_power, sqrtm
 
+from autonav.random_generator import random_generator
+from autonav.velocity import _velocity
+
 
 def gtrs(
     a_i: NDArray,
@@ -34,6 +35,9 @@ def gtrs(
     sigma: float,
     destinations: NDArray,
     initial_uav_position: list,
+    param_max_velocity: int,
+    param_reach_distance: int,
+    param_smooth_factor: int,
     noise_seed: int = 1,
     tol: float = 0.001,
     n_iter: int = 30,
@@ -200,7 +204,9 @@ def gtrs(
                 p = matmul(lk1, lk2)
                 estimated_trajectory.append(x_loc[0:3, qq])
             true_trajectory.append(x_true[:])
-            uav_velocity = _velocity(x_loc[0:3, qq], destinations[ww, :])
+            uav_velocity = _velocity(
+                x_loc[0:3, qq], destinations[ww, :], param_max_velocity, param_reach_distance, param_smooth_factor
+            )
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
             x_true[2] = x_true[2] + uav_velocity[2]

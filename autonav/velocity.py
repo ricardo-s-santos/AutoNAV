@@ -7,19 +7,25 @@ from numpy import dot, zeros
 from numpy.typing import NDArray
 
 
-def _velocity(current_position: NDArray, destination_position: NDArray) -> NDArray:
+def _velocity(
+    current_position: NDArray,
+    destination_position: NDArray,
+    param_max_velocity: int = 2,
+    param_reach_distance: int = 4,
+    param_smooth_factor: int = 2,
+) -> NDArray:
     """This function computes the max speed allowed to the UAV according to the distance to the destination.
 
     Args:
         current_position: The current position of the UAV.
         destination_position: The destination the UAV desires to reach.
+        param_max_velocity: The maximum velocity that the UAV can fly.
+        param_reach_distance: The threshold to reach the destination.
+        param_smooth_factor: The smoothing factor.
 
     Returns:
         The maximum velocity allowed to the UAV in the three axis (x,y,z).
     """
-    param_max_velocity = 2
-    param_reach_distance = 4
-    param_smooth_factor = 2
     velocity_allowed = zeros(3)
     """Check if parameters contain only numbers."""
     if destination_position.dtype == float or destination_position.dtype == int:
