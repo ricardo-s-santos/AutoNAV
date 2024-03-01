@@ -50,13 +50,27 @@ def test_velocity_reached_destination():
 
 
 @pytest.mark.parametrize(
-    ("current_position", "destination_position", "expected_error"),
+    (
+        "current_position",
+        "destination_position",
+        "param_max_velocity",
+        "param_reach_distance",
+        "param_smooth_factor",
+        "expected_error",
+    ),
     [
-        (array(["a", "a", "a"]), array([10, 10, 5]), TypeError),
-        (array([10, 10, 5]), array(["a", "a", "a"]), TypeError),
+        (array(["a", "a", "a"]), array([10, 10, 5]), "a", "a", "a", TypeError),
+        (array([10, 10, 5]), array(["a", "a", "a"]), "a", "a", "a", TypeError),
     ],
 )
-def test_velocity_invalid_parameters(current_position, destination_position, expected_error):
+def test_velocity_invalid_parameters(
+    current_position,
+    destination_position,
+    param_max_velocity,
+    param_reach_distance,
+    param_smooth_factor,
+    expected_error,
+):
     """Test velocity function when the parameters are incorrect."""
     with pytest.raises(expected_error):
-        _velocity(current_position, destination_position)
+        _velocity(current_position, destination_position, param_max_velocity, param_reach_distance, param_smooth_factor)
