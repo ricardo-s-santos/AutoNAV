@@ -38,6 +38,9 @@ def wls(
         destinations: The intermediate points need for navigation in 3D.
         initial_uav_position: The initial UAV position in 3D.
         noise_seed: The seed to generate the noise.
+        param_max_velocity: The maximum velocity that the UAV can fly.
+        param_reach_distance: The threshold to reach the destination.
+        param_smooth_factor: The smoothing factor.
 
     Returns:
         The estimated trajectory computed using the WLS algorithm for the given input scenario

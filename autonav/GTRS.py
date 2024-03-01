@@ -58,6 +58,9 @@ def gtrs(
         tol: The tolerance for the bisection function.
         n_iter: The max number of iterations for the bisection function.
         max_lim: The maximum value for the interval in the bisection function.
+        param_max_velocity: The maximum velocity that the UAV can fly.
+        param_reach_distance: The threshold to reach the destination.
+        param_smooth_factor: The smoothing factor.
 
     Returns:
         The estimated trajectory computed using the GTRS algorithm for the given input scenario
