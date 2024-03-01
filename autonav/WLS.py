@@ -20,10 +20,10 @@ def wls(
     sigma: float,
     destinations: NDArray,
     initial_uav_position: list,
+    noise_seed: int = 1,
     param_max_velocity: int = 2,
     param_reach_distance: int = 4,
     param_smooth_factor: int = 2,
-    noise_seed: int = 1,
 ) -> NDArray:
     """This function executes the WLS algorithm.
 

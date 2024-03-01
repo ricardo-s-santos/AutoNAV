@@ -3,9 +3,10 @@
 import os
 
 import pytest
-from autonav.file_handlers import readpathfile
 from numpy import array
 from numpy.testing import assert_array_equal
+
+from autonav.file_handlers import readpathfile
 
 
 def test_read_file():

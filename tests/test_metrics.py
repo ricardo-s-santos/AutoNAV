@@ -1,8 +1,9 @@
 """This file contains the tests for the metrics.py."""
 
 import pytest
-from autonav.metrics import compute_armse, compute_rmse
 from numpy.testing import assert_allclose
+
+from autonav.metrics import compute_armse, compute_rmse
 
 
 def test_compute_rmse(metrics_trajectories):

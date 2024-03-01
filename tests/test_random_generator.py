@@ -1,8 +1,9 @@
 """This file contains the random_generator.py tests."""
 
-from autonav.random_generator import random_generator
 from numpy import array
 from numpy.testing import assert_allclose
+
+from autonav.random_generator import random_generator
 
 
 def test_random_generator():

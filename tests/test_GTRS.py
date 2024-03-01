@@ -3,9 +3,10 @@
 import re
 
 import pytest
-from autonav.GTRS import _calc_eigen, gtrs
 from numpy import array
 from numpy.testing import assert_allclose, assert_array_equal
+
+from autonav.GTRS import _calc_eigen, gtrs
 
 
 @pytest.mark.critical()

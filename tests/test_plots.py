@@ -3,8 +3,9 @@
 import re
 
 import pytest
-from autonav.plots import plot_rmse, plot_trajectories
 from numpy import ndarray
+
+from autonav.plots import plot_rmse, plot_trajectories
 
 
 def test_plot_trajectories(

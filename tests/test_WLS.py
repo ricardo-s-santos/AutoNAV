@@ -3,9 +3,10 @@
 import re
 
 import pytest
-from autonav.WLS import wls
 from numpy import array
 from numpy.testing import assert_allclose
+
+from autonav.WLS import wls
 
 
 @pytest.mark.critical()

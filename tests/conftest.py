@@ -3,8 +3,9 @@
 import os
 
 import pytest
-from autonav.file_handlers import readpathfile
 from numpy import array, insert
+
+from autonav.file_handlers import readpathfile
 
 
 @pytest.fixture(scope="session")
