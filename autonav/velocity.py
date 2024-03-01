@@ -10,18 +10,18 @@ from numpy.typing import NDArray
 def _velocity(
     current_position: NDArray,
     destination_position: NDArray,
-    param_max_velocity: int,
-    param_reach_distance: int,
-    param_smooth_factor: int,
+    p_max: int,
+    tau: int,
+    gamma: int,
 ) -> NDArray:
     """This function computes the max speed allowed to the UAV according to the distance to the destination.
 
     Args:
         current_position: The current position of the UAV.
         destination_position: The destination the UAV desires to reach.
-        param_max_velocity: The maximum velocity that the UAV can fly.
-        param_reach_distance: The threshold to reach the destination.
-        param_smooth_factor: The smoothing factor.
+        p_max: The maximum velocity that the UAV can fly.
+        tau: The threshold to reach the destination.
+        gamma: The smoothing factor.
 
     Returns:
         The maximum velocity allowed to the UAV in the three axis (x,y,z).
@@ -34,12 +34,10 @@ def _velocity(
                 error_position = numpy.subtract(destination_position, current_position)
                 error_norm = sqrt(numpy.sum(numpy.square(error_position)))
                 if error_norm > 1.0:  # Longer Distance = More Speed
-                    scale = param_max_velocity / error_norm
+                    scale = p_max / error_norm
                     velocity_allowed = dot(error_position, scale)
-                    if error_norm < param_reach_distance:  # Lower Distance = Less Speed
-                        velocity_allowed = velocity_allowed * (
-                            (error_norm / param_reach_distance) ** param_smooth_factor
-                        )
+                    if error_norm < tau:  # Lower Distance = Less Speed
+                        velocity_allowed = velocity_allowed * ((error_norm / tau) ** gamma)
         else:
             raise TypeError("'current_position' must contain only numeric values")
     else:

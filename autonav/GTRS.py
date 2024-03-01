@@ -39,9 +39,9 @@ def gtrs(
     tol: float = 0.001,
     n_iter: int = 30,
     max_lim: float = 1000000.0,
-    param_max_velocity: int = 2,
-    param_reach_distance: int = 4,
-    param_smooth_factor: int = 2,
+    p_max: int = 2,
+    tau: int = 4,
+    gamma: int = 2,
 ) -> NDArray:
     """This function executes the GTRS algorithm.
 
@@ -58,9 +58,9 @@ def gtrs(
         tol: The tolerance for the bisection function.
         n_iter: The max number of iterations for the bisection function.
         max_lim: The maximum value for the interval in the bisection function.
-        param_max_velocity: The maximum velocity that the UAV can fly.
-        param_reach_distance: The threshold to reach the destination.
-        param_smooth_factor: The smoothing factor.
+        p_max: The maximum velocity that the UAV can fly.
+        tau: The threshold to reach the destination.
+        gamma: The smoothing factor.
 
     Returns:
         The estimated trajectory computed using the GTRS algorithm for the given input scenario
@@ -207,9 +207,7 @@ def gtrs(
                 p = matmul(lk1, lk2)
                 estimated_trajectory.append(x_loc[0:3, qq])
             true_trajectory.append(x_true[:])
-            uav_velocity = _velocity(
-                x_loc[0:3, qq], destinations[ww, :], param_max_velocity, param_reach_distance, param_smooth_factor
-            )
+            uav_velocity = _velocity(x_loc[0:3, qq], destinations[ww, :], p_max, tau, gamma)
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
             x_true[2] = x_true[2] + uav_velocity[2]
