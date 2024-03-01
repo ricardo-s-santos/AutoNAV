@@ -36,6 +36,6 @@ destinations = readpathfile("Path.csv")
 
 [estimated_trajectory_gtrs, true_trajectory_gtrs] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position)
 [estimated_trajectory_wls, true_trajectory_wls] = wls(a_i, n, k, sigma, destinations, initial_uav_position)
-print(f'GTRS ARMSE: {compute_armse(estimated_trajectory_gtrs, true_trajectory_gtrs)}')
-print(f'WLS ARMSE: {compute_armse(estimated_trajectory_wls, true_trajectory_wls)}')
+armsegtrs = print(f'GTRS ARMSE: {compute_armse(estimated_trajectory_gtrs, true_trajectory_gtrs)}')
+armsewls = print(f'WLS ARMSE: {compute_armse(estimated_trajectory_wls, true_trajectory_wls)}')
 plt_obj = plot_rmse([estimated_trajectory_gtrs, estimated_trajectory_wls],[true_trajectory_gtrs, true_trajectory_wls])
