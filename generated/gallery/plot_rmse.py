@@ -2,11 +2,16 @@
 
 """
 
+#%%
+# First, the required dependencies are imported:
 from autonav import gtrs, wls
 from autonav.file_handlers import readpathfile
 from autonav.metrics import compute_armse
 from autonav.plots import plot_rmse
 from numpy import array
+
+#%%
+# The next step is to define the simulation parameters:
 
 b = 200
 n = 8
@@ -25,6 +30,9 @@ k = 50
 sigma = 1
 initial_uav_position = [10, 10, 5]
 destinations = readpathfile("Path.csv")
+
+#%%
+# Invoke the [`gtrs`] and [`wls`]functions and afterwards the [`compute_armse`] and [`plot_rmse`] as follows to compute the ARMSE and plot the RMSE, respectively:
 
 [estimated_trajectory_gtrs, true_trajectory_gtrs] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position)
 [estimated_trajectory_wls, true_trajectory_wls] = wls(a_i, n, k, sigma, destinations, initial_uav_position)
