@@ -1,8 +1,3 @@
-![example workflow](https://github.com/ricardo-s-santos/AutoNAV/actions/workflows/test.yml/badge.svg)
-[![codecov](https://codecov.io/gh/ricardo-s-santos/AutoNAV/graph/badge.svg?token=LCR7KDRK3E)](https://codecov.io/gh/ricardo-s-santos/AutoNAV)
-[![docs](https://img.shields.io/badge/docs-click_here-blue.svg)](https://ricardo-s-santos.github.io/AutoNAV/)
-[![PyPI](https://img.shields.io/pypi/v/autonav)](https://pypi.org/project/autonav/)
-
 <p align="center">
   <img src="https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/icon.png?raw=true" alt="image" width="200" height="auto">
 </p>
