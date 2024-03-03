@@ -30,7 +30,10 @@ def default_values():
         ]
     ).T
     initial_uav_position = [10, 10, 5]
-    return [a_i, n, k, destinations, initial_uav_position]
+    p_max = 2
+    tau = 4
+    gamma = 2
+    return [a_i, n, k, destinations, initial_uav_position, p_max, tau, gamma]
 
 
 @pytest.fixture(scope="session")

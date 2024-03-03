@@ -35,13 +35,13 @@ def gtrs(
     sigma: float,
     destinations: NDArray,
     initial_uav_position: list,
+    p_max: int,
+    tau: int,
+    gamma: int,
     noise_seed: int = 1,
     tol: float = 0.001,
     n_iter: int = 30,
     max_lim: float = 1000000.0,
-    p_max: int = 2,
-    tau: int = 4,
-    gamma: int = 2,
 ) -> NDArray:
     """This function executes the GTRS algorithm.
 
@@ -56,13 +56,13 @@ def gtrs(
         sigma: The noise level in meters.
         destinations: The intermediate points need for navigation in 3D.
         initial_uav_position: The initial UAV position in 3D.
+        p_max: The maximum velocity that the UAV can fly.
+        tau: The threshold to reach the destination.
+        gamma: The smoothing factor.
         noise_seed: The seed to generate the noise.
         tol: The tolerance for the bisection function.
         n_iter: The max number of iterations for the bisection function.
         max_lim: The maximum value for the interval in the bisection function.
-        p_max: The maximum velocity that the UAV can fly.
-        tau: The threshold to reach the destination.
-        gamma: The smoothing factor.
 
     Returns:
         The estimated trajectory computed using the GTRS algorithm for the given input scenario

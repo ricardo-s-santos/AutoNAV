@@ -20,10 +20,10 @@ def wls(
     sigma: float,
     destinations: NDArray,
     initial_uav_position: list,
+    p_max: int,
+    tau: int,
+    gamma: int,
     noise_seed: int = 1,
-    p_max: int = 2,
-    tau: int = 4,
-    gamma: int = 2,
 ) -> NDArray:
     """This function executes the WLS algorithm.
 
@@ -39,10 +39,10 @@ def wls(
         sigma: The noise level in meters.
         destinations: The intermediate points need for navigation in 3D.
         initial_uav_position: The initial UAV position in 3D.
-        noise_seed: The seed to generate the noise.
         p_max: The maximum velocity that the UAV can fly.
         tau: The threshold to reach the destination.
         gamma: The smoothing factor.
+        noise_seed: The seed to generate the noise.
 
     Returns:
         The estimated trajectory computed using the WLS algorithm for the given input scenario
