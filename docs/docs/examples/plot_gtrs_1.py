@@ -28,7 +28,7 @@ a_i = array(
     ).T
 k = 50
 sigma = 1
-p_max = b / 100
+v_max = b / 100
 tau = b / 50
 gamma = b / 100
 initial_uav_position = [10, 10, 5]
@@ -37,5 +37,5 @@ destinations = readpathfile("Path.csv")
 #%%
 # Finally, one can invoke the [`gtrs`] function and plot the estimated trajectory:
 
-[estimated_trajectory, true_trajectory] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position, p_max, tau, gamma)
+[estimated_trajectory, true_trajectory] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position, v_max, tau, gamma)
 plt_obj = plot_trajectories(destinations, [estimated_trajectory], a_i, ['GTRS'])

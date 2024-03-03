@@ -10,7 +10,7 @@ from numpy.typing import NDArray
 def _velocity(
     current_position: NDArray,
     destination_position: NDArray,
-    p_max: int,
+    v_max: int,
     tau: int,
     gamma: int,
 ) -> NDArray:
@@ -19,7 +19,7 @@ def _velocity(
     Args:
         current_position: The current position of the UAV.
         destination_position: The destination the UAV desires to reach.
-        p_max: The maximum velocity that the UAV can fly.
+        v_max: The maximum velocity that the UAV can fly.
         tau: The threshold to reach the destination.
         gamma: The smoothing factor.
 
@@ -34,7 +34,7 @@ def _velocity(
                 error_position = numpy.subtract(destination_position, current_position)
                 error_norm = sqrt(numpy.sum(numpy.square(error_position)))
                 if error_norm > 1.0:  # Longer Distance = More Speed
-                    scale = p_max / error_norm
+                    scale = v_max / error_norm
                     velocity_allowed = dot(error_position, scale)
                     if error_norm < tau:  # Lower Distance = Less Speed
                         velocity_allowed = velocity_allowed * ((error_norm / tau) ** gamma)

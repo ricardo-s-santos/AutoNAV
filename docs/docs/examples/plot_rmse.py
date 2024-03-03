@@ -28,7 +28,7 @@ a_i = array(
     ).T
 k = 50
 sigma = 1
-p_max = b / 100
+v_max = b / 100
 tau = b / 50
 gamma = b / 100
 initial_uav_position = [10, 10, 5]
@@ -37,8 +37,8 @@ destinations = readpathfile("Path.csv")
 #%%
 # Invoke the [`gtrs`] and [`wls`] functions and afterwards the [`compute_armse`] and [`plot_rmse`] as follows to compute the ARMSE and plot the RMSE, respectively:
 
-[estimated_trajectory_gtrs, true_trajectory_gtrs] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position, p_max, tau, gamma)
-[estimated_trajectory_wls, true_trajectory_wls] = wls(a_i, n, k, sigma, destinations, initial_uav_position, p_max, tau, gamma)
+[estimated_trajectory_gtrs, true_trajectory_gtrs] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position, v_max, tau, gamma)
+[estimated_trajectory_wls, true_trajectory_wls] = wls(a_i, n, k, sigma, destinations, initial_uav_position, v_max, tau, gamma)
 armsegtrs = print(f'GTRS ARMSE: {compute_armse(estimated_trajectory_gtrs, true_trajectory_gtrs)}')
 armsewls = print(f'WLS ARMSE: {compute_armse(estimated_trajectory_wls, true_trajectory_wls)}')
 plt_obj = plot_rmse([estimated_trajectory_gtrs, estimated_trajectory_wls],[true_trajectory_gtrs, true_trajectory_wls])
