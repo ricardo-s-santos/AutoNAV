@@ -1,10 +1,10 @@
 # AutoNAV
 
-<div style="text-align:center">
+<p align="center">
   <img src="https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/icon.png?raw=true" alt="image" width="200" height="auto">
-</div>
+</p>
 
-A Python package for simulating UAV Navigation in Satellite-Less Environments. The package contains two algorithms the GTRS and WLS whose goal is to estimate and navigate a UAV. Apart from these algorithms a hand-full of other functions and features are also provided, such as, measure the performance using metrics and plot the trajectories.
+A Python package for simulating UAV Navigation in Satellite-Less Environments. The package contains two algorithms the GTRS <a href="https://ieeexplore.ieee.org/document/9456863">[1]</a> and WLS <a href="https://ietresearch.onlinelibrary.wiley.com/doi/full/10.1049/wss2.12041">[2]</a>  whose goal is to estimate and navigate a UAV.
 
 ## Installation
 
@@ -46,6 +46,9 @@ a_i = array(
     ).T
 k = 50
 sigma = 1
+p_max = b / 100
+tau = b / 50
+gamma = b / 100
 initial_uav_position = [10, 10, 5]
 destinations = readpathfile("docs/docs/examples/Path.csv")
 ```
@@ -53,7 +56,7 @@ destinations = readpathfile("docs/docs/examples/Path.csv")
 Finally, run the GTRS or WLS algorithm and plot the trajectories:
 
 ```python
-[estimated_trajectory, true_trajectory] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position)
+[estimated_trajectory, true_trajectory] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position, p_max, tau, gamma)
 plot_trajectories(destinations, [estimated_trajectory], a_i, ['GTRS'])
 plt.show()
 ```
@@ -61,3 +64,14 @@ plt.show()
 <p align="center">
   <img src="https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/trajectories_plot.png?raw=true" alt="image" width="auto" height="auto">
 </p>
+
+## References
+
+[1] J. P. Matos-Carvalho, R. Santos, S. Tomic and M. Beko, "GTRS-Based Algorithm for UAV Navigation in Indoor Environments Employing Range Measurements and Odometry," in IEEE Access, vol. 9, pp. 89120-89132, 2021, doi: 10.1109/ACCESS.2021.3089900. https://ieeexplore.ieee.org/document/9456863
+
+[2] R. Santos, J. P. Matos-Carvalho, S. Tomic and M. Beko, "WLS algorithm for UAV navigation in satellite‐less environments," in IET Wireless Sensor Systems, 2022, 12, (3-4), p. 93-102, DOI: 10.1049/wss2.12041
+IET Digital Library, https://ietresearch.onlinelibrary.wiley.com/doi/full/10.1049/wss2.12041
+
+## License
+
+[MIT License](LICENSE.txt)
