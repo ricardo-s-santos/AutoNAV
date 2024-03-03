@@ -600,7 +600,7 @@ to download the full example code</p>
 <!-- GENERATED FROM PYTHON SOURCE LINES 13-14 -->
 
 <p>The next step is to define the simulation parameters:</p>
-<!-- GENERATED FROM PYTHON SOURCE LINES 14-32 -->
+<!-- GENERATED FROM PYTHON SOURCE LINES 14-35 -->
 
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">b</span> <span class="o">=</span> <span class="mi">200</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">n</span> <span class="o">=</span> <span class="mi">8</span>
@@ -617,19 +617,22 @@ to download the full example code</p>
 <a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="p">)</span><span class="o">.</span><span class="n">T</span>
 <a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="n">k</span> <span class="o">=</span> <span class="mi">50</span>
 <a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="n">sigma</span> <span class="o">=</span> <span class="mi">1</span>
-<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="n">initial_uav_position</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="n">destinations</span> <span class="o">=</span> <span class="n">readpathfile</span><span class="p">(</span><span class="s2">&quot;Path.csv&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="n">p_max</span> <span class="o">=</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">100</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="n">tau</span> <span class="o">=</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">50</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="n">gamma</span> <span class="o">=</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">100</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="n">initial_uav_position</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="n">destinations</span> <span class="o">=</span> <span class="n">readpathfile</span><span class="p">(</span><span class="s2">&quot;Path.csv&quot;</span><span class="p">)</span>
 </code></pre></div>
-<!-- GENERATED FROM PYTHON SOURCE LINES 33-34 -->
+<!-- GENERATED FROM PYTHON SOURCE LINES 36-37 -->
 
 <p>Finally, one can invoke the [<code>wls</code>] and function and plot the estimated trajectory:</p>
-<!-- GENERATED FROM PYTHON SOURCE LINES 34-37 -->
+<!-- GENERATED FROM PYTHON SOURCE LINES 37-40 -->
 
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">[</span><span class="n">estimated_trajectory</span><span class="p">,</span> <span class="n">true_trajectory</span><span class="p">]</span> <span class="o">=</span> <span class="n">wls</span><span class="p">(</span><span class="n">a_i</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">initial_uav_position</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">[</span><span class="n">estimated_trajectory</span><span class="p">,</span> <span class="n">true_trajectory</span><span class="p">]</span> <span class="o">=</span> <span class="n">wls</span><span class="p">(</span><span class="n">a_i</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">initial_uav_position</span><span class="p">,</span> <span class="n">p_max</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">plt_obj</span> <span class="o">=</span> <span class="n">plot_trajectories</span><span class="p">(</span><span class="n">destinations</span><span class="p">,</span> <span class="p">[</span><span class="n">estimated_trajectory</span><span class="p">],</span> <span class="n">a_i</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;WLS&#39;</span><span class="p">])</span>
 </code></pre></div>
 <p><img alt="Estimated Trajectory WLS" class="mkd-glr-single-img" src="../images/mkd_glr_plot_wls_1_001.png" srcset="../images/mkd_glr_plot_wls_1_001.png" /></p>
-<p><strong>Total running time of the script:</strong> ( 0 minutes  0.960 seconds)</p>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  0.966 seconds)</p>
 <div id="download_links"></div>
 
 <p><a class="md-button center" href="../plot_wls_1.py"><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32v242.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64h384c35.3 0 64-28.7 64-64v-32c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg></span> Download Python source code: plot_wls_1.py</a></p>
