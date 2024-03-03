@@ -34,8 +34,11 @@ from numpy import array
 Afterwards, one can create the necessary values to run the algorithms:
 
 ```python
-b = 200 # Area border
-n = 8 # Number of anchors
+# Area border
+b = 200
+# Number of anchors
+n = 8
+# Position of the anchors
 a_i = array(
     [
     [0, 0, 0],
@@ -46,14 +49,21 @@ a_i = array(
     [0, b, b / 8],
     [b / 2, 0, b / 8],
     [b / 2, b, b / 8],]
-    ).T # Position of the anchors
-k = 50 # Number of measurement samples
-sigma = 1 # Noise standard deviation
-v_max = b / 100 # Maximum velocity allowed to the UAV
-tau = b / 50 # Distance threshold
-gamma = b / 100 # Smoothing factor
-initial_uav_position = [10, 10, 5] # Initial position of the UAV
-destinations = readpathfile("docs/docs/examples/Path.csv") # File containing the waypoints
+    ).T
+# Number of measurement samples
+k = 50
+# Noise standard deviation
+sigma = 1
+# Maximum velocity allowed to the UAV
+v_max = b / 100
+# Distance threshold
+tau = b / 50
+# Smoothing factor
+gamma = b / 10
+# Initial position of the UAV
+initial_uav_position = [10, 10, 5]
+# File containing the waypoints
+destinations = readpathfile("docs/docs/examples/Path.csv")
 ```
 
 Finally, run the GTRS or WLS algorithm and plot the trajectories:
