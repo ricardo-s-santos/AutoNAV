@@ -69,7 +69,9 @@ destinations = readpathfile("docs/docs/examples/Path.csv")
 Finally, run the GTRS or WLS algorithm and plot the trajectories:
 
 ```python
+# Estimate the trajectory using the GTRS algorithm
 [estimated_trajectory, true_trajectory] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position, v_max, tau, gamma)
+# Plot the obtained trajectory
 plot_trajectories(destinations, [estimated_trajectory], a_i, ['GTRS'])
 plt.show()
 ```
