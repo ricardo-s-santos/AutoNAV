@@ -59,7 +59,7 @@ v_max = b / 100
 # Distance threshold
 tau = b / 50
 # Smoothing factor
-gamma = b / 10
+gamma = b / 100
 # Initial position of the UAV
 initial_uav_position = [10, 10, 5]
 # File containing the waypoints
