@@ -11,7 +11,7 @@ from autonav.GTRS import _calc_eigen, gtrs
 
 @pytest.mark.critical()
 def test_gtrs_no_noise(default_values, expected_trajectories_gtrs_sigma_0):
-    """This test pretends to see if the algorithm is correctly implemented by setting the noise to zero."""
+    """Tests if the algorithm is correctly implemented by setting the noise to zero."""
     # This test does not use seeds because the noise is set to zero.
     # Values used in test
     sigma = 0  # Noise STD in meters
@@ -35,7 +35,7 @@ def test_gtrs_no_noise(default_values, expected_trajectories_gtrs_sigma_0):
 
 @pytest.mark.critical()
 def test_gtrs_reproducibility(default_values, seeds):
-    """This test pretends to see if the algorithm is reproducible."""
+    """Tests if the algorithm is reproducible."""
     # Values used in test
     sigma = 1  # Noise STD in meters
     trajectories = gtrs(
@@ -74,7 +74,7 @@ def test_gtrs_reproducibility(default_values, seeds):
 
 @pytest.mark.critical()
 def test_gtrs_exceptions(default_values):
-    """This test tests the expected exceptions with wrong args."""
+    """Tests if the expected exceptions are raised with wrong arguments."""
     sigma = 0
     # Case n != size(a_i, axis=1)
     with pytest.raises(ValueError, match=re.escape("The length of a_i must be equal to N.")):
@@ -208,7 +208,7 @@ def test_gtrs_exceptions(default_values):
 
 
 def test_gtrs_optional_parameters(default_values, expected_trajectories_gtrs_sigma_0, seeds):
-    """This test pretends to see if the algorithm correctly accepts optional parameters."""
+    """Tests if the algorithm correctly accepts optional parameters."""
     # Values used in test
     sigma = 1  # Noise STD in meters
     tol = 0.0015
@@ -245,6 +245,6 @@ def test_gtrs_optional_parameters(default_values, expected_trajectories_gtrs_sig
 
 
 def test_calc_eigen_incorrect_parameters():
-    """This test tests the _calc_eigen function with incorrect parameters."""
+    """Tests the _calc_eigen function with incorrect parameters."""
     eigen = _calc_eigen(array([]), array([]))
     assert_array_equal([0], eigen)

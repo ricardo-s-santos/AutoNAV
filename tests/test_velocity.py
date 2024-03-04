@@ -9,7 +9,7 @@ from autonav.velocity import _velocity
 
 @pytest.mark.critical()
 def test_velocity_higher_distance():
-    """Test velocity function in normal conditions when the error_norm is higher than 1."""
+    """Tests the velocity function in normal conditions when the error_norm is higher than 1."""
     current_position = array([0, 0, 5])
     destination_position = array([10, 10, 5])
     v_max = 2
@@ -21,7 +21,7 @@ def test_velocity_higher_distance():
 
 @pytest.mark.critical()
 def test_velocity_lower_distance():
-    """Test velocity function in normal conditions when the error_norm is lower than the param_reach_distance."""
+    """Tests the velocity function in normal conditions when the error_norm is lower than the param_reach_distance."""
     current_position = array([8, 10, 5])
     destination_position = array([10, 10, 5])
     v_max = 2
@@ -33,7 +33,7 @@ def test_velocity_lower_distance():
 
 @pytest.mark.critical()
 def test_velocity_reached_destination():
-    """Test velocity function when reaching the destination."""
+    """Tests the velocity function when reaching the destination."""
     current_position = array([10, 10, 5])
     destination_position = array([10, 10, 5])
     v_max = 2
@@ -58,6 +58,6 @@ def test_velocity_reached_destination():
     ],
 )
 def test_velocity_invalid_parameters(current_position, destination_position, v_max, tau, gamma, expected_error):
-    """Test velocity function when the parameters are incorrect."""
+    """Tests if the expected exceptions are raised."""
     with pytest.raises(expected_error):
         _velocity(current_position, destination_position, v_max, tau, gamma)

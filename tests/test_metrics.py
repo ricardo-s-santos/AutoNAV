@@ -7,7 +7,7 @@ from autonav.metrics import compute_armse, compute_rmse
 
 
 def test_compute_rmse(metrics_trajectories):
-    """This test tests the comupute_rmse function in normal conditions."""
+    """Tests the compute_rmse function in normal conditions."""
     rmse = compute_rmse(metrics_trajectories[0], metrics_trajectories[1])
     # The RMSE can be computed by hand, such that, with these trajectories one gets:
     expected_rmse = [
@@ -27,14 +27,14 @@ def test_compute_rmse(metrics_trajectories):
 
 
 def test_compute_rmse_different_lengths(metrics_trajectories):
-    """This test tests the comupute_rmse function with different lengths."""
+    """Tests the compute_rmse function with trajectories with different lengths."""
     rmse = compute_rmse(metrics_trajectories[0], metrics_trajectories[1][-1])
     expected_rmse = []
     assert_allclose(expected_rmse, rmse)
 
 
 def test_compute_armse(metrics_trajectories):
-    """This test tests the comupute_armse function in normal conditions."""
+    """Tests the compute_armse function in normal conditions."""
     armse = compute_armse(metrics_trajectories[0], metrics_trajectories[1])
     armse = float("{:.10f}".format(armse))
     # The ARMSE can be computed by hand, such that, with these trajectories one gets:
@@ -43,6 +43,6 @@ def test_compute_armse(metrics_trajectories):
 
 
 def test_compute_armse_different_lengths(metrics_trajectories):
-    """This test tests the comupute_armse function with different lengths."""
+    """Tests the compute_armse function with trajectories with different lengths."""
     with pytest.raises(ZeroDivisionError):
         compute_armse(metrics_trajectories[0], metrics_trajectories[1][-1])

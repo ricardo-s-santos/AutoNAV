@@ -1,4 +1,4 @@
-"""This file contains the fixtures needed for the tests."""
+"""Contains the fixtures needed for the tests."""
 
 import os
 
@@ -10,7 +10,7 @@ from autonav.file_handlers import readpathfile
 
 @pytest.fixture(scope="session")
 def default_values():
-    """This fixture defines the default values to be used in the algorithm tests."""
+    """Defines the default values to be used in the GTRS and WLS tests."""
     root_dir = os.path.dirname(os.path.realpath(__file__))
     filename = root_dir + "/path_files/Path_small.csv"
     destinations = readpathfile(filename)
@@ -38,7 +38,7 @@ def default_values():
 
 @pytest.fixture(scope="session")
 def ideal_trajectory():
-    """This fixture contains the ideal trajectory for the plots.py tests."""
+    """Contains the ideal trajectory for the plots.py tests."""
     root_dir = os.path.dirname(os.path.realpath(__file__))
     filename = root_dir + "/path_files/Path_small.csv"
     ideal_trajectory = readpathfile(filename)
@@ -48,13 +48,13 @@ def ideal_trajectory():
 
 @pytest.fixture(scope="session", params=[5, 24612, 93456558])
 def seeds(request):
-    """This fixture contains the seeds for the GTRS and WLS tests."""
+    """Contains the seeds for the GTRS and WLS tests."""
     return request.param
 
 
 @pytest.fixture(scope="session")
 def metrics_trajectories():
-    """This fixture contains the trajectories for the metrics.py tests."""
+    """Contains the trajectories for the metrics.py tests."""
     estimated_trajectory = array(
         [
             [9.99999962, 9.99999996, 4.99999754],
@@ -90,7 +90,7 @@ def metrics_trajectories():
 
 @pytest.fixture(scope="session")
 def expected_trajectories_gtrs_sigma_0():
-    """This fixture defines the expected GTRS trajectories for sigma = 0."""
+    """Defines the expected GTRS trajectories for sigma = 0."""
     expected_estimated_trajectory = array(
         [
             [9.99999962, 9.99999996, 4.99999754],
@@ -187,7 +187,7 @@ def expected_trajectories_gtrs_sigma_0():
 
 @pytest.fixture(scope="session")
 def expected_trajectories_wls_sigma_0():
-    """This fixture defines the expected WLS trajectories for sigma = 0."""
+    """Defines the expected WLS trajectories for sigma = 0."""
     expected_estimated_trajectory = array(
         [
             [10.0, 10.0, 5.0],

@@ -1,4 +1,4 @@
-"""This module contains the functions to read the Path file."""
+"""This module contains the functions to read the path file."""
 
 import csv
 import os
@@ -8,7 +8,7 @@ from numpy.typing import NDArray
 
 
 def readpathfile(filename: str) -> NDArray:
-    """Reads the Path file.
+    """Reads the path file.
 
     Args:
         filename: The name of the file to read.

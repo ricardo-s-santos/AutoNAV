@@ -10,7 +10,7 @@ from autonav.file_handlers import readpathfile
 
 
 def test_read_file():
-    """This test the reading of input file."""
+    """Tests the reading of an existing and correctly formatted path file."""
     root_dir = os.path.dirname(os.path.realpath(__file__))
     filename = root_dir + "/path_files/Path_small.csv"
     destinations = readpathfile(filename)
@@ -26,7 +26,7 @@ def test_read_file():
 
 
 def test_file_not_found():
-    """Test for non-existing file."""
+    """Tests if a FileNotFoundError exception is raised when reading a non-existing path file."""
     root_dir = os.path.dirname(os.path.realpath(__file__))
     filename = root_dir + "/path_files/Path_not_found.csv"
     with pytest.raises(FileNotFoundError):
