@@ -16,15 +16,15 @@ def test_gtrs_no_noise(default_values, expected_trajectories_gtrs_sigma_0):
     # Values used in test
     sigma = 0  # Noise STD in meters
     trajectories = gtrs(
-        default_values[0],
-        default_values[1],
-        default_values[2],
+        default_values.a_i,
+        default_values.n,
+        default_values.k,
         sigma,
-        default_values[3],
-        default_values[4],
-        default_values[5],
-        default_values[6],
-        default_values[7],
+        default_values.destinations,
+        default_values.initial_uav_position,
+        default_values.v_max,
+        default_values.tau,
+        default_values.gamma,
     )
     gtrs_estimated_trajectory = trajectories[0]
     gtrs_true_trajectory = trajectories[1]
@@ -39,30 +39,30 @@ def test_gtrs_reproducibility(default_values, seeds):
     # Values used in test
     sigma = 1  # Noise STD in meters
     trajectories = gtrs(
-        default_values[0],
-        default_values[1],
-        default_values[2],
+        default_values.a_i,
+        default_values.n,
+        default_values.k,
         sigma,
-        default_values[3],
-        default_values[4],
-        default_values[5],
-        default_values[6],
-        default_values[7],
+        default_values.destinations,
+        default_values.initial_uav_position,
+        default_values.v_max,
+        default_values.tau,
+        default_values.gamma,
         seeds,
     )
     gtrs_estimated_trajectory_1 = trajectories[0]
     gtrs_true_trajectory_1 = trajectories[1]
     # Call GTRS again
     trajectories = gtrs(
-        default_values[0],
-        default_values[1],
-        default_values[2],
+        default_values.a_i,
+        default_values.n,
+        default_values.k,
         sigma,
-        default_values[3],
-        default_values[4],
-        default_values[5],
-        default_values[6],
-        default_values[7],
+        default_values.destinations,
+        default_values.initial_uav_position,
+        default_values.v_max,
+        default_values.tau,
+        default_values.gamma,
         seeds,
     )
     gtrs_estimated_trajectory_2 = trajectories[0]
@@ -79,109 +79,109 @@ def test_gtrs_exceptions(default_values):
     # Case n != size(a_i, axis=1)
     with pytest.raises(ValueError, match=re.escape("The length of a_i must be equal to N.")):
         gtrs(
-            default_values[0],
+            default_values.a_i,
             10,
-            default_values[2],
+            default_values.k,
             sigma,
-            default_values[3],
-            default_values[4],
-            default_values[5],
-            default_values[6],
-            default_values[7],
+            default_values.destinations,
+            default_values.initial_uav_position,
+            default_values.v_max,
+            default_values.tau,
+            default_values.gamma,
         )
     # Case k < 0
     with pytest.raises(ValueError, match=re.escape("K must be positive.")):
         gtrs(
-            default_values[0],
-            default_values[1],
+            default_values.a_i,
+            default_values.n,
             -1,
             sigma,
-            default_values[3],
-            default_values[4],
-            default_values[5],
-            default_values[6],
-            default_values[7],
+            default_values.destinations,
+            default_values.initial_uav_position,
+            default_values.v_max,
+            default_values.tau,
+            default_values.gamma,
         )
     # Case sigma < 0
     with pytest.raises(ValueError, match=re.escape("Sigma must be between 0 and 5.")):
         gtrs(
-            default_values[0],
-            default_values[1],
-            default_values[2],
+            default_values.a_i,
+            default_values.n,
+            default_values.k,
             -1,
-            default_values[3],
-            default_values[4],
-            default_values[5],
-            default_values[6],
-            default_values[7],
+            default_values.destinations,
+            default_values.initial_uav_position,
+            default_values.v_max,
+            default_values.tau,
+            default_values.gamma,
         )
     # Case destinations with wrong coordinates
     with pytest.raises(ValueError, match=re.escape("Waypoints must contain the 3 coordinates (x, y, z).")):
         gtrs(
-            default_values[0],
-            default_values[1],
-            default_values[2],
+            default_values.a_i,
+            default_values.n,
+            default_values.k,
             sigma,
             array([[1, 2]]),
-            default_values[4],
-            default_values[5],
-            default_values[6],
-            default_values[7],
+            default_values.initial_uav_position,
+            default_values.v_max,
+            default_values.tau,
+            default_values.gamma,
         )
     # Case empty destinations
     with pytest.raises(ValueError, match=re.escape("Waypoints cannot be empty.")):
         gtrs(
-            default_values[0],
-            default_values[1],
-            default_values[2],
+            default_values.a_i,
+            default_values.n,
+            default_values.k,
             sigma,
             array([]),
-            default_values[4],
-            default_values[5],
-            default_values[6],
-            default_values[7],
+            default_values.initial_uav_position,
+            default_values.v_max,
+            default_values.tau,
+            default_values.gamma,
         )
     # Case initial_uav_position with wrong coordinates
     with pytest.raises(ValueError, match=re.escape("Initial UAV position must contain the 3 coordinates (x, y, z).")):
         gtrs(
-            default_values[0],
-            default_values[1],
-            default_values[2],
+            default_values.a_i,
+            default_values.n,
+            default_values.k,
             sigma,
-            default_values[3],
+            default_values.destinations,
             [1, 2],
-            default_values[5],
-            default_values[6],
-            default_values[7],
+            default_values.v_max,
+            default_values.tau,
+            default_values.gamma,
         )
     # Validate optional parameters
     # Case tol < 0
     with pytest.raises(ValueError, match=re.escape("Tolerance must be positive.")):
         gtrs(
-            default_values[0],
-            default_values[1],
-            default_values[2],
+            default_values.a_i,
+            default_values.n,
+            default_values.k,
             sigma,
-            default_values[3],
-            default_values[4],
-            default_values[5],
-            default_values[6],
-            default_values[7],
+            default_values.destinations,
+            default_values.initial_uav_position,
+            default_values.v_max,
+            default_values.tau,
+            default_values.gamma,
             0,
             -1,
         )
     # Case n_iter < 0
     with pytest.raises(ValueError, match=re.escape("Number of Bisection iterations must be positive.")):
         gtrs(
-            default_values[0],
-            default_values[1],
-            default_values[2],
+            default_values.a_i,
+            default_values.n,
+            default_values.k,
             sigma,
-            default_values[3],
-            default_values[4],
-            default_values[5],
-            default_values[6],
-            default_values[7],
+            default_values.destinations,
+            default_values.initial_uav_position,
+            default_values.v_max,
+            default_values.tau,
+            default_values.gamma,
             0,
             0.001,
             -1,
@@ -191,15 +191,15 @@ def test_gtrs_exceptions(default_values):
         ValueError, match=re.escape("The maximum value for the interval in the bisection function must be positive.")
     ):
         gtrs(
-            default_values[0],
-            default_values[1],
-            default_values[2],
+            default_values.a_i,
+            default_values.n,
+            default_values.k,
             sigma,
-            default_values[3],
-            default_values[4],
-            default_values[5],
-            default_values[6],
-            default_values[7],
+            default_values.destinations,
+            default_values.initial_uav_position,
+            default_values.v_max,
+            default_values.tau,
+            default_values.gamma,
             0,
             0.001,
             30,
@@ -215,15 +215,15 @@ def test_gtrs_optional_parameters(default_values, expected_trajectories_gtrs_sig
     n_iter = 35
     max_lim = 1000005.0
     trajectories = gtrs(
-        default_values[0],
-        default_values[1],
-        default_values[2],
+        default_values.a_i,
+        default_values.n,
+        default_values.k,
         sigma,
-        default_values[3],
-        default_values[4],
-        default_values[5],
-        default_values[6],
-        default_values[7],
+        default_values.destinations,
+        default_values.initial_uav_position,
+        default_values.v_max,
+        default_values.tau,
+        default_values.gamma,
         seeds,
         tol,
         n_iter,

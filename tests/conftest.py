@@ -1,5 +1,6 @@
 """Contains the fixtures needed for the tests."""
 
+import collections
 import os
 
 import pytest
@@ -33,7 +34,11 @@ def default_values():
     v_max = 2
     tau = 4
     gamma = 2
-    return [a_i, n, k, destinations, initial_uav_position, v_max, tau, gamma]
+    Defaults = collections.namedtuple(
+        "Defaults", ["a_i", "n", "k", "destinations", "initial_uav_position", "v_max", "tau", "gamma"]
+    )
+    defaults = Defaults(a_i, n, k, destinations, initial_uav_position, v_max, tau, gamma)
+    return defaults
 
 
 @pytest.fixture(scope="session")
