@@ -6,7 +6,7 @@ from numpy.typing import NDArray
 
 
 def compute_rmse(estimated_trajectory: NDArray, true_trajectory: NDArray) -> list:
-    """This function computes the root mean squared error between the true and estimated trajectory of the UAV.
+    """Computes the root mean squared error between the true and estimated trajectory of the UAV.
 
     Args:
         estimated_trajectory: The estimated position of the UAV.

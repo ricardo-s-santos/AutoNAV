@@ -25,7 +25,7 @@ def wls(
     gamma: int,
     noise_seed: int = 1,
 ) -> NDArray:
-    """This function executes the WLS algorithm.
+    """Executes the WLS algorithm.
 
     [See here more details about the WLS algorithm.]
     (https://ietresearch.onlinelibrary.wiley.com/doi/full/10.1049/wss2.12041)

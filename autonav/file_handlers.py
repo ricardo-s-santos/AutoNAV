@@ -8,7 +8,7 @@ from numpy.typing import NDArray
 
 
 def readpathfile(filename: str) -> NDArray:
-    """This function reads the Path file.
+    """Reads the Path file.
 
     Args:
         filename: The name of the file to read.

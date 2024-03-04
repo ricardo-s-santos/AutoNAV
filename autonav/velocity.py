@@ -14,7 +14,7 @@ def _velocity(
     tau: int,
     gamma: int,
 ) -> NDArray:
-    """This function computes the max speed allowed to the UAV according to the distance to the destination.
+    """Computes the max speed allowed to the UAV according to the distance to the destination.
 
     Args:
         current_position: The current position of the UAV.

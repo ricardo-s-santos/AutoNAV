@@ -43,7 +43,7 @@ def gtrs(
     n_iter: int = 30,
     max_lim: float = 1000000.0,
 ) -> NDArray:
-    """This function executes the GTRS algorithm.
+    """Executes the GTRS algorithm.
 
     [See here more details about the GTRS algorithm.](https://ieeexplore.ieee.org/document/9456863)
 

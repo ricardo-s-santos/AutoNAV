@@ -14,7 +14,7 @@ def plot_trajectories(
     a_i: NDArray,
     names_of_the_algorithms: Optional[List[str]] = None,
 ) -> list:
-    """This function plots the ideal and estimated trajectory for one or more algorithms.
+    """Plots the ideal and estimated trajectory for one or more algorithms.
 
     Args:
         ideal_trajectory: The ideal trajectory that the UAV is supposed to follow.
@@ -81,7 +81,7 @@ def plot_rmse(
     true_trajectories: List[NDArray],
     names_of_the_algorithms: Optional[List[str]] = None,
 ) -> NDArray:
-    """This function plots the root mean squared error along the trajectory for one or more algorithms.
+    """Plots the root mean squared error along the trajectory for one or more algorithms.
 
     Args:
        estimated_trajectories: The estimated trajectory that the UAV followed.

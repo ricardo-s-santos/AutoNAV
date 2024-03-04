@@ -4,7 +4,7 @@ from numpy.random import PCG64, Generator
 
 
 def random_generator(seed):
-    """This function creates a generator to be used by the algorithms.
+    """Creates a generator to be used by the algorithms.
 
     Args:
         seed: The seed to allow reproducibility.
