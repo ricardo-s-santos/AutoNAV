@@ -7,19 +7,19 @@ import math
 from numpy import array, asarray, cos, dot, eye, median, sin, size, sqrt, zeros
 from numpy.lib import scimath
 from numpy.linalg import norm, solve
-from numpy.typing import NDArray
+from numpy.typing import ArrayLike, NDArray
 
 from autonav.random_generator import random_generator
 from autonav.velocity import _velocity
 
 
 def wls(
-    a_i: NDArray,
+    a_i: ArrayLike,
     n: int,
     k: int,
     sigma: float,
-    destinations: NDArray,
-    initial_uav_position: list,
+    destinations: ArrayLike,
+    initial_uav_position: ArrayLike,
     v_max: int,
     tau: int,
     gamma: int,
@@ -46,6 +46,10 @@ def wls(
         The estimated trajectory computed using the WLS algorithm for the given input scenario
           and the true trajectory that the UAV followed.
     """
+    # Transform inputs in NDArray
+    a_i = asarray(a_i, dtype=float)
+    destinations = asarray(destinations, dtype=float)
+    initial_uav_position = asarray(initial_uav_position, dtype=float)
     # Validate inputs
     if size(a_i, axis=1) != n:
         raise ValueError("The length of a_i must be equal to N.")
@@ -133,7 +137,7 @@ def wls(
             b_loc = dot(w, b_1)
             x_est = asarray(solve(dot(a_loc.T, a_loc) + (1 * 10 ** (-6)) * eye(3), dot(a_loc.T, b_loc)))
             estimated_trajectory.append(x_est[:, 0])
-            true_trajectory.append(x_true[:])
+            true_trajectory.append(x_true.copy())
             uav_velocity = _velocity(x_est[:, 0], destinations[ww, :], v_max, tau, gamma)
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
