@@ -2,19 +2,23 @@
 
 from math import sqrt
 
-from numpy.typing import NDArray
+from numpy import asarray
+from numpy.typing import ArrayLike
 
 
-def compute_rmse(estimated_trajectory: NDArray, true_trajectory: NDArray) -> list:
+def compute_rmse(estimated_trajectory: ArrayLike, true_trajectory: ArrayLike) -> list:
     """Computes the root mean squared error between the true and estimated trajectory of the UAV.
 
     Args:
-        estimated_trajectory: The estimated position of the UAV.
-        true_trajectory: The true position of the UAV.
+        estimated_trajectory: The estimated trajectory by the algorithm.
+        true_trajectory: The true trajectory that the UAV followed.
 
     Returns:
-        The average root mean squared error between the true and the estimated positions of the UAV.
+        The average root mean squared error between the true and the estimated trajectories.
     """
+    # Transform inputs in NDArray
+    estimated_trajectory = asarray(estimated_trajectory, dtype=float)
+    true_trajectory = asarray(true_trajectory, dtype=float)
     rmse = []
     # Trajectories must have the same length for comparison
     if len(estimated_trajectory) == len(true_trajectory):
@@ -28,16 +32,19 @@ def compute_rmse(estimated_trajectory: NDArray, true_trajectory: NDArray) -> lis
     return rmse
 
 
-def compute_armse(estimated_trajectory: NDArray, true_trajectory: NDArray) -> float:
+def compute_armse(estimated_trajectory: ArrayLike, true_trajectory: ArrayLike) -> float:
     """This function computes the average root mean squared error between the true and estimated trajectory of the UAV.
 
     Args:
-        estimated_trajectory: The estimated position of the UAV.
-        true_trajectory: The true position of the UAV.
+        estimated_trajectory: The estimated trajectory by the algorithm.
+        true_trajectory: The true trajectory that the UAV followed.
 
     Returns:
-        The average root mean squared error between the true and the estimated positions of the UAV.
+        The average root mean squared error between the true and the estimated trajectories.
     """
+    # Transform inputs in NDArray
+    estimated_trajectory = asarray(estimated_trajectory, dtype=float)
+    true_trajectory = asarray(true_trajectory, dtype=float)
     rmse = compute_rmse(estimated_trajectory, true_trajectory)
     if len(rmse) != 0:
         armse = sum(rmse) / len(rmse)
