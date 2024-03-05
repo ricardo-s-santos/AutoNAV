@@ -6,6 +6,7 @@ from numpy import (
     append,
     arange,
     array,
+    asarray,
     concatenate,
     diag,
     dot,
@@ -21,7 +22,7 @@ from numpy import (
     zeros,
 )
 from numpy.linalg import eigvals, inv, norm, pinv, solve
-from numpy.typing import NDArray
+from numpy.typing import ArrayLike, NDArray
 from scipy.linalg import fractional_matrix_power, sqrtm
 
 from autonav.random_generator import random_generator
@@ -29,15 +30,15 @@ from autonav.velocity import _velocity
 
 
 def gtrs(
-    a_i: NDArray,
+    a_i: ArrayLike,
     n: int,
     k: int,
     sigma: float,
-    destinations: NDArray,
-    initial_uav_position: list,
-    v_max: int,
-    tau: int,
-    gamma: int,
+    destinations: ArrayLike,
+    initial_uav_position: ArrayLike,
+    v_max: float,
+    tau: float,
+    gamma: float,
     noise_seed: int = 1,
     tol: float = 0.001,
     n_iter: int = 30,
@@ -66,6 +67,10 @@ def gtrs(
         The estimated trajectory computed using the GTRS algorithm for the given input scenario
           and the true trajectory that the UAV followed.
     """
+    # Transform inputs in NDArray
+    a_i = asarray(a_i, dtype=float)
+    destinations = asarray(destinations, dtype=float)
+    initial_uav_position = asarray(initial_uav_position, dtype=float)
     # Validate inputs
     if size(a_i, axis=1) != n:
         raise ValueError("The length of a_i must be equal to N.")
@@ -77,7 +82,7 @@ def gtrs(
         raise ValueError("Waypoints cannot be empty.")
     if size(destinations, axis=1) != 3:
         raise ValueError("Waypoints must contain the 3 coordinates (x, y, z).")
-    if len(initial_uav_position) != 3:
+    if size(initial_uav_position) != 3:
         raise ValueError("Initial UAV position must contain the 3 coordinates (x, y, z).")
     # Test optional inputs
     if tol < 0:
@@ -86,12 +91,16 @@ def gtrs(
         raise ValueError("Number of Bisection iterations must be positive.")
     if max_lim < 0:
         raise ValueError("The maximum value for the interval in the bisection function must be positive.")
-    ts = 1  # Time sample in seconds
-    s = eye(6)  # State transition matrix
+    # Time sample in seconds
+    ts = 1
+    # State transition matrix
+    s = eye(6)
     s[0, 3] = ts
     s[1, 4] = ts
     s[2, 5] = ts
-    sigma_w = 0.05  # State process noise intensity  # State process noise covariance
+    # State process noise intensity
+    sigma_w = 0.05
+    # State process noise covariance
     q = dot(
         sigma_w**2,
         (
@@ -114,7 +123,7 @@ def gtrs(
     true_trajectory = []
     ww = 0
     n_dest = len(destinations) - 1
-    # Generator to create random numbers (see line 122)
+    # Generator to create random numbers
     gen = random_generator(noise_seed)
     while ww <= n_dest:
         distance = math.sqrt(
@@ -123,7 +132,7 @@ def gtrs(
             + (x_true[2] - destinations[ww][2]) ** 2
         )
         while distance > 1:
-            x = x_true[0:3]
+            x = x_true[:]
             # ---------------------------------------------------------------------
             # Simulation part
             # ---------------------------------------------------------------------
@@ -206,7 +215,7 @@ def gtrs(
                 lk2 = subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1)).T
                 p = matmul(lk1, lk2)
                 estimated_trajectory.append(x_loc[0:3, qq])
-            true_trajectory.append(x_true[:])
+            true_trajectory.append(x_true.copy())
             uav_velocity = _velocity(x_loc[0:3, qq], destinations[ww, :], v_max, tau, gamma)
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
