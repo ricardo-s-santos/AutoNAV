@@ -68,21 +68,21 @@ def gtrs(
           and the true trajectory that the UAV followed.
     """
     # Transform inputs in NDArray
-    a_i = asarray(a_i, dtype=float)
-    destinations = asarray(destinations, dtype=float)
-    initial_uav_position = asarray(initial_uav_position, dtype=float)
+    arr_a_i: NDArray = asarray(a_i, dtype=float)
+    arr_destinations: NDArray = asarray(destinations, dtype=float)
+    arr_initial_uav_position: NDArray = asarray(initial_uav_position, dtype=float)
     # Validate inputs
-    if size(a_i, axis=1) != n:
+    if size(arr_a_i, axis=1) != n:
         raise ValueError("The length of a_i must be equal to N.")
     if k <= 0:
         raise ValueError("K must be positive.")
     if sigma < 0 or sigma > 5:
         raise ValueError("Sigma must be between 0 and 5.")
-    if size(destinations) == 0:
+    if size(arr_destinations) == 0:
         raise ValueError("Waypoints cannot be empty.")
-    if size(destinations, axis=1) != 3:
+    if size(arr_destinations, axis=1) != 3:
         raise ValueError("Waypoints must contain the 3 coordinates (x, y, z).")
-    if size(initial_uav_position) != 3:
+    if size(arr_initial_uav_position) != 3:
         raise ValueError("Initial UAV position must contain the 3 coordinates (x, y, z).")
     # Test optional inputs
     if tol < 0:
@@ -118,25 +118,25 @@ def gtrs(
     x_loc = zeros(shape=(3, 1))
     p = eye(6)
     qq = 0
-    x_true = initial_uav_position[:]
+    x_true = arr_initial_uav_position[:]
     estimated_trajectory = []
     true_trajectory = []
     ww = 0
-    n_dest = len(destinations) - 1
+    n_dest = len(arr_destinations) - 1
     # Generator to create random numbers
     gen = random_generator(noise_seed)
     while ww <= n_dest:
         distance = math.sqrt(
-            (x_true[0] - destinations[ww][0]) ** 2
-            + (x_true[1] - destinations[ww][1]) ** 2
-            + (x_true[2] - destinations[ww][2]) ** 2
+            (x_true[0] - arr_destinations[ww][0]) ** 2
+            + (x_true[1] - arr_destinations[ww][1]) ** 2
+            + (x_true[2] - arr_destinations[ww][2]) ** 2
         )
         while distance > 1:
             x = x_true[:]
             # ---------------------------------------------------------------------
             # Simulation part
             # ---------------------------------------------------------------------
-            di_k = sqrt(((x[0] - a_i[0, :]) ** 2) + ((x[1] - a_i[1, :]) ** 2) + ((x[2] - a_i[2, :]) ** 2))
+            di_k = sqrt(((x[0] - arr_a_i[0, :]) ** 2) + ((x[1] - arr_a_i[1, :]) ** 2) + ((x[2] - arr_a_i[2, :]) ** 2))
             di_k = array([di_k]).T
             di_k = di_k + (sigma * gen.standard_normal(size=(n, k)))
             d_i = median(di_k, axis=1)
@@ -150,8 +150,8 @@ def gtrs(
             b_track = zeros(shape=(n + 6, 1))
             w_i_loc = array(sqrt(d_i ** (-1.0) / (sum(d_i ** (-1.0)))))
             for tt in arange(0, n, 1).reshape(-1):
-                a1_loc[tt] = append(dot(2, a_i[0:3, tt].T), -1)
-                b1_loc[tt] = norm(a_i[0:3, tt]) ** 2 - d_i[tt] ** 2
+                a1_loc[tt] = append(dot(2, arr_a_i[0:3, tt].T), -1)
+                b1_loc[tt] = norm(arr_a_i[0:3, tt]) ** 2 - d_i[tt] ** 2
             w_loc = diag(w_i_loc.T[0])
             d_loc = eye(4)
             d_loc[3, 3] = 0
@@ -166,8 +166,8 @@ def gtrs(
                 a1_track = zeros(shape=(n, 7))
                 b1_track = zeros(shape=(n, 1))
                 for tt in arange(0, n, 1).reshape(-1):
-                    a1_track[tt] = concatenate((dot(2, a_i[0:3, tt].T), zeros(size(x, 0)), [-1]), axis=0)
-                    b1_track[tt] = norm(a_i[0:3, tt]) ** 2 - abs(d_i[tt] ** 2)
+                    a1_track[tt] = concatenate((dot(2, arr_a_i[0:3, tt].T), zeros(size(x, 0)), [-1]), axis=0)
+                    b1_track[tt] = norm(arr_a_i[0:3, tt]) ** 2 - abs(d_i[tt] ** 2)
                 left_matrix = sqrtm(inv(p_pred))
                 right_matrix = zeros((size(x_state, 0), 1))
                 a1_track = concatenate((a1_track, concatenate((left_matrix, right_matrix), axis=1)), axis=0)
@@ -216,14 +216,14 @@ def gtrs(
                 p = matmul(lk1, lk2)
                 estimated_trajectory.append(x_loc[0:3, qq])
             true_trajectory.append(x_true.copy())
-            uav_velocity = _velocity(x_loc[0:3, qq], destinations[ww, :], v_max, tau, gamma)
+            uav_velocity = _velocity(x_loc[0:3, qq], arr_destinations[ww, :], v_max, tau, gamma)
             x_true[0] = x_true[0] + uav_velocity[0]
             x_true[1] = x_true[1] + uav_velocity[1]
             x_true[2] = x_true[2] + uav_velocity[2]
             distance = math.sqrt(
-                (x_true[0] - destinations[ww][0]) ** 2
-                + (x_true[1] - destinations[ww][1]) ** 2
-                + (x_true[2] - destinations[ww][2]) ** 2
+                (x_true[0] - arr_destinations[ww][0]) ** 2
+                + (x_true[1] - arr_destinations[ww][1]) ** 2
+                + (x_true[2] - arr_destinations[ww][2]) ** 2
             )
             qq += 1
         ww += 1
