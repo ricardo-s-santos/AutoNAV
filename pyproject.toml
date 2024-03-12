@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "autonav"
-version = "1.0.1"
+version = "1.0.2"
 description = "Research software for navigating a UAV in indoor environments"
 readme = "README.md"
 requires-python = ">=3.8"
