@@ -39,6 +39,7 @@ def gtrs(
     v_max: float,
     tau: float,
     gamma: float,
+    noise_distribution: str = "standard_normal",
     noise_seed: int = 1,
     tol: float = 0.001,
     n_iter: int = 30,
@@ -58,6 +59,7 @@ def gtrs(
         v_max: The maximum velocity that the UAV can fly.
         tau: The threshold to reach the destination.
         gamma: The smoothing factor.
+        noise_distribution: The distribution used to model the noise.
         noise_seed: The seed to generate the noise.
         tol: The tolerance for the bisection function.
         n_iter: The max number of iterations for the bisection function.
@@ -85,6 +87,9 @@ def gtrs(
     if size(arr_initial_uav_position) != 3:
         raise ValueError("Initial UAV position must contain the 3 coordinates (x, y, z).")
     # Test optional inputs
+    available_noise_distributions = ["normal", "standard_normal", "exponential"]
+    if noise_distribution not in available_noise_distributions:
+        raise ValueError("Noise distribution must be " + ", ".join(available_noise_distributions))
     if tol < 0:
         raise ValueError("Tolerance must be positive.")
     if n_iter < 0:
@@ -138,7 +143,13 @@ def gtrs(
             # ---------------------------------------------------------------------
             di_k = sqrt(((x[0] - arr_a_i[0, :]) ** 2) + ((x[1] - arr_a_i[1, :]) ** 2) + ((x[2] - arr_a_i[2, :]) ** 2))
             di_k = array([di_k]).T
-            di_k = di_k + (sigma * gen.standard_normal(size=(n, k)))
+            if noise_distribution == "normal":
+                noise_model = gen.normal(size=(n, k))
+            elif noise_distribution == "exponential":
+                noise_model = gen.exponential(size=(n, k))
+            elif noise_distribution == "standard_normal":  # Default value (standard_normal)
+                noise_model = gen.standard_normal(size=(n, k))
+            di_k = di_k + (sigma * noise_model)
             d_i = median(di_k, axis=1)
             d_i = array([d_i]).T
             # ---------------------------------------------------------------------
