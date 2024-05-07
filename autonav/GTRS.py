@@ -39,8 +39,8 @@ def gtrs(
     v_max: float,
     tau: float,
     gamma: float,
-    noise_distribution: str = "standard_normal",
     noise_seed: int = 1,
+    noise_distribution: str = "standard_normal",
     tol: float = 0.001,
     n_iter: int = 30,
     max_lim: float = 1000000.0,
@@ -89,7 +89,7 @@ def gtrs(
     # Test optional inputs
     available_noise_distributions = ["normal", "standard_normal", "exponential"]
     if noise_distribution not in available_noise_distributions:
-        raise ValueError("Noise distribution must be " + ", ".join(available_noise_distributions))
+        raise ValueError("Noise distribution must be " + ", ".join(available_noise_distributions) + ".")
     if tol < 0:
         raise ValueError("Tolerance must be positive.")
     if n_iter < 0:

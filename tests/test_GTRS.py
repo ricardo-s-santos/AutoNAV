@@ -48,7 +48,6 @@ def test_gtrs_reproducibility(default_values, seeds):
         default_values.v_max,
         default_values.tau,
         default_values.gamma,
-        "standard_normal",
         seeds,
     )
     gtrs_estimated_trajectory_1 = trajectories[0]
@@ -64,7 +63,6 @@ def test_gtrs_reproducibility(default_values, seeds):
         default_values.v_max,
         default_values.tau,
         default_values.gamma,
-        "standard_normal",
         seeds,
     )
     gtrs_estimated_trajectory_2 = trajectories[0]
@@ -169,8 +167,8 @@ def test_gtrs_exceptions(default_values):
             default_values.v_max,
             default_values.tau,
             default_values.gamma,
-            "standard_normal",
             0,
+            "standard_normal",
             -1,
         )
     # Case n_iter < 0
@@ -185,8 +183,8 @@ def test_gtrs_exceptions(default_values):
             default_values.v_max,
             default_values.tau,
             default_values.gamma,
-            "standard_normal",
             0,
+            "standard_normal",
             0.001,
             -1,
         )
@@ -204,11 +202,26 @@ def test_gtrs_exceptions(default_values):
             default_values.v_max,
             default_values.tau,
             default_values.gamma,
-            "standard_normal",
             0,
+            "standard_normal",
             0.001,
             30,
             -1,
+        )
+    # Case wrong distribution
+    with pytest.raises(ValueError, match=re.escape("Noise distribution must be normal, standard_normal, exponential.")):
+        gtrs(
+            default_values.a_i,
+            default_values.n,
+            default_values.k,
+            sigma,
+            default_values.destinations,
+            default_values.initial_uav_position,
+            default_values.v_max,
+            default_values.tau,
+            default_values.gamma,
+            0,
+            "exp",
         )
 
 
@@ -230,8 +243,8 @@ def test_gtrs_optional_parameters(default_values, expected_trajectories_gtrs_sig
         default_values.v_max,
         default_values.tau,
         default_values.gamma,
-        noise_distribution,
         seeds,
+        noise_distribution,
         tol,
         n_iter,
         max_lim,

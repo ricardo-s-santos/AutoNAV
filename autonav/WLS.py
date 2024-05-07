@@ -24,6 +24,7 @@ def wls(
     tau: int,
     gamma: int,
     noise_seed: int = 1,
+    noise_distribution: str = "standard_normal",
 ) -> NDArray:
     """Executes the WLS algorithm.
 
@@ -63,6 +64,10 @@ def wls(
         raise ValueError("Waypoints must contain the 3 coordinates (x, y, z).")
     if size(initial_uav_position) != 3:
         raise ValueError("Initial UAV position must contain the 3 coordinates (x, y, z).")
+    # Test optional inputs
+    available_noise_distributions = ["normal", "standard_normal", "exponential"]
+    if noise_distribution not in available_noise_distributions:
+        raise ValueError("Noise distribution must be " + ", ".join(available_noise_distributions) + ".")
     x_true = arr_initial_uav_position[:]
     ww = 0
     n_dest = len(arr_destinations) - 1
@@ -83,7 +88,13 @@ def wls(
             # ---------------------------------------------------------------------
             di_k = sqrt(((x[0] - arr_a_i[0, :]) ** 2) + ((x[1] - arr_a_i[1, :]) ** 2) + ((x[2] - arr_a_i[2, :]) ** 2))
             di_k = array([di_k]).T
-            di_k = di_k + (sigma * gen.standard_normal(size=(n, k)))
+            if noise_distribution == "normal":
+                noise_model = gen.normal(size=(n, k))
+            elif noise_distribution == "exponential":
+                noise_model = gen.exponential(size=(n, k))
+            elif noise_distribution == "standard_normal":  # Default value (standard_normal)
+                noise_model = gen.standard_normal(size=(n, k))
+            di_k = di_k + (sigma * noise_model)
             d_i = median(di_k, axis=1)
             d_i = array([d_i]).T
             # ---------------------------------------------------------------------

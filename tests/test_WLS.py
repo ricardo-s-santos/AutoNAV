@@ -154,12 +154,28 @@ def test_wls_exceptions(default_values):
             default_values.tau,
             default_values.gamma,
         )
+    # Case wrong distribution
+    with pytest.raises(ValueError, match=re.escape("Noise distribution must be normal, standard_normal, exponential.")):
+        wls(
+            default_values.a_i,
+            default_values.n,
+            default_values.k,
+            sigma,
+            default_values.destinations,
+            default_values.initial_uav_position,
+            default_values.v_max,
+            default_values.tau,
+            default_values.gamma,
+            0,
+            "exp",
+        )
 
 
 def test_wls_optional_parameters(default_values, expected_trajectories_wls_sigma_0, seeds):
     """Tests if the algorithm correctly accepts optional parameters."""
     # Values used in test
     sigma = 1  # Noise STD in meters
+    noise_distribution = "normal"
     trajectories = wls(
         default_values.a_i,
         default_values.n,
@@ -171,6 +187,7 @@ def test_wls_optional_parameters(default_values, expected_trajectories_wls_sigma
         default_values.tau,
         default_values.gamma,
         seeds,
+        noise_distribution,
     )
     wls_estimated_trajectory = trajectories[0]
     wls_true_trajectory = trajectories[1]
