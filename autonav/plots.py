@@ -2,11 +2,23 @@
 
 from typing import List, Optional
 
+import matplotlib.pylab as pylab
 import matplotlib.pyplot as plt
 from numpy import asarray
 from numpy.typing import ArrayLike, NDArray
 
 from .metrics import compute_rmse
+
+# Parameters for plots
+params = {
+    "legend.fontsize": "xx-large",
+    "figure.figsize": (15, 5),
+    "axes.labelsize": "xx-large",
+    "axes.titlesize": "xx-large",
+    "xtick.labelsize": "medium",
+    "ytick.labelsize": "medium",
+}
+pylab.rcParams.update(params)
 
 
 def plot_trajectories(
@@ -19,7 +31,7 @@ def plot_trajectories(
 
     Args:
         ideal_trajectory: The ideal trajectory that the UAV is supposed to follow.
-        estimated_trajectories: The estimated trajectory that the UAV followed using the GTRS algorithm.
+        estimated_trajectories: The estimated trajectory that the UAV followed using an algorithm.
         names_of_the_algorithms: The names of the algorithms in the same order as in estimated_trajectories.
         a_i: The position of the anchors.
 
@@ -45,7 +57,7 @@ def plot_trajectories(
                     arr_a_i[0][i],
                     arr_a_i[1][i],
                     arr_a_i[2][i],
-                    marker="s",
+                    "s",
                     markersize=10,
                     markeredgecolor="black",
                     markerfacecolor="black",
@@ -65,11 +77,11 @@ def plot_trajectories(
                 arr_estimated_trajectories[:, 0],
                 arr_estimated_trajectories[:, 1],
                 arr_estimated_trajectories[:, 2],
-                label="Estimated Trajectory " + names_of_the_algorithms[j],
+                label="Trajectory followed by the UAV using " + names_of_the_algorithms[j],
                 color="red",
                 alpha=1.0,
             )
-            ax.set_title("Estimated Trajectory " + names_of_the_algorithms[j])
+            ax.set_title("Trajectory followed by the UAV using " + names_of_the_algorithms[j])
             ax.set_xlabel("Width (m)")
             ax.set_ylabel("Length (m)")
             ax.set(zlabel="Heigth (m)")

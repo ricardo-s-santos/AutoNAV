@@ -57,6 +57,18 @@ def seeds(request):
     return request.param
 
 
+@pytest.fixture(scope="session", params=["normal", "standard_normal", "exponential"])
+def noise_distributions(request):
+    """Contains the noise distributions for the GTRS and WLS tests."""
+    return request.param
+
+
+@pytest.fixture(scope="session", params=[[], [10**-3]])
+def distribution_parameters(request):
+    """Contains the distribution parameters for the GTRS and WLS tests."""
+    return request.param
+
+
 @pytest.fixture(scope="session")
 def metrics_trajectories():
     """Contains the trajectories for the metrics.py tests."""

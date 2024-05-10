@@ -171,11 +171,14 @@ def test_wls_exceptions(default_values):
         )
 
 
-def test_wls_optional_parameters(default_values, expected_trajectories_wls_sigma_0, seeds):
+def test_wls_optional_parameters(
+    default_values, expected_trajectories_wls_sigma_0, seeds, noise_distributions, distribution_parameters
+):
     """Tests if the algorithm correctly accepts optional parameters."""
     # Values used in test
     sigma = 1  # Noise STD in meters
-    noise_distribution = "normal"
+    if noise_distributions == "normal" and distribution_parameters == [10**-3]:
+        distribution_parameters = [0, 1]
     trajectories = wls(
         default_values.a_i,
         default_values.n,
@@ -187,7 +190,8 @@ def test_wls_optional_parameters(default_values, expected_trajectories_wls_sigma
         default_values.tau,
         default_values.gamma,
         seeds,
-        noise_distribution,
+        noise_distributions,
+        distribution_parameters,
     )
     wls_estimated_trajectory = trajectories[0]
     wls_true_trajectory = trajectories[1]

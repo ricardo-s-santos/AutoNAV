@@ -40,7 +40,8 @@ def gtrs(
     tau: float,
     gamma: float,
     noise_seed: int = 1,
-    noise_distribution: str = "standard_normal",
+    noise_distribution: str = "normal",
+    distribution_parameters: ArrayLike = None,
     tol: float = 0.001,
     n_iter: int = 30,
     max_lim: float = 1000000.0,
@@ -59,20 +60,25 @@ def gtrs(
         v_max: The maximum velocity that the UAV can fly.
         tau: The threshold to reach the destination.
         gamma: The smoothing factor.
-        noise_distribution: The distribution used to model the noise.
         noise_seed: The seed to generate the noise.
+        noise_distribution: The distribution used to model the noise.
+        distribution_parameters: Optional parameters to customize the noise distribution.
         tol: The tolerance for the bisection function.
         n_iter: The max number of iterations for the bisection function.
         max_lim: The maximum value for the interval in the bisection function.
 
     Returns:
-        The estimated trajectory computed using the GTRS algorithm for the given input scenario
-          and the true trajectory that the UAV followed.
+        The estimated positions for the UAV computed using the GTRS algorithm for the given input scenario
+        and the true trajectory that the UAV followed.
     """
     # Transform inputs in NDArray
     arr_a_i: NDArray = asarray(a_i, dtype=float)
     arr_destinations: NDArray = asarray(destinations, dtype=float)
     arr_initial_uav_position: NDArray = asarray(initial_uav_position, dtype=float)
+    if distribution_parameters is None:
+        arr_distribution_parameters: NDArray = asarray([])
+    else:
+        arr_distribution_parameters: NDArray = asarray(distribution_parameters, dtype=float)
     # Validate inputs
     if size(arr_a_i, axis=1) != n:
         raise ValueError("The length of a_i must be equal to N.")
@@ -124,7 +130,7 @@ def gtrs(
     p = eye(6)
     qq = 0
     x_true = arr_initial_uav_position[:]
-    estimated_trajectory = []
+    estimated_positions = []
     true_trajectory = []
     ww = 0
     n_dest = len(arr_destinations) - 1
@@ -143,13 +149,27 @@ def gtrs(
             # ---------------------------------------------------------------------
             di_k = sqrt(((x[0] - arr_a_i[0, :]) ** 2) + ((x[1] - arr_a_i[1, :]) ** 2) + ((x[2] - arr_a_i[2, :]) ** 2))
             di_k = array([di_k]).T
-            if noise_distribution == "normal":
-                noise_model = gen.normal(size=(n, k))
+            if noise_distribution == "normal":  # Default value (normal)
+                # See if user passed the mean and std
+                if size(arr_distribution_parameters) == 2:
+                    mean = arr_distribution_parameters[0]
+                    std = arr_distribution_parameters[1]
+                    noise_model = gen.normal(loc=mean, scale=std, size=(n, k))
+                else:
+                    noise_model = gen.normal(size=(n, k))
+                di_k = di_k + (sigma * noise_model)
             elif noise_distribution == "exponential":
-                noise_model = gen.exponential(size=(n, k))
-            elif noise_distribution == "standard_normal":  # Default value (standard_normal)
+                # See if user passed the rate
+                if size(arr_distribution_parameters) == 1:
+                    rate = arr_distribution_parameters[0]
+                    noise_model = gen.exponential(scale=rate, size=(n, k))
+                else:
+                    rate = 10**-6
+                    noise_model = gen.exponential(scale=rate, size=(n, k))
+                di_k = di_k + noise_model
+            elif noise_distribution == "standard_normal":
                 noise_model = gen.standard_normal(size=(n, k))
-            di_k = di_k + (sigma * noise_model)
+                di_k = di_k + noise_model
             d_i = median(di_k, axis=1)
             d_i = array([d_i]).T
             # ---------------------------------------------------------------------
@@ -209,7 +229,7 @@ def gtrs(
                 x_loc[0:3, qq] = real(y_hat_loc[0:3, 0])
                 x_state[0:6, qq] = concatenate((x_loc[0:3, qq], zeros(3)), axis=0)
                 p = eye(6)
-                estimated_trajectory.append(x_loc[0:3, qq])
+                estimated_positions.append(x_loc[0:3, qq])
             else:
                 x_loc = insert(x_loc, qq, real(y_hat_loc[0:3, 0]), axis=1)
                 eigen_values = _calc_eigen(a_track, d_track)
@@ -225,7 +245,7 @@ def gtrs(
                 lk1 = subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1))
                 lk2 = subtract(x_state[0:6, qq], x_state[0:6, qq - 1]).reshape((6, 1)).T
                 p = matmul(lk1, lk2)
-                estimated_trajectory.append(x_loc[0:3, qq])
+                estimated_positions.append(x_loc[0:3, qq])
             true_trajectory.append(x_true.copy())
             uav_velocity = _velocity(x_loc[0:3, qq], arr_destinations[ww, :], v_max, tau, gamma)
             x_true[0] = x_true[0] + uav_velocity[0]
@@ -238,7 +258,7 @@ def gtrs(
             )
             qq += 1
         ww += 1
-    return array([array(estimated_trajectory), array(true_trajectory)])
+    return array([array(estimated_positions), array(true_trajectory)])
 
 
 def _bisection_fun(

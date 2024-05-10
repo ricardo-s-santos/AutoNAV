@@ -24,7 +24,8 @@ def wls(
     tau: int,
     gamma: int,
     noise_seed: int = 1,
-    noise_distribution: str = "standard_normal",
+    noise_distribution: str = "normal",
+    distribution_parameters: ArrayLike = None,
 ) -> NDArray:
     """Executes the WLS algorithm.
 
@@ -42,15 +43,21 @@ def wls(
         tau: The threshold to reach the destination.
         gamma: The smoothing factor.
         noise_seed: The seed to generate the noise.
+        noise_distribution: The distribution used to model the noise.
+        distribution_parameters: Optional parameters to customize the noise distribution.
 
     Returns:
-        The estimated trajectory computed using the WLS algorithm for the given input scenario
-          and the true trajectory that the UAV followed.
+        The estimated positions for the UAV computed using the WLS algorithm for the given input scenario
+        and the true trajectory that the UAV followed.
     """
     # Transform inputs in NDArray
     arr_a_i: NDArray = asarray(a_i, dtype=float)
     arr_destinations: NDArray = asarray(destinations, dtype=float)
     arr_initial_uav_position: NDArray = asarray(initial_uav_position, dtype=float)
+    if distribution_parameters is None:
+        arr_distribution_parameters: NDArray = asarray([])
+    else:
+        arr_distribution_parameters: NDArray = asarray(distribution_parameters, dtype=float)
     # Validate inputs
     if size(arr_a_i, axis=1) != n:
         raise ValueError("The length of a_i must be equal to N.")
@@ -71,7 +78,7 @@ def wls(
     x_true = arr_initial_uav_position[:]
     ww = 0
     n_dest = len(arr_destinations) - 1
-    estimated_trajectory = []
+    estimated_positions = []
     true_trajectory = []
     # Generator to create random numbers (see line 65)
     gen = random_generator(noise_seed)
@@ -88,12 +95,27 @@ def wls(
             # ---------------------------------------------------------------------
             di_k = sqrt(((x[0] - arr_a_i[0, :]) ** 2) + ((x[1] - arr_a_i[1, :]) ** 2) + ((x[2] - arr_a_i[2, :]) ** 2))
             di_k = array([di_k]).T
-            if noise_distribution == "normal":
-                noise_model = gen.normal(size=(n, k))
+            if noise_distribution == "normal":  # Default value (normal)
+                # See if user passed the mean and std
+                if size(arr_distribution_parameters) == 2:
+                    mean = arr_distribution_parameters[0]
+                    std = arr_distribution_parameters[1]
+                    noise_model = gen.normal(loc=mean, scale=std, size=(n, k))
+                else:
+                    noise_model = gen.normal(size=(n, k))
+                di_k = di_k + (sigma * noise_model)
             elif noise_distribution == "exponential":
-                noise_model = gen.exponential(size=(n, k))
-            elif noise_distribution == "standard_normal":  # Default value (standard_normal)
+                # See if user passed the rate
+                if size(arr_distribution_parameters) == 1:
+                    rate = arr_distribution_parameters[0]
+                    noise_model = gen.exponential(scale=rate, size=(n, k))
+                else:
+                    rate = 10**-6
+                    noise_model = gen.exponential(scale=rate, size=(n, k))
+                di_k = di_k + noise_model
+            elif noise_distribution == "standard_normal":
                 noise_model = gen.standard_normal(size=(n, k))
+                di_k = di_k + noise_model
             di_k = di_k + (sigma * noise_model)
             d_i = median(di_k, axis=1)
             d_i = array([d_i]).T
@@ -152,7 +174,7 @@ def wls(
             a_loc = dot(w, a_1)
             b_loc = dot(w, b_1)
             x_est = asarray(solve(dot(a_loc.T, a_loc) + (1 * 10 ** (-6)) * eye(3), dot(a_loc.T, b_loc)))
-            estimated_trajectory.append(x_est[:, 0])
+            estimated_positions.append(x_est[:, 0])
             true_trajectory.append(x_true.copy())
             uav_velocity = _velocity(x_est[:, 0], arr_destinations[ww, :], v_max, tau, gamma)
             x_true[0] = x_true[0] + uav_velocity[0]
@@ -164,4 +186,4 @@ def wls(
                 + (x_true[2] - arr_destinations[ww][2]) ** 2
             )
         ww += 1
-    return array([array(estimated_trajectory), array(true_trajectory)])
+    return array([array(estimated_positions), array(true_trajectory)])

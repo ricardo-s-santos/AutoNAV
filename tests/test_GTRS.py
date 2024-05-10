@@ -169,6 +169,7 @@ def test_gtrs_exceptions(default_values):
             default_values.gamma,
             0,
             "standard_normal",
+            [],
             -1,
         )
     # Case n_iter < 0
@@ -185,6 +186,7 @@ def test_gtrs_exceptions(default_values):
             default_values.gamma,
             0,
             "standard_normal",
+            [],
             0.001,
             -1,
         )
@@ -204,6 +206,7 @@ def test_gtrs_exceptions(default_values):
             default_values.gamma,
             0,
             "standard_normal",
+            [],
             0.001,
             30,
             -1,
@@ -225,14 +228,17 @@ def test_gtrs_exceptions(default_values):
         )
 
 
-def test_gtrs_optional_parameters(default_values, expected_trajectories_gtrs_sigma_0, seeds):
+def test_gtrs_optional_parameters(
+    default_values, expected_trajectories_gtrs_sigma_0, seeds, noise_distributions, distribution_parameters
+):
     """Tests if the algorithm correctly accepts optional parameters."""
     # Values used in test
     sigma = 1  # Noise STD in meters
     tol = 0.0015
     n_iter = 35
     max_lim = 1000005.0
-    noise_distribution = "normal"
+    if noise_distributions == "normal" and distribution_parameters == [10**-3]:
+        distribution_parameters = [0, 1]
     trajectories = gtrs(
         default_values.a_i,
         default_values.n,
@@ -244,7 +250,8 @@ def test_gtrs_optional_parameters(default_values, expected_trajectories_gtrs_sig
         default_values.tau,
         default_values.gamma,
         seeds,
-        noise_distribution,
+        noise_distributions,
+        distribution_parameters,
         tol,
         n_iter,
         max_lim,
