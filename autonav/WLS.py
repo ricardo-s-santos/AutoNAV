@@ -3,6 +3,7 @@
 import cmath
 import itertools
 import math
+from typing import Optional
 
 from numpy import array, asarray, cos, dot, eye, median, sin, size, sqrt, zeros
 from numpy.lib import scimath
@@ -25,7 +26,7 @@ def wls(
     gamma: int,
     noise_seed: int = 1,
     noise_distribution: str = "normal",
-    distribution_parameters: ArrayLike = None,
+    distribution_parameters: Optional[ArrayLike] = None,
 ) -> NDArray:
     """Executes the WLS algorithm.
 
@@ -57,7 +58,7 @@ def wls(
     if distribution_parameters is None:
         arr_distribution_parameters: NDArray = asarray([])
     else:
-        arr_distribution_parameters: NDArray = asarray(distribution_parameters, dtype=float)
+        arr_distribution_parameters = asarray(distribution_parameters, dtype=float)
     # Validate inputs
     if size(arr_a_i, axis=1) != n:
         raise ValueError("The length of a_i must be equal to N.")
