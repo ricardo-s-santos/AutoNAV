@@ -18,14 +18,13 @@ def wls(
     a_i: ArrayLike,
     n: int,
     k: int,
-    sigma: float,
     destinations: ArrayLike,
     initial_uav_position: ArrayLike,
-    v_max: int,
-    tau: int,
-    gamma: int,
+    v_max: float,
+    tau: float,
+    gamma: float,
     noise_seed: int = 1,
-    noise_distribution: str = "normal",
+    noise_distribution: str = "standard_normal",
     distribution_parameters: Optional[ArrayLike] = None,
 ) -> NDArray:
     """Executes the WLS algorithm.
@@ -37,7 +36,6 @@ def wls(
         a_i: The true position of the anchors in 3D.
         n: The number of anchors.
         k: The number of measurements.
-        sigma: The noise level in meters.
         destinations: The intermediate points need for navigation in 3D.
         initial_uav_position: The initial UAV position in 3D.
         v_max: The maximum velocity that the UAV can fly.
@@ -64,8 +62,6 @@ def wls(
         raise ValueError("The length of a_i must be equal to N.")
     if k <= 0:
         raise ValueError("K must be positive.")
-    if sigma < 0 or sigma > 5:
-        raise ValueError("Sigma must be between 0 and 5.")
     if size(arr_destinations) == 0:
         raise ValueError("Waypoints cannot be empty.")
     if size(arr_destinations, axis=1) != 3:
@@ -96,7 +92,7 @@ def wls(
             # ---------------------------------------------------------------------
             di_k = sqrt(((x[0] - arr_a_i[0, :]) ** 2) + ((x[1] - arr_a_i[1, :]) ** 2) + ((x[2] - arr_a_i[2, :]) ** 2))
             di_k = array([di_k]).T
-            if noise_distribution == "normal":  # Default value (normal)
+            if noise_distribution == "normal":
                 # See if user passed the mean and std
                 if size(arr_distribution_parameters) == 2:
                     mean = arr_distribution_parameters[0]
@@ -104,7 +100,7 @@ def wls(
                     noise_model = gen.normal(loc=mean, scale=std, size=(n, k))
                 else:
                     noise_model = gen.normal(size=(n, k))
-                di_k = di_k + (sigma * noise_model)
+                di_k = di_k + noise_model
             elif noise_distribution == "exponential":
                 # See if user passed the rate
                 if size(arr_distribution_parameters) == 1:
@@ -114,10 +110,9 @@ def wls(
                     rate = 10**-6
                     noise_model = gen.exponential(scale=rate, size=(n, k))
                 di_k = di_k + noise_model
-            elif noise_distribution == "standard_normal":
+            elif noise_distribution == "standard_normal":  # Default distribution
                 noise_model = gen.standard_normal(size=(n, k))
                 di_k = di_k + noise_model
-            di_k = di_k + (sigma * noise_model)
             d_i = median(di_k, axis=1)
             d_i = array([d_i]).T
             # ---------------------------------------------------------------------
