@@ -53,7 +53,7 @@ noise_distribution_parameters = [mean, std]
 # %%
 # Finally, one can invoke the [`wls`] and function and plot the estimated trajectory:
 
-[estimated_trajectory, true_trajectory] = wls(
+[estimated_positions, true_trajectory] = wls(
     a_i,
     n,
     k,
@@ -66,4 +66,4 @@ noise_distribution_parameters = [mean, std]
     noise_distribution,
     noise_distribution_parameters,
 )
-plt_obj = plot_trajectories(destinations, [estimated_trajectory], a_i, ["WLS"])
+plt_obj = plot_trajectories(destinations, [true_trajectory], a_i, ["WLS"])
