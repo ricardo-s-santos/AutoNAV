@@ -54,7 +54,7 @@ noise_distribution_parameters = [mean, std]
 # %%
 # Finally, one can invoke the [`gtrs`] function and plot the estimated trajectory:
 
-[estimated_trajectory, true_trajectory] = gtrs(
+[estimated_positions, true_trajectory] = gtrs(
     a_i,
     n,
     k,
@@ -67,4 +67,4 @@ noise_distribution_parameters = [mean, std]
     noise_distribution,
     noise_distribution_parameters,
 )
-plt_obj = plot_trajectories(destinations, [estimated_trajectory], a_i, ["GTRS"])
+plt_obj = plot_trajectories(destinations, [true_trajectory], a_i, ["GTRS"])
