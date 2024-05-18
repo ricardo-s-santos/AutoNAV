@@ -75,7 +75,7 @@ noise_distribution_parameters = [mean, std]
 Finally, run the GTRS or WLS algorithm and plot the trajectories:
 
 ```python
-# Estimate the trajectory using the GTRS algorithm
+# Estimate the positions and trajectory using the GTRS algorithm
 [estimated_positions, true_trajectory] = gtrs(
     a_i,
     n,
@@ -89,7 +89,7 @@ Finally, run the GTRS or WLS algorithm and plot the trajectories:
     noise_distribution,
     noise_distribution_parameters,
 )
-# Plot the estimated trajectory
+# Plot the trajectory that the UAV followed
 plot_trajectories(destinations, [true_trajectory], a_i, ['GTRS'])
 plt.show()
 ```
