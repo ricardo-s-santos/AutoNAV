@@ -632,6 +632,10 @@
 
   <h1>Home</h1>
 
+<p><img alt="example workflow" src="https://github.com/ricardo-s-santos/AutoNAV/actions/workflows/test.yml/badge.svg" />
+<a href="https://codecov.io/gh/ricardo-s-santos/AutoNAV"><img alt="codecov" src="https://codecov.io/gh/ricardo-s-santos/AutoNAV/graph/badge.svg?token=LCR7KDRK3E" /></a>
+<a href="https://ricardo-s-santos.github.io/AutoNAV/"><img alt="docs" src="https://img.shields.io/badge/docs-click_here-blue.svg" /></a>
+<a href="https://pypi.org/project/autonav/"><img alt="PyPI" src="https://img.shields.io/pypi/v/autonav" /></a></p>
 <p align="center">
   <img src="https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/icon.png?raw=true" alt="image" width="200" height="auto">
 </p>
@@ -670,25 +674,43 @@
 <a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="p">)</span><span class="o">.</span><span class="n">T</span>
 <a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="c1"># Number of measurement samples</span>
 <a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="n">k</span> <span class="o">=</span> <span class="mi">50</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="c1"># Noise standard deviation</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="n">sigma</span> <span class="o">=</span> <span class="mi">1</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="c1"># Maximum velocity allowed to the UAV</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="n">v_max</span> <span class="o">=</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">100</span>
-<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="c1"># Distance threshold</span>
-<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="n">tau</span> <span class="o">=</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">50</span>
-<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="c1"># Smoothing factor</span>
-<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="n">gamma</span> <span class="o">=</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">100</span>
-<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="c1"># Initial position of the UAV</span>
-<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="n">initial_uav_position</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="c1"># File containing the waypoints</span>
-<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="n">destinations</span> <span class="o">=</span> <span class="n">readpathfile</span><span class="p">(</span><span class="s2">&quot;docs/docs/examples/Path.csv&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="c1"># Maximum velocity allowed to the UAV</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="n">v_max</span> <span class="o">=</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">100</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="c1"># Distance threshold</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="n">tau</span> <span class="o">=</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">50</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="c1"># Smoothing factor</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="n">gamma</span> <span class="o">=</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">100</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="c1"># Initial position of the UAV</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="n">initial_uav_position</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="c1"># File containing the waypoints</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a><span class="n">destinations</span> <span class="o">=</span> <span class="n">readpathfile</span><span class="p">(</span><span class="s2">&quot;docs/docs/examples/Path.csv&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="c1"># Noise seed</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="n">noise_seed</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="c1"># Noise Distribution</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="n">noise_distribution</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="c1"># Noise distribution parameters</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="n">mean</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="n">std</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="n">noise_distribution_parameters</span> <span class="o">=</span> <span class="p">[</span><span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">]</span>
 </code></pre></div>
 <p>Finally, run the GTRS or WLS algorithm and plot the trajectories:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Estimate the trajectory using the GTRS algorithm</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">[</span><span class="n">estimated_trajectory</span><span class="p">,</span> <span class="n">true_trajectory</span><span class="p">]</span> <span class="o">=</span> <span class="n">gtrs</span><span class="p">(</span><span class="n">a_i</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">destinations</span><span class="p">,</span> <span class="n">initial_uav_position</span><span class="p">,</span> <span class="n">v_max</span><span class="p">,</span> <span class="n">tau</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Plot the estimated trajectory</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">plot_trajectories</span><span class="p">(</span><span class="n">destinations</span><span class="p">,</span> <span class="p">[</span><span class="n">estimated_trajectory</span><span class="p">],</span> <span class="n">a_i</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;GTRS&#39;</span><span class="p">])</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="p">[</span><span class="n">estimated_positions</span><span class="p">,</span> <span class="n">true_trajectory</span><span class="p">]</span> <span class="o">=</span> <span class="n">gtrs</span><span class="p">(</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">a_i</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">n</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">k</span><span class="p">,</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">destinations</span><span class="p">,</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">initial_uav_position</span><span class="p">,</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">v_max</span><span class="p">,</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="n">tau</span><span class="p">,</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="n">gamma</span><span class="p">,</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    <span class="n">noise_seed</span><span class="p">,</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="n">noise_distribution</span><span class="p">,</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    <span class="n">noise_distribution_parameters</span><span class="p">,</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="p">)</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="c1"># Plot the estimated trajectory</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a><span class="n">plot_trajectories</span><span class="p">(</span><span class="n">destinations</span><span class="p">,</span> <span class="p">[</span><span class="n">true_trajectory</span><span class="p">],</span> <span class="n">a_i</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;GTRS&#39;</span><span class="p">])</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div>
 <p align="center">
   <img src="https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/trajectories_plot.png?raw=true" alt="image" width="auto" height="auto">
