@@ -81,7 +81,6 @@ def plot_trajectories(
                 color="red",
                 alpha=1.0,
             )
-            ax.set_title("Trajectory followed by the UAV using " + names_of_the_algorithms[j])
             ax.set_xlabel("Width (m)")
             ax.set_ylabel("Length (m)")
             ax.set(zlabel="Heigth (m)")

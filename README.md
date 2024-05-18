@@ -52,8 +52,6 @@ a_i = array(
     ).T
 # Number of measurement samples
 k = 50
-# Noise standard deviation
-sigma = 1
 # Maximum velocity allowed to the UAV
 v_max = b / 100
 # Distance threshold
@@ -64,15 +62,35 @@ gamma = b / 100
 initial_uav_position = [10, 10, 5]
 # File containing the waypoints
 destinations = readpathfile("docs/docs/examples/Path.csv")
+# Noise seed
+noise_seed = 1
+# Noise Distribution
+noise_distribution = "normal"
+# Noise distribution parameters
+mean = 0
+std = 1
+noise_distribution_parameters = [mean, std]
 ```
 
 Finally, run the GTRS or WLS algorithm and plot the trajectories:
 
 ```python
 # Estimate the trajectory using the GTRS algorithm
-[estimated_trajectory, true_trajectory] = gtrs(a_i, n, k, sigma, destinations, initial_uav_position, v_max, tau, gamma)
+[estimated_positions, true_trajectory] = gtrs(
+    a_i,
+    n,
+    k,
+    destinations,
+    initial_uav_position,
+    v_max,
+    tau,
+    gamma,
+    noise_seed,
+    noise_distribution,
+    noise_distribution_parameters,
+)
 # Plot the estimated trajectory
-plot_trajectories(destinations, [estimated_trajectory], a_i, ['GTRS'])
+plot_trajectories(destinations, [true_trajectory], a_i, ['GTRS'])
 plt.show()
 ```
 
