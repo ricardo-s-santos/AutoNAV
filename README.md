@@ -98,11 +98,15 @@ plt.show()
   <img src="https://github.com/ricardo-s-santos/AutoNAV/blob/main/docs/docs/figures/trajectories_plot.png?raw=true" alt="image" width="auto" height="auto">
 </p>
 
+## Citation
+
+Ricardo Serras Santos, Nuno Fachada, João P. Matos-Carvalho, Slavisa Tomic and Marko Beko, "AutoNAV: A Python package for simulating UAV navigation in satellite-less environments," in SoftwareX, 2024, vol. 27, 101782, doi: [10.1016/j.softx.2024.101782](https://doi.org/10.1016/j.softx.2024.101782). 
+
 ## References
 
 [1] J. P. Matos-Carvalho, R. Santos, S. Tomic and M. Beko, "GTRS-Based Algorithm for UAV Navigation in Indoor Environments Employing Range Measurements and Odometry," in IEEE Access, vol. 9, pp. 89120-89132, 2021, doi: 10.1109/ACCESS.2021.3089900. https://ieeexplore.ieee.org/document/9456863
 
-[2] R. Santos, J. P. Matos-Carvalho, S. Tomic and M. Beko, "WLS algorithm for UAV navigation in satellite‐less environments," in IET Wireless Sensor Systems, 2022, 12, (3-4), p. 93-102, DOI: 10.1049/wss2.12041
+[2] R. Santos, J. P. Matos-Carvalho, S. Tomic and M. Beko, "WLS algorithm for UAV navigation in satellite‐less environments," in IET Wireless Sensor Systems, 2022, 12, (3-4), p. 93-102, doi: 10.1049/wss2.12041
 IET Digital Library, https://ietresearch.onlinelibrary.wiley.com/doi/full/10.1049/wss2.12041
 
 ## License
